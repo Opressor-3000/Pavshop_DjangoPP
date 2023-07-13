@@ -13,4 +13,4 @@
    д. git commit -m 'comment'
    e. git push
 Возвращаемся в свою именованную ветку
-5. git checkout zuur 
+5. git checkout zaur 
