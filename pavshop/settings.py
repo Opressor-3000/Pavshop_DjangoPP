@@ -79,8 +79,16 @@ WSGI_APPLICATION = 'pavshop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
+<<<<<<< HEAD
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'GPT_DB'
         'USER': 'root'
@@ -88,6 +96,14 @@ DATABASES = {
         'HOST': 'localhost'
         'PORT': '5432'
         
+=======
+        'ENGINE': 'django.db.backends.postgresql_pcycopg2',
+        'NAME': BASE_DIR / 'pav',
+        'USER': 'Pavshop',
+        'PASSWORD': 'P@vshop2023',
+        'HOST': '0.0.0.0',
+        'PORT': 54321,
+>>>>>>> yusif
     }
 }
 

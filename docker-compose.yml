@@ -28,12 +28,10 @@ services:
     ports:
      - 5432:5432
     environment:
-      POSTGRES_PASSWORD: 12345
-      POSTGRES_USER: root
-      POSTGRES_DB: GPT_DB
-
-  adminer:
-    image: adminer
-    restart: always
+      POSTGRES_USER: Pavshop
+      POSTGRES_PASSWORD: P@wshop2023
+      POSTGRES_DB: pav
+      PGDATA: ~/E-commerce-Pavshop-PyA3/
+      POSTGRES_INITDB_ARGS: "-A md5"
     ports:
-      - 8080:8080
+      - "54321:5432"
