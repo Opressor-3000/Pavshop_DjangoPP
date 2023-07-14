@@ -7,10 +7,10 @@
 4. git push
 после написания кода надо актуализировать данные в ветке dev
    a. git checkout dev
-   б. git pull origin 
+   б. git pull origin dev
    в. git merge zaur
    г. git add .
    д. git commit -m 'comment'
    e. git push
 Возвращаемся в свою именованную ветку
-5. git checkout zuur 
+5. git checkout zaur 
