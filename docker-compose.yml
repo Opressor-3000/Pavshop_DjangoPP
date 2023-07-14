@@ -1,16 +1,39 @@
+# version: '3.1'
+
+# services:
+
+#   db:
+#     image: postgres
+#     container_name: postgresdb
+#     restart: always
+#     environment:
+#       POSTGRES_USER: Pavshop
+#       POSTGRES_PASSWORD: P@wshop2023
+#       POSTGRES_DB: pav
+#       PGDATA: ~/E-commerce-Pavshop-PyA3/
+#       POSTGRES_INITDB_ARGS: "-A md5"
+#     ports:
+#       - "54321:5432"
+
+
+
+# Use postgres/example user/password credentials
 version: '3.1'
 
 services:
 
   db:
     image: postgres
-    container_name: postgresdb
     restart: always
-    environment:
-      POSTGRES_USER: Pavshop
-      POSTGRES_PASSWORD: P@wshop2023
-      POSTGRES_DB: pav
-      PGDATA: ~/E-commerce-Pavshop-PyA3/
-      POSTGRES_INITDB_ARGS: "-A md5"
     ports:
-      - "54321:5432"
+     - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_USER: root
+      POSTGRES_DB: GPT_DB
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
