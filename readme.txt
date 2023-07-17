@@ -14,3 +14,4 @@
    e. git push
 Возвращаемся в свою именованную ветку
 5. git checkout zaur 
+6. git pull origin dev
