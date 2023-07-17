@@ -89,12 +89,11 @@ WSGI_APPLICATION = 'pavshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'GPT_DB'
-        'USER': 'root'
-        'PASSWORD': 12345
-        'HOST': 'localhost'
-        'PORT': '5432'
-        
+        'NAME': 'pav',
+        'USER': 'Pavshop',
+        'PASSWORD': 'P@wshop2023',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
