@@ -5,6 +5,7 @@ services:
   db:
     image: postgres
     restart: always
+    container_name: postgres
     ports:
      - 5432:5432
     environment:
@@ -14,4 +15,9 @@ services:
       PGDATA: ~/E-commerce-Pavshop-PyA3/
       POSTGRES_INITDB_ARGS: "-A md5"
     volumes:
+<<<<<<< HEAD
       - ./:/var/lib/postgresql/data \
+=======
+      - ./pavdata:var/lib/postgresql
+
+>>>>>>> yusif
