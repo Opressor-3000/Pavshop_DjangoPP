@@ -94,7 +94,7 @@ DATABASES = {
         'PASSWORD': 'P@wshop2023',
         'HOST': 'localhost',
         'PORT': '5432',
-    }
+    }                                                                                                                                                                                                                   
 }
 
 
