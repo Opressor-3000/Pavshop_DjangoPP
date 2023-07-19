@@ -35,4 +35,7 @@ class Discount(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-    
+class DiscountType(models.Model):
+    title = models.CharField(max_length=100)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
