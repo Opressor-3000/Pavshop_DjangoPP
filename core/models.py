@@ -3,7 +3,7 @@ from django.db.models.fields import EmailField, DateTimeField, CharField, TextFi
 # Create your models here.
 
 class Subscriber(models.Model):
-    email = EmailField(max_length= 50)
+    email = EmailField(max_length= 50)                                                                                                                          
 
     created_at = DateTimeField(auto_now_add=True)
     updated_at = DateTimeField(auto_now=True)

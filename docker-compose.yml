@@ -14,4 +14,4 @@ services:
       PGDATA: ~/E-commerce-Pavshop-PyA3/
       POSTGRES_INITDB_ARGS: "-A md5"
     volumes:
-      - ./:/var/lib/postgresql/data \
+      - ./database:/var/lib/postgresql/data                                                                                                                
