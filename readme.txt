@@ -4,7 +4,7 @@
 1. git branch     > zaur
 2. git add .
 3. git commit -m 'comment'
-4. git push
+4. git push origin zaur
 после написания кода надо актуализировать данные в ветке dev
    a. git checkout dev
    б. git pull origin zaur
