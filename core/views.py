@@ -1,12 +1,20 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from typing import Any, Dict
+from django.db import models
+from django.views.generic import ListView, DetailView, CreateView
+from django.db.models.query import QuerySet
 
+from product.models import Variant
 
 def about_us(request):
-    return HttpResponse("about_us.html")
+    return render("about_us.html")
 
 def contact(request):
-    return HttpResponse("contact.html")
+    return render("contact.html")
 
-def index(request):
-    return HttpResponse("index.html")
+class HomePage(ListView):
+    model = Variant
+    template_name = 'templates/index.html'
+
+
+    
