@@ -12,8 +12,10 @@ class Subscriber(models.Model):
 class Contact(models.Model):
     name = CharField(max_length=30)
     email = EmailField(max_length=50)
+    phone = CharField(max_length=12, unique=True, verbose_name='Contact Phone')
     subject = CharField(max_length=50)
     message = TextField()
 
     created_at = DateTimeField(auto_now_add=True)
     updated_at = DateTimeField(auto_now=True)
+

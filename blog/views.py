@@ -1,9 +1,27 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from typing import Any, Dict
+from django.db import models
+from django.views.generic import ListView, DetailView, CreateView
+from django.db.models.query import QuerySet
 
 
-def blog_detail(request):
-    return HttpResponse("blog_detail.html")
+from .models import Post
 
-def blog_list(request):
-    return HttpResponse("blog_list.html")
+
+class PostList(ListView):
+    model = Post
+    template_name = 'templates/blog_list.html'
+
+
+class PostDetail(DetailView):
+    model = Post
+    template_name = 'templates/blog_detail.html'
+
+    
+
+
+# def blog_detail(request):
+#     return render("blog_detail.html")
+
+# def blog_list(request):
+#     return H("blog_list.html")
