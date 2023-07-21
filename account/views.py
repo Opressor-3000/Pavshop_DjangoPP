@@ -1,12 +1,11 @@
 from typing import Any, Dict
-from django.db import models
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, CreateView
 from django.db.models.query import QuerySet
 
 
-from .models import User, ShoppingCart
+from .models import User, Basket, Address
+from core import urls
 
 
 class UserRegister(CreateView):
@@ -21,21 +20,27 @@ class UserRegister(CreateView):
     def get_queryset(self) -> QuerySet[Any]:
         return super().get_queryset()
 
+
 class UserAuth(CreateView):
     model = User
     template_name = 'tamplates/login.html'
 
 
-
-class ShopCart(ListView):
-    model = ShoppingCart
+class Basket(ListView):
+    model = Basket
     template_name = 'templates/shopping_cart.html'
 
 
+class Checkout(CreateView):
+    model = Address
+    template_name = 'templates/checkout.html'
 
 
-def checkout(request):
-    return render("checkout.html")
+def logout(request):
+    return render('')
+
+# def checkout(request):
+#     return render("checkout.html")
 
 # def login(request):
 #     return render("login.html")
