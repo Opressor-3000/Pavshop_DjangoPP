@@ -9,4 +9,9 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ('email')
     list_filter = ('email')
 
-admin.site.register(Product)
+
+
+
+admin.site.register([Product, Category, Discount, DiscountType, ProductReview, Store, Designer, Style, Brand, Collection])
+
+

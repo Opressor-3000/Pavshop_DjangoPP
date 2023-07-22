@@ -6,6 +6,6 @@ app_name = 'core'
 urlpatterns = [
     path('about_us/', about_us, name = 'about_us'),
     path('contact/', contact, name = 'contact'),
-    path('/', HomePage.as_view(), name = 'index'),
+    path('', HomePage.as_view(), name = 'index'),
 
 ]

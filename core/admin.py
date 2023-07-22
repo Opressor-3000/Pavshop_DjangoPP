@@ -9,7 +9,7 @@ class ContactAdmin(admin.ModelAdmin):
     list_editable = ('email')
     list_filter = ('email')
 
-admin.site.register(Contact)
+admin.site.register([Contact, Subscriber])
 
 
  

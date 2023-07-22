@@ -8,4 +8,4 @@ from .models import *
 
 
 
-admin.site.register(User, Basket, ShoppingCart, Wishlist, Address, Order)
+admin.site.register([User, Basket, Address, Order])

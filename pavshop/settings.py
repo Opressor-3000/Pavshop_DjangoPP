@@ -93,10 +93,11 @@ DATABASES = {
         'USER': 'Pavshop',
         'PASSWORD': 'P@wshop2023',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '5433',
     }                                                                                                                                                                                                                   
 }
 
+AUTH_USER_MODEL = 'account.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

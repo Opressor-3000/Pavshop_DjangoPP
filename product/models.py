@@ -1,7 +1,11 @@
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse_lazy
+from core.models import AbstractModel
+from account.models import User
 
-class Product(models.Model): #11
+
+class Product(AbstractModel): #11
     title = models.CharField(max_length=50, unique=True, db_index=True, verbose_name='Product')
     slug = models.SlugField(max_length=100, unique=True, db_index=True, verbose_name='Product_slug')
     category_id = models.ForeignKey('Category', on_delete=models.PROTECT)
@@ -11,117 +15,111 @@ class Product(models.Model): #11
     description = models.TextField()
     archive = models.BooleanField(default=False)
     style_id = models.ForeignKey('Style', on_delete=models.PROTECT)
-    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
+
+    def get_absolute_url(self):
+        return reverse_lazy('product/', kwargs={'product':self.pk})
+    
+    def __str__(self) -> str:
+        return self.title
 
 
-class Category(models.Model):
+class Category(AbstractModel):
     title = models.CharField(max_length=50, unique=True, db_index=True, verbose_name='Category')
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     slug = models.SlugField(max_length=100, unique=True, db_index=True, verbose_name='Category_slug')
-    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
+    
+    def get_absolute_url(self):
+        return reverse_lazy('category/', kwargs={'product':self.pk})
+    
+    def __str__(self) -> str:
+        return self.title
 
-
-class Discount(models.Model):
+    
+class Discount(AbstractModel):
     title = models.CharField(max_length=100, unique=True, verbose_name='Discont')
     code = models.CharField(max_length=50)
     type_id = models.ForeignKey('DiscountType', on_delete=models.CASCADE)
     sum = models.DecimalField(max_digits=10, decimal_places=2)
     date_begin = models.DateField()
     date_end = models.DateField()
-    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self) -> str:
+        return self.pk
 
 
-class DiscountType(models.Model):
+class DiscountType(AbstractModel):
     title = models.CharField(max_length=50, unique=True, verbose_name='Discont')
-    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self) -> str:
+        return self.pk
 
 
-class ProductReview(models.Model):
-    user_id = models.ForeignKey('User', on_delete=models.PROTECT)
-    product_id = models.ForeignKey('Product', on_delete=models.PROTECT)
+class ProductReview(AbstractModel):
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    product = models.ForeignKey('Product', on_delete=models.PROTECT)
     text = models.TextField()
     rating = models.DecimalField(max_digits=5, decimal_places=3, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
+  
+    def __str__(self) -> str:
+        return self.pk
 
 
-class Store(models.Model):
+class Store(AbstractModel):
     title = models.CharField(max_length=50, unique=True, default='Pavshop')
     address = models.CharField(max_length=100, unique=True)
-    post = models.IntegerField(max_length=6, blank=True)
+    post = models.IntegerField(blank=True)
     location = models.CharField(max_length=255, blank=True, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
+   
+    def __str__(self) -> str:
+        return self.pk
 
-
-class Unit(models.Model):
+class Unit(AbstractModel):
     title = models.CharField(max_length=100, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
     
-
-class Quantity(models.Model):
-    variant_id = models.ForeignKey('Variant', on_delete=models.PROTECT)
-    store_id = models.ForeignKey('Store', on_delete=models.CASCADE)
-    quantity = models.DecimalField(decimal_places=3)
-    unit_id = models.ForeignKey(Unit, on_delete=models.PROTECT)
-    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
+    def __str__(self) -> str:
+        return self.pk
 
 
-class Variant(models.Model):
+class Color(AbstractModel):
+    title = models.CharField(max_length=50, unique=True, db_index=True, verbose_name='Color')
+
+
+class Variant(AbstractModel):
     title = models.CharField(max_length=100, unique=True, db_index=True, verbose_name='Variant')
+    color = models.ForeignKey(Color, on_delete=models.CASCADE)
     slug = models.SlugField(max_length=100, unique=True, db_index=True, verbose_name='Varian_slug')
     image_id = models.ForeignKey(Store, on_delete=models.CASCADE)
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2, db_index=True)
-    discont_id = models.ForeignKey(Discount, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
+    discont_id = models.ManyToManyField(Discount)
+    quantity = models.IntegerField()
+  
+    def get_absolute_url(self):
+        return reverse_lazy('product/', kwargs={'product':self.pk})
+    
+    def __str__(self) -> str:
+        return self.title
 
 
-class Image(models.Model):
+class Image(AbstractModel):
     image_url = models.CharField(max_length=255, unique=True, db_index=True, verbose_name='Image')
-    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
+    
 
-
-# class Option(models.Model):
-#     variant_id = models.ForeignKey('Variant', on_delete=models.PROTECT)
-
-
-# class PropertyValue(models.Model):
-#     property_id = models.ForeignKey('Property', on_delete=models.PROTECT)
-
-
-# class Property(models.Model):
-#     title = models.CharField(max_length=50)
-
-
-class Designer(models.Model):
+class Designer(AbstractModel):
     name = models.CharField(max_length=100, unique=True, db_index=True, verbose_name='Designer')
-    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
+   
 
-class Style(models.Model):
+class Style(AbstractModel):
     title = models.CharField(max_length=50, unique=True, db_index=True)
-    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
+   
 
-class Brand(models.Model):
+class Brand(AbstractModel):
     title = models.CharField(max_length=50, unique=True, db_index=True, verbose_name='Brand')  
-    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
+  
 
-class Collection(models.Model):
+class Collection(AbstractModel):
     title = models.CharField(max_length=100, db_index=True)
     brand_id = models.ForeignKey(Brand, on_delete=models.PROTECT)
-    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = ['title', 'brand_id']

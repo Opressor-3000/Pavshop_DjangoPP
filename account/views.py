@@ -11,14 +11,7 @@ from core import urls
 class UserRegister(CreateView):
     model = User
     template_name = 'templates/register.html'
-
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        # context = super(UserRegister, self).get_context_data(**kwargs)
-        # context['title'] = 'value'
-        return super().get_context_data(**kwargs)
-    
-    def get_queryset(self) -> QuerySet[Any]:
-        return super().get_queryset()
+    context_object_name = 'user'
 
 
 class UserAuth(CreateView):
