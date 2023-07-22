@@ -9,16 +9,10 @@ class PostAdmin(admin.ModelAdmin):
     list_editable = ('user_id')
     list_filter = ('user_id')
 
-admin.site.register(Post)
 
 
 
+admin.site.register([PostReview, Post])
 
-admin.site.register(PostReview)
-
-
-
-
-admin.site.register(PostImage)
 
 

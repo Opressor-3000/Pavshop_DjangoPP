@@ -12,13 +12,13 @@ class NewUserAccount(forms.ModelForm):
 
 class UserWishList(forms.ModelForm):
     class Meta:
-        model = Wishlist
+        model = User
         fields = ['product_id']
 
 
 class ShoppingCart(forms.ModelForm):
     class Meta:
-        model = ShoppingCart
+        model = User
         fields = ['basket_id']
 
 
