@@ -22,6 +22,11 @@ class Product(AbstractModel): #11
     
     def __str__(self) -> str:
         return self.title
+    
+    class Meta:
+        verbose_name = 'product'
+        verbose_name_plural = 'products'
+        ordering = ['-pk']
 
 
 class Category(AbstractModel):
@@ -34,6 +39,11 @@ class Category(AbstractModel):
     
     def __str__(self) -> str:
         return self.title
+    
+    class Meta:
+        verbose_name = 'category'
+        verbose_name_plural = 'categories'
+        ordering = ['title']
 
     
 class Discount(AbstractModel):
@@ -47,6 +57,10 @@ class Discount(AbstractModel):
     def __str__(self) -> str:
         return self.pk
 
+    class Meta:
+        verbose_name = 'discont'
+        verbose_name_plural = 'disconts'
+        ordering = ['-pk']
 
 class DiscountType(AbstractModel):
     title = models.CharField(max_length=50, unique=True, verbose_name='Discont')
@@ -63,6 +77,11 @@ class ProductReview(AbstractModel):
   
     def __str__(self) -> str:
         return self.pk
+    
+    class Meta:
+        verbose_name = 'review'
+        verbose_name_plural = 'reviews'
+        ordering = ['pk']
 
 
 class Store(AbstractModel):
@@ -73,12 +92,20 @@ class Store(AbstractModel):
    
     def __str__(self) -> str:
         return self.pk
+    
+    class Meta:
+        verbose_name = 'store'
+        verbose_name_plural = 'stores'
+        ordering = ['title']
 
 class Unit(AbstractModel):
     title = models.CharField(max_length=100, unique=True)
     
     def __str__(self) -> str:
         return self.pk
+
+class Image(AbstractModel):
+    image_url = models.ImageField(upload_to='product_images/')
 
 
 class Color(AbstractModel):
@@ -89,34 +116,51 @@ class Variant(AbstractModel):
     title = models.CharField(max_length=100, unique=True, db_index=True, verbose_name='Variant')
     color = models.ForeignKey(Color, on_delete=models.CASCADE)
     slug = models.SlugField(max_length=100, unique=True, db_index=True, verbose_name='Varian_slug')
-    image_id = models.ForeignKey(Store, on_delete=models.CASCADE)
+    image_id = models.ManyToManyField(Image)
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2, db_index=True)
     discont_id = models.ManyToManyField(Discount)
     quantity = models.IntegerField()
+    unit = models.ForeignKey(Unit, on_delete=models.PROTECT, null=True)
   
     def get_absolute_url(self):
         return reverse_lazy('product/', kwargs={'product':self.pk})
     
     def __str__(self) -> str:
-        return self.title
-
-
-class Image(AbstractModel):
-    image_url = models.CharField(max_length=255, unique=True, db_index=True, verbose_name='Image')
+        return self.tit
+    
+    class Meta:
+        verbose_name = 'variant'
+        verbose_name_plural = 'variants'
+        ordering = ['title']
     
 
 class Designer(AbstractModel):
     name = models.CharField(max_length=100, unique=True, db_index=True, verbose_name='Designer')
+
+    class Meta:
+        verbose_name = 'designer'
+        verbose_name_plural = 'designers'
+        ordering = ['name']
    
 
 class Style(AbstractModel):
     title = models.CharField(max_length=50, unique=True, db_index=True)
    
+    class Meta:
+        verbose_name = 'style'
+        verbose_name_plural = 'styles'
+        ordering = ['title']
+
 
 class Brand(AbstractModel):
     title = models.CharField(max_length=50, unique=True, db_index=True, verbose_name='Brand')  
   
+    class Meta:
+        verbose_name = 'brand'
+        verbose_name_plural = 'brands'
+        ordering = ['title']
+
 
 class Collection(AbstractModel):
     title = models.CharField(max_length=100, db_index=True)
@@ -124,4 +168,6 @@ class Collection(AbstractModel):
 
     class Meta:
         unique_together = ['title', 'brand_id']
-
+        verbose_name = 'collection'
+        verbose_name_plural = 'collections'
+        ordering = ['brand_id']

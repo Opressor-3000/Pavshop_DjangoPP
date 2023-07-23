@@ -6,15 +6,16 @@ class AbstractModel(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     update_at=models.DateTimeField(auto_now=True)
 
-
-
     class Meta:
         abstract=True
 
 class Subscriber(AbstractModel):
-    email = EmailField(max_length= 50)                                                                                                                          
+    email = EmailField(max_length= 50)
 
-   
+    class Meta:
+        verbose_name = 'subscriber'
+        verbose_name_plural = 'subscribers'
+        ordering = ['pk']                                                                                                                    
 
 
 class Contact(AbstractModel):
@@ -24,4 +25,7 @@ class Contact(AbstractModel):
     subject = CharField(max_length=50)
     message = TextField()
 
- 
+    class Meta:
+        verbose_name = 'contact'
+        verbose_name_plural = 'contacts'
+        ordering = ['-pk']

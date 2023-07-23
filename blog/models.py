@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-
+from django.urls import reverse_lazy
 
 from account.models import User
 from product.models import Product
@@ -21,11 +21,23 @@ class Post(AbstractModel):
     image_id = models.ForeignKey(PostImage, on_delete=models.CASCADE)
     published_at = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name = 'post'
+        verbose_name_plural = 'posts'
+        ordering = ['pk']
+
+
+    def get_absolute_url(self):
+        return reverse_lazy('blog_detail', kwargs={'blog':self.pk})
+
     
 
 class PostReview(AbstractModel):
-    post = models.ForeignKey(Post, on_delete=models.PROTECT)
+    post = models.ForeignKey(Post, on_delete=models.PROTECT, blank=True)
     review = models.TextField()
-    review = models.ForeignKey('self', on_delete=models.CASCADE)
+    review_id = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
 
-   
+    class Meta:
+        verbose_name = 'postreview'
+        verbose_name_plural = 'reviews of posts'
+        ordering = ['pk']

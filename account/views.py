@@ -1,12 +1,17 @@
 from typing import Any, Dict
 from django.shortcuts import render
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, DeleteView
 from django.db.models.query import QuerySet
 
 
 from .models import User, Basket, Address
 from core import urls
 
+
+class UserAccount(DeleteView):
+    model = User
+    template_name = 'templates/account.html'
+    context_object_name = 'account'
 
 class UserRegister(CreateView):
     model = User
@@ -30,7 +35,7 @@ class Checkout(CreateView):
 
 
 def logout(request):
-    return render('')
+    return render('index.html')
 
 # def checkout(request):
 #     return render("checkout.html")
