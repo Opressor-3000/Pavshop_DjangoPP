@@ -3,19 +3,19 @@ from django.contrib import admin
 from .models import *
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user_id')
-    list_display_links = ('user_id')
-    search_fields = ('user_id',)
-    list_editable = ('user_id')
-    list_filter = ('user_id')
+    prepopulated_fields = {"slug": 'title'}
+    list_display = ('id', 'user', 'product', 'title')
+    list_display_links = ('user', 'product')
+    search_fields = ('user', 'product', 'title')
+    list_editable = ('product', 'title')
+    list_filter = ('user', 'product', 'title')
 
 
 class PostReviewAdmin(admin.ModelAdmin):
-    list_display = ('id', 'email')
-    list_display_links = ('email')
-    search_fields = ('email',)
-    list_editable = ('email')
-    list_filter = ('email')
+    list_display = ('id', 'user', 'post', 'review')
+    list_display_links = ('user', 'post', 'review')
+    search_fields = ('user', 'post', 'review')
+    list_filter = ('user')
 
 
 admin.site.register([PostReview, Post])

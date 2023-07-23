@@ -1,50 +1,48 @@
 from django.contrib import admin
 
+
 from .models import *
 
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'email')
-    list_display_links = ('email')
+
+class AccountAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ('first_name', 'last_name')}
+    list_display = ('pk', 'first_name', 'last_name', 'phone', 'email' )
     search_fields = ('email',)
-    list_editable = ('email')
     list_filter = ('email')
+    list_editable = ('email')
 
 
-class BasketAdmin(admin.ModelAdmin):
-    list_display = ('id', 'email')
-    list_display_links = ('email')
-    search_fields = ('email',)
-    list_editable = ('email')
-    list_filter = ('email')
+class PrdctBasketAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'order', 'variant', 'count')
+    list_display_links = ('order', 'user', 'variant')
+    search_fields = ('order', 'user', 'variant')
+    list_filter = ('order', 'user', 'variant'),
 
 
 class AddressAdmin(admin.ModelAdmin):
-    list_display = ('id', 'email')
-    list_display_links = ('email')
-    search_fields = ('email',)
-    list_editable = ('email')
-    list_filter = ('email')
+    list_display = ('pk', 'user', 'company', 'address', 'city', 'country')
+    list_display_links = ('company', 'address', 'city', 'country')
+    search_fields = ('company', 'address', 'city', 'country')
+    list_filter = ('user', 'company', 'address', 'city', 'country')
+
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'email')
-    list_display_links = ('email')
-    search_fields = ('email',)
-    list_editable = ('email')
-    list_filter = ('email')
+    list_display = ('pk', 'user','status')
+    list_display_links = ('pk', 'user','status')
+    search_fields = ('user',)
+    list_filter = ('user', 'status')
+
 
 class WishlistAdmin(admin.ModelAdmin):
-    list_display = ('id', 'email')
-    list_display_links = ('email')
-    search_fields = ('email',)
-    list_editable = ('email')
-    list_filter = ('email')
+    list_display = ('pk', 'user', 'variant')
+    list_display_links = ('user', 'variant')
+    search_fields = ('user', 'variant')
+    list_filter = ('user', 'variant')
+
 
 class StatusAdmin(admin.ModelAdmin):
-    list_display = ('id', 'email')
-    list_display_links = ('email')
-    search_fields = ('email',)
+    list_display = ('pk', 'status')
     list_editable = ('email')
-    list_filter = ('email')
 
 
-admin.site.register([User, Basket, Address, Order, WishList, Status])
+admin.site.register([User, ProductToBasket, Address, Order, WishList, Status])

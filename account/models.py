@@ -7,8 +7,9 @@ from core.models import AbstractModel
 from django.urls import reverse_lazy
 
 class User(AbstractUser):
-    phone = models.CharField(max_length=20, db_index=True, unique=True)
+    phone = models.CharField(max_length=20, db_index=True, unique=True, verbose_name='phone')
     avatar = models.ImageField(upload_to='avatars/')
+    slug = models.SlugField(max_length=50, unique=True, db_index=True, verbose_name='User_slug')
 
     class Meta:
         verbose_name = 'user'
@@ -24,20 +25,7 @@ class User(AbstractUser):
 
 from product.models import Variant, Discount
 
-
-class Basket(AbstractModel):
-    variant = models.ForeignKey(Variant, on_delete=models.CASCADE)
-    count = models.DecimalField(max_digits=10, decimal_places=3)
-    discont_id = models.ForeignKey(Discount, on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name = 'product_to_basket'
-        verbose_name_plural = 'products_to_basket'
-        ordering = ['-pk']
-
     
-
-
 class WishList(AbstractModel):
     user =  models.ForeignKey(User, on_delete=models.CASCADE)
     variant = models.ForeignKey(Variant, on_delete=models.CASCADE)
@@ -61,21 +49,33 @@ class Address(AbstractModel):
         ordering = ['-pk']
    
 class Status(AbstractModel):
-    title = models.CharField(max_length=50, unique=True, verbose_name='Order status')
+    title = models.CharField(max_length=50, unique=True, db_index=True, verbose_name='Order status')
 
     class Meta:
         verbose_name = 'status'
         verbose_name_plural = 'statuses'
+        ordering = ['pk']
+
         
-  
 class Order(AbstractModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    basket = models.ManyToManyField(Basket)
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'order'
         verbose_name_plural = 'orders' 
+        ordering = ['-pk']
+
+
+class ProductToBasket(AbstractModel):
+    order = models.ForeignKey(Order, on_delete=models.PROTECT)
+    variant = models.ForeignKey(Variant, on_delete=models.CASCADE)
+    count = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='count')
+    discont_id = models.ForeignKey(Discount, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'product_to_basket'
+        verbose_name_plural = 'products_to_basket'
         ordering = ['-pk']
     
 

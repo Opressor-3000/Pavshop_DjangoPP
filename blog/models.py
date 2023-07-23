@@ -14,11 +14,12 @@ class PostImage(AbstractModel):
 
 
 class Post(AbstractModel):
-    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
-    product_id = models.ForeignKey(Product, on_delete=models.PROTECT)
+    title = models.CharField(max_length=100, unique=True, db_index=True)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    product= models.ForeignKey(Product, on_delete=models.PROTECT)
     text = models.TextField()
     Preview = models.ImageField(upload_to='blog_image/')
-    image_id = models.ForeignKey(PostImage, on_delete=models.CASCADE)
+    image = models.ForeignKey(PostImage, on_delete=models.CASCADE)
     published_at = models.BooleanField(default=False)
 
     class Meta:
@@ -34,8 +35,9 @@ class Post(AbstractModel):
 
 class PostReview(AbstractModel):
     post = models.ForeignKey(Post, on_delete=models.PROTECT, blank=True)
-    review = models.TextField()
-    review_id = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    text = models.TextField()
+    review = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         verbose_name = 'postreview'
