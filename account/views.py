@@ -4,7 +4,7 @@ from django.views.generic import ListView, CreateView, DeleteView
 from django.db.models.query import QuerySet
 
 
-from .models import User, Basket, Address
+from .models import User, ProductToBasket, Address
 from core import urls
 
 
@@ -25,7 +25,7 @@ class UserAuth(CreateView):
 
 
 class Basket(ListView):
-    model = Basket
+    model = ProductToBasket
     template_name = 'templates/shopping_cart.html'
 
 

@@ -9,7 +9,8 @@ from django.urls import reverse_lazy
 class User(AbstractUser):
     phone = models.CharField(max_length=20, db_index=True, unique=True, verbose_name='phone')
     avatar = models.ImageField(upload_to='avatars/')
-    slug = models.SlugField(max_length=50, unique=True, db_index=True, verbose_name='User_slug')
+    slug = models.SlugField(max_length=50, unique=True, db_index=True, null=True, verbose_name='User_slug')
+    bloger = models.BooleanField(default=False, verbose_name='Bloger')
 
     class Meta:
         verbose_name = 'user'
@@ -27,8 +28,8 @@ from product.models import Variant, Discount
 
     
 class WishList(AbstractModel):
-    user =  models.ForeignKey(User, on_delete=models.CASCADE)
-    variant = models.ForeignKey(Variant, on_delete=models.CASCADE)
+    user =  models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user')
+    variant = models.ForeignKey(Variant, on_delete=models.CASCADE, verbose_name='variant')
 
     class Meta:
         verbose_name = 'users_wish'
@@ -68,9 +69,9 @@ class Order(AbstractModel):
 
 
 class ProductToBasket(AbstractModel):
-    order = models.ForeignKey(Order, on_delete=models.PROTECT)
-    variant = models.ForeignKey(Variant, on_delete=models.CASCADE)
-    count = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='count')
+    order = models.ForeignKey(Order, on_delete=models.PROTECT, verbose_name='Order')
+    variant = models.ForeignKey(Variant, on_delete=models.CASCADE, verbose_name='Product')
+    count = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Count')
     discont_id = models.ForeignKey(Discount, on_delete=models.CASCADE)
 
     class Meta:

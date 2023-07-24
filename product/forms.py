@@ -1,4 +1,11 @@
 from django import forms
 
 
-from .models import *
+from account.models import ProductToBasket
+
+
+
+# class ShoppingCart(forms.ModelForm):
+#     class Meta:
+#         model = ProductToBasket
+#         fields = ['variant']

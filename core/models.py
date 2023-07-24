@@ -26,6 +26,9 @@ class Contact(AbstractModel):
     message = TextField(verbose_name='message')
     status = BooleanField(default=False)
 
+    def __str__(self):
+        return self.subject
+
     class Meta:
         verbose_name = 'contact'
         verbose_name_plural = 'contacts'
