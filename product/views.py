@@ -5,7 +5,7 @@ from django.views.generic import ListView, DetailView, CreateView
 from django.db.models.query import QuerySet
 
 
-from .models import Variant
+from .models import Variant, Product
 
 
 class ProductDetail(DetailView):
@@ -15,8 +15,27 @@ class ProductDetail(DetailView):
 
 class ProductList(ListView):
     model = Variant
-    template_name = 'templates/product.list'
+    template_name = 'templates/product.html'
 
+
+class Category(ListView):
+    model = Product
+    template_name = 'template/product.html'
+
+
+class Brand(ListView):
+    model = Product
+    template_name = 'template/product.html'
+
+
+class Style(ListView):
+    model = Product
+    template_name = 'template/product.html'
+
+
+class Discont(ListView):
+    model = Variant
+    template_name = 'template/product.html'
 
 
 # def product_detail(request):

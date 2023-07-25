@@ -9,9 +9,7 @@
    a. git checkout dev
    б. git pull origin dev
    в. git merge zaur
-   г. git add .
-   д. git commit -m 'comment'
-   e. git push
+   г. git push
 Возвращаемся в свою именованную ветку
 5. git checkout zaur 
 6. git pull origin dev

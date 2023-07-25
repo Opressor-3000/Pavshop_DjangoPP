@@ -36,6 +36,9 @@ class WishList(AbstractModel):
         verbose_name_plural = 'wishlists'
         ordering = ['-pk']
 
+    def get_absolute_url(self):
+        return reverse_lazy('account', kwargs={'account': [self.first_name, self.last_name]})
+
 
 class Address(AbstractModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -72,7 +75,7 @@ class ProductToBasket(AbstractModel):
     order = models.ForeignKey(Order, on_delete=models.PROTECT, verbose_name='Order')
     variant = models.ForeignKey(Variant, on_delete=models.CASCADE, verbose_name='Product')
     count = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Count')
-    discont_id = models.ForeignKey(Discount, on_delete=models.CASCADE)
+    discount_id = models.ForeignKey(Discount, on_delete=models.CASCADE, blank=True, null=True, verbose_name='discount')
 
     class Meta:
         verbose_name = 'product_to_basket'
