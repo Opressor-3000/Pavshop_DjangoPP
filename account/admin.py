@@ -9,10 +9,8 @@ class AccountAdmin(admin.ModelAdmin):
     list_display = ('pk', 'first_name', 'last_name', 'phone', 'email' )
     search_fields = ('email',)
     list_filter = ('email')
-    list_editable = ('email')
 
-
-class PrdctBasketAdmin(admin.ModelAdmin):
+class ProdctBasketAdmin(admin.ModelAdmin):
     list_display = ('pk', 'order', 'variant', 'count')
     list_display_links = ('order', 'user', 'variant')
     search_fields = ('order', 'user', 'variant')
