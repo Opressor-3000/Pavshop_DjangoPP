@@ -9,7 +9,7 @@ class AccountAdmin(admin.ModelAdmin):
     search_fields = ('email',)
     list_filter = ('email',)
 
-class ProdctBasketAdmin(admin.ModelAdmin):
+class ProductBasketAdmin(admin.ModelAdmin):
     list_display = ('pk',  'user','variant', 'count')
     list_display_links = ('user', 'variant')
     search_fields = ('user', 'variant')
@@ -43,4 +43,4 @@ class StatusAdmin(admin.ModelAdmin):
 
 
 admin.site.register(User, AccountAdmin)
-admin.site.register(ProductToBasket,ProdctBasketAdmin)
+admin.site.register(ProductToBasket, ProductBasketAdmin)

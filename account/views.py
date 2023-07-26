@@ -37,15 +37,3 @@ class Checkout(CreateView):
 def logout(request):
     return render('index.html')
 
-# def checkout(request):
-#     return render("checkout.html")
-
-# def login(request):
-#     return render("login.html")
-
-# def register(request):
-#     return render("register.html")
-
-# def shopping_cart(request):
-#     return render("shopping_cart.html")
-

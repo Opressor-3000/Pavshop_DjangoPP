@@ -33,8 +33,8 @@ from product.models import Variant, Discount
 
     
 class WishList(AbstractModel):
-    user =  models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user')
-    variant = models.ForeignKey(Variant, on_delete=models.CASCADE, verbose_name='variant')
+    user =  models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user', related_name='wishlistuser')
+    variant = models.ForeignKey(Variant, on_delete=models.CASCADE, verbose_name='variant', related_name='wishlistvariant')
 
     class Meta:
         verbose_name = 'users_wish'
