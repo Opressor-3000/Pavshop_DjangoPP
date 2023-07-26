@@ -7,9 +7,12 @@ from core.models import AbstractModel
 from django.urls import reverse_lazy
 
 class User(AbstractUser):
+    # username =None
+    # email = models.EmailField(('email address'), unique=True)
+    # USERNAME_FIELD = 'email'
+    # REQUIRED_FIELDS = []
     phone = models.CharField(max_length=20, db_index=True, unique=True, verbose_name='phone')
     avatar = models.ImageField(upload_to='avatars/')
-    slug = models.SlugField(max_length=50, unique=True, db_index=True, null=True, verbose_name='User_slug')
     bloger = models.BooleanField(default=False, verbose_name='Bloger')
 
     class Meta:
@@ -18,7 +21,9 @@ class User(AbstractUser):
         ordering = ['pk']
 
     def __str__(self):
-        return self.first_name, self.last_name
+        if self.get_full_name():
+            return self.get_full_name()
+        return self.username
     
     def get_absolute_url(self):
         return reverse_lazy('account', kwargs={'account': [self.first_name, self.last_name]})
@@ -72,7 +77,7 @@ class Order(AbstractModel):
 
 
 class ProductToBasket(AbstractModel):
-    order = models.ForeignKey(Order, on_delete=models.PROTECT, verbose_name='Order')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     variant = models.ForeignKey(Variant, on_delete=models.CASCADE, verbose_name='Product')
     count = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Count')
     discount_id = models.ForeignKey(Discount, on_delete=models.CASCADE, blank=True, null=True, verbose_name='discount')

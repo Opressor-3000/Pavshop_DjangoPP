@@ -5,16 +5,15 @@ from .models import *
 
 
 class AccountAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ('first_name', 'last_name')}
     list_display = ('pk', 'first_name', 'last_name', 'phone', 'email' )
     search_fields = ('email',)
-    list_filter = ('email')
+    list_filter = ('email',)
 
 class ProdctBasketAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'order', 'variant', 'count')
-    list_display_links = ('order', 'user', 'variant')
-    search_fields = ('order', 'user', 'variant')
-    list_filter = ('order', 'user', 'variant'),
+    list_display = ('pk',  'user','variant', 'count')
+    list_display_links = ('user', 'variant')
+    search_fields = ('user', 'variant')
+    list_filter = ('user', 'variant')
 
 
 class AddressAdmin(admin.ModelAdmin):
@@ -43,4 +42,5 @@ class StatusAdmin(admin.ModelAdmin):
     list_editable = ('email')
 
 
-admin.site.register([User, ProductToBasket, Address, Order, WishList, Status])
+admin.site.register(User, AccountAdmin)
+admin.site.register(ProductToBasket,ProdctBasketAdmin)

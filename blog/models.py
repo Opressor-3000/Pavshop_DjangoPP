@@ -50,4 +50,4 @@ class Post(AbstractModel):
     text = models.TextField(verbose_name='Content')
     Preview = models.ImageField(upload_to='blog_image/', verbose_name='Preview')
     image = models.ManyToManyField(Image, verbose_name='Image')
-    published_at = models.BooleanField(default=False, verbose_name='Published at')
+    published_at = models.BooleanField(default=False, verbose_name='Published at')  
