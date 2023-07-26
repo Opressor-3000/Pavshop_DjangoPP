@@ -9,7 +9,7 @@ from account.models import User
 
 class Category(AbstractModel):
     title = models.CharField(max_length=50, unique=True, db_index=True, verbose_name='Category')
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, parent_link='parents', related_name='parents')
     slug = models.SlugField(max_length=100, unique=True, db_index=True, verbose_name='Category_slug')
     
     def get_absolute_url(self):
@@ -34,7 +34,7 @@ class DiscountType(AbstractModel):
 class Discount(AbstractModel):
     title = models.CharField(max_length=100, unique=True, verbose_name='Discont')
     code = models.CharField(max_length=50)
-    type_id = models.ForeignKey(DiscountType, on_delete=models.PROTECT)
+    type_id = models.ForeignKey(DiscountType, on_delete=models.PROTECT, related_name='types')
     sum = models.DecimalField(max_digits=10, decimal_places=2)
     date_begin = models.DateField()
     date_end = models.DateField()
@@ -52,8 +52,8 @@ class Discount(AbstractModel):
 
 
 class ProductReview(AbstractModel):
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
-    product = models.ForeignKey('Product', on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='userspr')
+    product = models.ForeignKey('Product', on_delete=models.PROTECT, related_name='productsr')
     text = models.TextField()
     rating = models.DecimalField(max_digits=5, decimal_places=3, blank=True)
     published_at = models.BooleanField(default=False)
@@ -168,14 +168,14 @@ class Collection(AbstractModel):
 class Product(AbstractModel): #11
     title = models.CharField(max_length=50, unique=True, db_index=True, verbose_name='Product')
     slug = models.SlugField(max_length=100, unique=True, db_index=True)
-    category_id = models.ForeignKey('Category', on_delete=models.PROTECT)
+    category_id = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='categoriesp')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='fabric price')
-    brand_id = models.ForeignKey(Brand, on_delete=models.PROTECT, blank=True, null=True)
-    collection_id = models.ForeignKey(Collection, on_delete=models.CASCADE, blank=True, null=True)
+    brand_id = models.ForeignKey(Brand, on_delete=models.PROTECT, blank=True, null=True, related_name='brandsp')
+    collection_id = models.ForeignKey(Collection, on_delete=models.CASCADE, blank=True, null=True, related_name='collectionsp')
     views = models.IntegerField(null=True, verbose_name='viewer')
     description = models.TextField(blank=True, verbose_name='Description')
     archive = models.BooleanField(default=False, verbose_name='Archived')
-    style_id = models.ForeignKey(Style, on_delete=models.PROTECT, blank=True, null=True)
+    style_id = models.ForeignKey(Style, on_delete=models.PROTECT, blank=True, null=True, related_name='stylesp')
 
     def get_absolute_url(self):
         return reverse_lazy('product/', kwargs={'product':self.title})
