@@ -12,10 +12,12 @@ class ContactAdmin(admin.ModelAdmin):
 class SubscriberAdmin(admin.ModelAdmin):
     list_display = ('pk', 'email')
     search_fields = ('email',)
-    list_filter = ('email')
+    list_filter = ('email',)
 
 
-admin.site.register([Contact, Subscriber])
+admin.site.register(Contact, ContactAdmin)
+admin.site.register(Subscriber, SubscriberAdmin)
+
 
 
  

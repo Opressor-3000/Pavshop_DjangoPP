@@ -41,5 +41,5 @@ class Post(AbstractModel):
     author = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Author', related_name='authorsp')
     text = models.TextField(verbose_name='Content')
     Preview = models.ImageField(upload_to='blog_image/', verbose_name='Preview')
-    image = models.ManyToManyField(Image, verbose_name='Image', related_name='imagesp')
-    published_at = models.BooleanField(default=False, verbose_name='Published at')
+    image = models.ManyToManyField(Image, verbose_name='Image')
+    published_at = models.BooleanField(default=False, verbose_name='Published at')  

@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from typing import Any, Dict
 from django.db import models
 from django.views.generic import ListView, DetailView, CreateView
@@ -9,8 +9,9 @@ from django.db.models.query import QuerySet
 from product.models import Product, Variant, Discount
 from .models import *
 
+
 def about_us(request):
-    return render("about_us.html")
+    return render(request, "/about_us.html")
 
 
 class Contact(CreateView):
