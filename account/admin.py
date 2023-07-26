@@ -9,7 +9,7 @@ class AccountAdmin(admin.ModelAdmin):
     search_fields = ('email',)
     list_filter = ('email',)
 
-class ProdctBasketAdmin(admin.ModelAdmin):
+class ProductBasketAdmin(admin.ModelAdmin):
     list_display = ('pk',  'user','variant', 'count')
     list_display_links = ('user', 'variant')
     search_fields = ('user', 'variant')
@@ -17,10 +17,10 @@ class ProdctBasketAdmin(admin.ModelAdmin):
 
 
 class AddressAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'user', 'company', 'address', 'city', 'country')
-    list_display_links = ('company', 'address', 'city', 'country')
-    search_fields = ('company', 'address', 'city', 'country')
-    list_filter = ('user', 'company', 'address', 'city', 'country')
+    list_display = ('pk', 'user', 'company_name', 'address', 'city', 'country')
+    list_display_links = ('company_name', 'address', 'city', 'country')
+    search_fields = ('company_name', 'address', 'city', 'country')
+    list_filter = ('user', 'company_name', 'address', 'city', 'country')
 
 
 class OrderAdmin(admin.ModelAdmin):
@@ -38,9 +38,13 @@ class WishlistAdmin(admin.ModelAdmin):
 
 
 class StatusAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'status')
-    list_editable = ('email')
+    list_display = ('pk', 'title')
+    list_editable = ('title',)
 
 
 admin.site.register(User, AccountAdmin)
-admin.site.register(ProductToBasket,ProdctBasketAdmin)
+admin.site.register(ProductToBasket,ProductBasketAdmin)
+admin.site.register(Address, AddressAdmin)
+admin.site.register(WishList, WishlistAdmin)
+admin.site.register(Order, OrderAdmin)
+admin.site.register(Status, StatusAdmin)
