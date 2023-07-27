@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import *
 
 class ProductAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"product_slug": ['title']}
+    prepopulated_fields = {"slug": ['title']}
     list_display = ('pk', 'title', 'price', 'views', 'archive')
     list_display_links = ('title', 'price', 'views', 'archive')
     search_fields = ('title', 'price')
@@ -12,7 +12,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 class VariantAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"variant_slug": ['title']}
+    prepopulated_fields = {"slug": ['title']}
     list_display = ('pk', 'title', 'price', 'quantity', 'unit')
     list_display_links = ('unit',)
     search_fields = ('title', 'price', 'quantity', 'unit')
@@ -53,11 +53,10 @@ class ProductReviewAdmin(admin.ModelAdmin):
 
 
 class StoreAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'email')
-    list_display_links = ('email',)
-    search_fields = ('email',)
-    list_editable = ('email',)
-    list_filter = ('email',)
+    list_display = ('pk', 'title', 'address', 'post', 'location')
+    search_fields = ('title', 'address', 'post')
+    list_editable = ('totle','address', 'post', 'location')
+    list_filter = ('title', 'address', 'post')
 
 
 class UnitAdmin(admin.ModelAdmin):    

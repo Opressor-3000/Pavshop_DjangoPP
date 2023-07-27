@@ -4,11 +4,11 @@ from .models import *
 
 class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ['title']}
-    list_display = ('id', 'user', 'product', 'title')
-    list_display_links = ('user', 'product')
-    search_fields = ('user', 'product', 'title')
-    list_editable = ('product', 'title')
-    list_filter = ('user', 'product', 'title')
+    list_display = ('pk', 'author', 'title', 'published_at')
+    list_display_links = ('author', 'title')
+    search_fields = ('author', 'title', 'published_at')
+    list_editable = ('published_at', 'title')
+    list_filter = ('author', 'published_at', 'title')
 
 
 class PostReviewAdmin(admin.ModelAdmin):
