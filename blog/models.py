@@ -23,19 +23,11 @@ class Image(AbstractModel):
         return reverse_lazy('post', kwargs={'post':f'{self.title}{self.author}'})
 
 
-# class Image(AbstractModel):
-#     post = models.ForeignKey('Post', on_delete=models.PROTECT)
-#     image = models.ForeignKey(PostImage, on_delete=models.PROTECT)
-
-#     class Meta:
-#         unique_together = ['post', 'image']
-
-
 class PostReview(AbstractModel):
-    post = models.ForeignKey('Post', on_delete=models.PROTECT, blank=True)
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    post = models.ForeignKey('Post', on_delete=models.PROTECT, blank=True, related_name='postsr')
+    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='usersr')
     text = models.TextField(verbose_name='')
-    review = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
+    review = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='reviewsr')
 
     class Meta:
         verbose_name = 'review'
@@ -46,7 +38,7 @@ class PostReview(AbstractModel):
 class Post(AbstractModel):
     title = models.CharField(max_length=100, unique=True, db_index=True, verbose_name='Title')
     slug = models.SlugField(max_length=100, unique=True, db_index=True)
-    author = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Author')
+    author = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Author', related_name='authorsp')
     text = models.TextField(verbose_name='Content')
     Preview = models.ImageField(upload_to='blog_image/', verbose_name='Preview')
     image = models.ManyToManyField(Image, verbose_name='Image')
