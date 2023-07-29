@@ -23,6 +23,7 @@ class Contact(CreateView):
 #     return render("contact.html")
 
 class HomePage(ListView):
+    paginate_by = 8
     model = Product
     template_name = 'templates/index.html'
     context_object_name = 'products'
