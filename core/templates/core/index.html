@@ -11,7 +11,7 @@
     <div class="tp-banner-container">
       <div class="tp-banner">
         <ul>
-          {% for p in preview %}
+          <!-- for i in discount -->
           <!-- SLIDE  -->
           <li data-transition="random" data-slotamount="7" data-masterspeed="300"  data-saveperformance="off" > 
             <!-- MAIN IMAGE --> 
@@ -83,7 +83,7 @@
                 style="z-index: 8;"><a href="#." class="btn">{{ p.linkword }}</a> 
             </div>
           </li>
-        {% endfor %}
+         <!-- endfor  -->
         </ul>
       </div>
     </div>
@@ -112,22 +112,22 @@
           <div class="position-center-center">
              <a href="" data-lighter>
               <i class="icon-magnifier">
-              <img class="img-1" src="{{ p.image }}" alt=""> 
+              <img class="img-1" src="#" alt=""> 
                 <!-- Overlay  -->
                 <div class="overlay"> 
                 <!-- Price --> 
-                <span class="price"><small>$</small>{{ p.price }}</span>
+                <span class="price"><small>$</small>price</span>
             </i></a> 
           </div>
         </div>
           <!-- Item Name -->
-          <div class="item-name"> <a href="{% url 'product' %}">{{ p.title }}</a>
-            <p>{{ p.description }}</p>
-          </div>
+        <div class="item-name"> <a href="#">title</a>
+          <p>description </p>
         </div>
         {% endfor %}
       </div>
-    </section>
+    </div>
+  </section>
     
     <!-- Popular Products -->
     <section class="padding-top-50 padding-bottom-150">
@@ -138,7 +138,7 @@
           <h4>popular products</h4>
           <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus maximus vehicula. 
           Sed feugiat, tellus vel tristique posuere, diam</span> </div>
-        
+
         <!-- Popular Item Slide -->
         <div class="papular-block block-slide single-img-demos"> 
           
@@ -176,15 +176,15 @@
           Sed feugiat, tellus vel tristique posuere, diam</span> </div>
         <div class="knowledge-share">
           <ul class="row">
-            {% for p in posts %}
+            <!-- for p in posts -->
             <!-- Post 1 -->
             <li class="col-md-6">
-              <div class="date"> <span>{{ p.datetime }}</span> <span class="huge">{{ p.datetime }}</span> </div>
-              <a href="#.">{{ p.title }}</a>
-              <p>{{ p.text | truncate }}</p>
-              <span>By <strong>{{ p.author }}</strong></span> 
+              <div class="date"> <span>p.datetime</span> <span class="huge">p.datetime</span> </div>
+              <a href="#.">p.title</a>
+              <p>p.text | truncate</p>
+              <span>By <strong>p.author</strong></span> 
             </li>
-          {% endfor %}
+           <!-- endfor -->
           </ul>
         </div>
       </div>
