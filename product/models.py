@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.urls import reverse_lazy
 
 
-from core.models import AbstractModel
+from core.models import AbstractModel, Tag
 from account.models import User
 
 
@@ -52,8 +52,8 @@ class Discount(AbstractModel):
 
 
 class ProductReview(AbstractModel):
-    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='userspr')
-    product = models.ForeignKey('Product', on_delete=models.PROTECT, related_name='productsr')
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    product = models.ForeignKey('Product', on_delete=models.PROTECT, related_name='productreview')
     text = models.TextField()
     rating = models.DecimalField(max_digits=5, decimal_places=3, blank=True)
     published_at = models.BooleanField(default=False)
@@ -176,6 +176,7 @@ class Product(AbstractModel): #11
     description = models.TextField(blank=True, verbose_name='Description')
     archive = models.BooleanField(default=False, verbose_name='Archived')
     style_id = models.ForeignKey(Style, on_delete=models.PROTECT, blank=True, null=True, related_name='stylesp')
+    tag = models.ManyToManyField(Tag, related_name='product_tag')
 
     def get_absolute_url(self):
         return reverse_lazy('product/', kwargs={'product':self.title})
@@ -199,6 +200,7 @@ class Variant(AbstractModel):
     discont_id = models.ManyToManyField(Discount, verbose_name='Discont')
     quantity = models.IntegerField(verbose_name='Quantity')
     unit = models.ForeignKey(Unit, on_delete=models.PROTECT, null=True, verbose_name='Unit')
+    tag = models.ManyToManyField(Tag, related_name='variant_tag')
   
     def get_absolute_url(self):
         return reverse_lazy('variant', kwargs={'product':self.title})

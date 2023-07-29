@@ -14,9 +14,16 @@ class SubscriberAdmin(admin.ModelAdmin):
     search_fields = ('email',)
     list_filter = ('email',)
 
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'title')
+    list_editable = ('title',)
+    list_filter = ('title',)
+    search_fields = ('title',)
+
 
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(Subscriber, SubscriberAdmin)
+admin.site.register(Tag, TagAdmin)
 
 
 

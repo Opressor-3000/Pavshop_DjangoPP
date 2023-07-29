@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 
 from account.models import User
 from product.models import Product
-from core.models import AbstractModel
+from core.models import AbstractModel, Tag
 
 
 class Image(AbstractModel):
@@ -43,3 +43,5 @@ class Post(AbstractModel):
     Preview = models.ImageField(upload_to='blog_image/', verbose_name='Preview')
     image = models.ManyToManyField(Image, verbose_name='Image')
     published_at = models.BooleanField(default=False, verbose_name='Published at')  
+    tag = models.ManyToManyField(Tag, verbose_name='Tags')
+    
