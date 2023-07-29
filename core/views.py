@@ -18,12 +18,12 @@ class Contact(CreateView):
     model = Contact
     template_name = 'templates/contact.html'
 
-
 # def contact(request):
 #     return render("contact.html")
 
+
 class HomePage(ListView):
-    paginate_by = 8
+    # paginate_by = 8
     model = Product
     template_name = 'templates/index.html'
     context_object_name = 'products'
@@ -31,11 +31,11 @@ class HomePage(ListView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Pavshop'
+        # context['title'] = 'Pavshop'
         return context
     
     def get_queryset(self) -> QuerySet[Any]:
-        now = datetime.now()
-        return Discount.objects.annotate()
+        return Variant.objects.filter(quantity__gt = 1).order_by('-created_at')
+    
 
 

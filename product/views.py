@@ -33,6 +33,16 @@ class ProductList(BaseMixin, ListView):
 class DiscountList(BaseMixin, ListView):
     paginate_by = 8
     model = Variant
+    template_name = 'templates/product.html'
+    content_type = 'variants'
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        mainmenu = self.get_mainmenu_context()
+        return dict(list(context.item()) + list(mainmenu.items()))
+    
+    def get_queryset(self) -> QuerySet[Any]:
+        return Variant.objects.filter(discount_id__pk = True).order_by('-created_at')
 
 
 class Category(BaseMixin, ListView):
