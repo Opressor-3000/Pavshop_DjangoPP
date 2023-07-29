@@ -5,7 +5,7 @@ from .models import *
 class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ['title']}
     list_display = ('pk', 'title', 'price', 'views', 'archive')
-    list_display_links = ('title', 'price', 'views', 'archive')
+    list_display_links = ('title', 'views')
     search_fields = ('title', 'price')
     list_editable = ('price', 'archive')
     list_filter = ('title', 'price', 'views', 'archive')
@@ -29,11 +29,10 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class DiscountAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'type_pk', 'sum', 'date_begin', 'date_end')
-    list_display_links = ('type_pk',)
+    list_display = ('pk', 'title', 'type_id', 'sum', 'date_begin', 'date_end')
     search_fields = ('pk', 'title', 'sum', 'date_begin', 'date_end')
     list_editable = ('sum', 'date_begin', 'date_end')
-    list_filter = ('pk', 'title', 'type_pk', 'sum', 'date_begin', 'date_end')
+    list_filter = ('title', 'type_id', 'sum', 'date_begin', 'date_end')
 
 
 class DiscountTypeAdmin(admin.ModelAdmin):
@@ -45,8 +44,8 @@ class DiscountTypeAdmin(admin.ModelAdmin):
 
 
 class ProductReviewAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'user', 'product', 'rating')
-    list_display_links = ('user', 'product', 'publised_at')
+    list_display = ('pk', 'user', 'product', 'rating', 'published_at')
+    list_display_links = ('user', 'product')
     search_fields = ('user', 'product', 'published_at')
     list_editable = ('published_at',)
     list_filter = ('user', 'product', 'published_at')
@@ -55,7 +54,7 @@ class ProductReviewAdmin(admin.ModelAdmin):
 class StoreAdmin(admin.ModelAdmin):
     list_display = ('pk', 'title', 'address', 'post', 'location')
     search_fields = ('title', 'address', 'post')
-    list_editable = ('totle','address', 'post', 'location')
+    list_editable = ('title','address', 'post', 'location')
     list_filter = ('title', 'address', 'post')
 
 

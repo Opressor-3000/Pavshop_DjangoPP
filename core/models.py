@@ -1,6 +1,6 @@
 from django.db import models
-from django.db.models.fields import EmailField, DateTimeField, CharField, TextField, BooleanField
-# Create your models here.
+from django.db.models.fields import EmailField, CharField, TextField, BooleanField
+from django.urls import reverse_lazy
 
 class AbstractModel(models.Model):
     created_at=models.DateTimeField(auto_now_add=True, verbose_name='create at')
@@ -33,3 +33,18 @@ class Contact(AbstractModel):
         verbose_name = 'contact'
         verbose_name_plural = 'contacts'
         ordering = ['-pk']
+
+
+class Tag(AbstractModel):
+    title = models.CharField(max_length=20, unique=True, db_index=True, verbose_name='Tag')
+
+    # class Meta:
+    #     verbouse_name = 'Tag'
+    #     verbouse_name_plural = 'tags'
+    #     ordering = ['title']
+
+    def __str__(self):
+        return self.title
+    
+    def get_absolute_url(self):
+        return reverse_lazy('tag', kwargs={'tag': self.title})
