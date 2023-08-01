@@ -24,7 +24,7 @@
 <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
 
 <!-- JavaScripts -->
-<script src="{% static 'js/modernizr.js' %}"></script>
+<script src="/static/js/modernizr.js"></script>
 
 <!-- Online Fonts -->
 <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
@@ -45,9 +45,10 @@
 <div id="wrap"> 
   
   <!-- header -->
-{% include 'parts/_nav.html' %}
+{% include '../parts/__nav.html' %}
   
   {% block content %}
+  
   {% endblock %}
  
     <section class="news-letter padding-top-150 padding-bottom-150">
@@ -69,7 +70,7 @@
       
       <!-- Location -->
       <div class="col-md-3">
-        <div class="about-footer"> <img class="margin-bottom-30" src="{% static 'images/logo-foot.png' %}" alt="" >
+        <div class="about-footer"> <img class="margin-bottom-30" src="/static/images/logo-foot.png" alt="" >
           <p><i class="icon-pointer"></i> Street No. 12, Newyork 12, <br>   MD - 123, USA.</p>
           <p><i class="icon-call-end"></i> 1.800.123.456789</p>
           <p><i class="icon-envelope"></i> info@PAVSHOP.com</p>
@@ -122,14 +123,14 @@
     </div>
   </footer>  
 </div>
-<script src="{% static 'js/jquery-1.11.3.min.js' %}"></script> 
-<script src="{% static 'js/bootstrap.min.js' %}"></script> 
-<script src="{% static 'js/own-menu.js' %}"></script> 
-<script src="{% static 'js/jquery.lighter.js' %}"></script> 
-<script src="{% static 'js/owl.carousel.min.js' %}"></script> 
+<script src="/static/js/jquery-1.11.3.min.js"></script> 
+<script src="/static/js/bootstrap.min.js"></script> 
+<script src="/static 'js/own-menu.js"></script> 
+<script src="/static/js/jquery.lighter.js"></script> 
+<script src="/static/js/owl.carousel.min.js"></script> 
 <!-- SLIDER REVOLUTION 4.x SCRIPTS  --> 
-<script type="text/javascript" src="{% static 'rs-plugin/js/jquery.tp.t.min.js' %}"></script> 
-<script type="text/javascript" src="{% static 'rs-plugin/js/jquery.tp.min.js' %}"></script> 
-<script src="{% static 'js/main.js' %}"></script>
+<script type="text/javascript" src="/static/rs-plugin/js/jquery.tp.t.min.js"></script> 
+<script type="text/javascript" src="/static/rs-plugin/js/jquery.tp.min.js"></script> 
+<script src="/static/js/main.js"></script>
 </body>
 </html>

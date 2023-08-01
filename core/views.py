@@ -11,7 +11,7 @@ from .models import *
 
 
 def about_us(request):
-    return render(request, "/about_us.html")
+    return render(request, "core/about-us.html")
 
 
 class Contact(CreateView):

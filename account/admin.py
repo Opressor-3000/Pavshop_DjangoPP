@@ -43,12 +43,8 @@ class StatusAdmin(admin.ModelAdmin):
 
 
 admin.site.register(User, AccountAdmin)
-<<<<<<< HEAD
-admin.site.register(ProductToBasket, ProductBasketAdmin)
-=======
 admin.site.register(ProductToBasket,ProductBasketAdmin)
 admin.site.register(Address, AddressAdmin)
 admin.site.register(WishList, WishlistAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Status, StatusAdmin)
->>>>>>> yusif

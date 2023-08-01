@@ -10,5 +10,5 @@ urlpatterns = [
     path('brand/<slug:brand_id>/', Brand.as_view(), name='brand'),
     path('style/<slug:style_id>/', Style.as_view(), name='style'),
     path('collection<slug:collection_id>/', Collection.as_view(), name='collection'),
-    path('discont/<slug:discont>/', Discont.as_view(), name='discont')
+    path('discount/<slug:discont>/', Discount.as_view(), name='discount')
 ]

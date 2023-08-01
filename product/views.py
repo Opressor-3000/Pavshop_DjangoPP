@@ -98,4 +98,15 @@ class Collection(BaseMixin, ListView):
         context = super().get_context_data(**kwargs)
         mainmenu = self.get_mainmenu_context()
         return dict(list(context.item()) + list(mainmenu.items()))
+    
+
+class Discount (BaseMixin, ListView):
+    model = Product
+    template_name = 'templates/product_list.html'
+    context_object_name = 'products'
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        mainmenu = self.get_mainmenu_context()
+        return dict(list(context.item()) + list(mainmenu.items()))
 
