@@ -46,7 +46,7 @@ class WishList(AbstractModel):
 
 
 class Address(AbstractModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     company_name = models.CharField(max_length=50, blank=True, verbose_name='Company')
     address = models.CharField(max_length=100, verbose_name='Address')
     city = models.CharField(max_length=50, verbose_name='City/Town')
@@ -67,8 +67,8 @@ class Status(AbstractModel):
 
         
 class Order(AbstractModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.ForeignKey(Status, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='username', related_name='user_id')
+    status = models.ForeignKey(Status, on_delete=models.CASCADE, verbose_name='status', related_name='status')
 
     class Meta:
         verbose_name = 'order'
@@ -78,7 +78,8 @@ class Order(AbstractModel):
 
 class ProductToBasket(AbstractModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    variant = models.ForeignKey(Variant, on_delete=models.CASCADE, verbose_name='Product')
+    order = models.ForeignKey(Order, on_delete=models.PROTECT, verbose_name='Order', related_name='order')
+    variant = models.ForeignKey(Variant, on_delete=models.CASCADE, verbose_name='Variant', related_name='variant')
     count = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Count')
     discount_id = models.ForeignKey(Discount, on_delete=models.CASCADE, blank=True, null=True, verbose_name='discount')
 
