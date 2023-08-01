@@ -63,7 +63,7 @@
                 <ul class="row margin-top-30">
                   <li class="col-xs-4">
                     <div class="quinty"> 
-                      <!-- QTY -->
+                      <!-- add form chouse quantity -->
                       <select class="selectpicker">
                         <option>1</option>
                         <option>2</option>
@@ -75,24 +75,28 @@
                   <!-- COLORS -->
                   <li class="col-xs-8">
                     <ul class="colors-shop">
+                      <!-- сделать тег for который разворачивает список цветов этого товара который в наличии  -->
                       <li><span class="margin-right-20">Colors</span></li>
-                      <li><a href="#." style="background:#958170;"></a></li>
-                      <li><a href="#." style="background:#c9a688;"></a></li>
-                      <li><a href="#." style="background:#c9c288;"></a></li>
-                      <li><a href="#." style="background:#a7c988;"></a></li>
-                      <li><a href="#." style="background:#9ed66b;"></a></li>
-                      <li><a href="#." style="background:#6bd6b1;"></a></li>
-                      <li><a href="#." style="background:#82c2dc;"></a></li>
-                      <li><a href="#." style="background:#8295dc;"></a></li>
+                      {% for v in variant  %}
+                      <li><a href="{% url 'product' %}" style="background:blueviolet;"></a></li>
+                      {% endfor %}
                     </ul>
                   </li>
+
+                  <!-- сделать тег for который разворачивает список наборов в которых есть этот product -->
                   
                   <!-- ADD TO CART -->
                   <li class="col-xs-6"> <a href="#." class="btn">ADD TO CART</a> </li>
+                  <form class="form-check" method="post" action="{% url 'product' %}">
+                      <input class="form-check-input" name="" id="" type="checkbox" value="checkedValue" aria-label="Text for screen reader">
+                  </div>"
                   
                   <!-- LIKE -->
-                  <li class="col-xs-6"> <a href="#." class="like-us"><i class="icon-heart"></i></a> </li>
-                </ul>
+                  <li class="col-xs-6">
+                    <form action="{% url 'product' %}" method="post" class="form-check-input" type="checkbox" value="checkedValue">
+                      <input class="icon-heart" name="" id="" type="checkbox" value="checkedValue">
+                    </form></li>
+                  </ul>
                 
                 <!-- INFOMATION -->
                 <div class="inner-info">
@@ -173,34 +177,23 @@
               </div>
               
               <!-- REVIEW PEOPLE 1 -->
-              
+              {% for r in review %}
               <div class="media">
                 <div class="media-left"> 
                   <!--  Image -->
-                  <div class="avatar"> <a href="#"> <img class="media-object" src="images/avatar-2.jpg" alt=""> </a> </div>
+                  <div class="avatar"> <a href="#"> <img class="media-object" src="{{ r.avatar }}" alt=""> </a> </div>
                 </div>
                 <!--  Details -->
                 <div class="media-body">
-                  <p class="font-playfair">“Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua.”</p>
-                  <h6>TYRION LANNISTER <span class="pull-right">MAY 10, 2016</span> </h6>
+                  <p class="font-playfair">{{ r.text }}</p>
+                  <h6>{{ r.first_name }} {{ r.last_name }}<span class="pull-right">{{ r.date }}</span> </h6>
                 </div>
               </div>
               
               <!-- ADD REVIEW -->
               <h6 class="margin-t-40">ADD REVIEW</h6>
               <form>
-                <ul class="row">
-                  <li class="col-sm-6">
-                    <label> *NAME
-                      <input type="text" value="" placeholder="">
-                    </label>
-                  </li>
-                  <li class="col-sm-6">
-                    <label> *EMAIL
-                      <input type="email" value="" placeholder="">
-                    </label>
-                  </li>
+                <ul class="row">                  
                   <li class="col-sm-12">
                     <label> *YOUR REVIEW
                       <textarea></textarea>

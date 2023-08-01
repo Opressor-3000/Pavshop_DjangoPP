@@ -21,6 +21,7 @@ class VariantAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ['title']}
     list_display = ('pk', 'title', 'parent')
     list_display_links = None
     search_fields = ('title',)
@@ -66,6 +67,59 @@ class UnitAdmin(admin.ModelAdmin):
     list_filter = ('title',)
 
 
+class BrandAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ['title']}
+    list_display = ('pk', 'title')
+    list_display_links = None
+    search_fields = ('title',)
+    list_editable = ('title',)
+    list_filter = ('title',)
+
+
+class StyleAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ['title']}
+    list_display = ('pk', 'title')
+    list_display_links = None
+    search_fields = ('title',)
+    list_editable = ('title',)
+    list_filter = ('title',)
+
+
+class DesignerAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ['name']}
+    list_display = ('pk', 'name')
+    list_display_links = None
+    search_fields = ('name',)
+    list_editable = ('name',)
+    list_filter = ('name',)
+
+
+class ColorAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ['title']}
+    list_display = ('pk', 'title')
+    list_display_links = None
+    search_fields = ('title',)
+    list_editable = ('title',)
+    list_filter = ('title',)
+
+
+class CollectionAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ['title', 'brand_id']}
+    list_display = ('pk', 'title', 'brand_id')
+    list_display_links = ['brand_id']
+    search_fields = ('title',)
+    list_editable = ('title',)
+    list_filter = ('title',)
+
+
+class ImageAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'image_url')
+    list_display_links = None
+    search_fields = ('image_url',)
+    list_editable = ('image_url',)
+    list_filter = ('image_url',)
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Variant, VariantAdmin)
 admin.site.register(Category, CategoryAdmin)
@@ -74,3 +128,9 @@ admin.site.register(DiscountType, DiscountTypeAdmin)
 admin.site.register(ProductReview, ProductReviewAdmin)
 admin.site.register(Store, StoreAdmin)
 admin.site.register(Unit, UnitAdmin)
+admin.site.register(Image, ImageAdmin)
+admin.site.register(Brand, BrandAdmin)
+admin.site.register(Style, StyleAdmin)
+admin.site.register(Designer, DesignerAdmin)
+admin.site.register(Color, ColorAdmin)
+admin.site.register(Collection, CollectionAdmin)

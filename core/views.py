@@ -26,12 +26,12 @@ class HomePage(ListView):
     # paginate_by = 8
     model = Product
     template_name = 'templates/index.html'
-    context_object_name = 'products'
+    context_object_name = 'toplist'
     allow_empty = False
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        # context['title'] = 'Pavshop'
+        popular = Variant.objects.annotate(('order'))
         return context
     
     def get_queryset(self) -> QuerySet[Any]:
