@@ -4,18 +4,17 @@
 1. выводить только продукты которые в налиции 
 
 фильтрации product_list.html
-1 Brands 
-2 categories
-3 Styles
-4 Designers
-5 Discounts (current discount)
-6 price ()
-7 new
-8 colors
-9 Stores (quantity products to store) (checkbox)
-10 Populars (count buies to product)
-11 New arrival (default)
-12 Tags ()
+1 Brands +
+2 Categories +
+3 Styles +
+4 Designers +
+5 Discounts (current discount) +
+6 price () 
+8 colors 
+9 Stores (quantity products to store) (checkbox) 
+10 Populars (count buies to product) 
+11 New arrival (default) 
+12 Tags () 
 
 фильтрация index.html
 1 discount + popular (banner)
@@ -49,6 +48,7 @@
 3. Везде где выводятся продукты проверять добавлен ли product to wishlist a user
 4. Исключить из всех выборок продукты которые уже в корзине юзера!!!
 5. product detail указывать список цветов товара который вналии , а также списов наборов где есть этот товар 
+6. пустые категории не должны отображаться 
 
 
 Изменить в шаблоне 

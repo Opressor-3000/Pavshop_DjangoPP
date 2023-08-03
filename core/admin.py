@@ -20,10 +20,18 @@ class TagAdmin(admin.ModelAdmin):
     list_filter = ('title',)
     search_fields = ('title',)
 
+class HomeSliderAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'title', 'slide', 'first_line', 'second_line', 'price', 'created_at', 'update_at', 'published_at')
+    list_editable = ('title', 'slide', 'first_line', 'second_line', 'price', 'published_at')
+    list_filter = ('title', 'created_at', 'update_at', 'published_at')
+    search_fields = ('title', 'price', 'first_line', 'second_line')
+
+
 
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(Subscriber, SubscriberAdmin)
 admin.site.register(Tag, TagAdmin)
+admin.site.register(HomeSlider, HomeSliderAdmin)
 
 
 

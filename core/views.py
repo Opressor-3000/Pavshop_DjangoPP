@@ -6,7 +6,7 @@ from django.db import models
 from django.views.generic import ListView, DetailView, CreateView
 from django.db.models.query import QuerySet
 
-from product.models import Product, Variant, Discount
+from product.models import Product, Variant, Discount, Category, Brand, Style
 from .models import *
 
 
@@ -31,7 +31,6 @@ class HomePage(ListView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        popular = Variant.objects.annotate(('order'))
         return context
     
     def get_queryset(self) -> QuerySet[Any]:

@@ -48,3 +48,23 @@ class Tag(AbstractModel):
     
     def get_absolute_url(self):
         return reverse_lazy('tag', kwargs={'tag': self.title})
+    
+
+class HomeSlider(AbstractModel):
+    title = models.CharField(max_length=100, unique=True, verbose_name='slider name')
+    slide = models.ImageField(upload_to='slide_image/', verbose_name='slide')
+    first_line = models.CharField(max_length=50, verbose_name='first line')
+    second_line = models.CharField(max_length=50, verbose_name='second line')
+    price = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='price')
+    published_at = models.BooleanField(default=False)
+
+    # class Meta:
+    #     verbouse_name = 'Slider'
+    #     verbouse_name_plural = 'Sliders'
+    #     ordering = ['-pk']
+
+    def __str__(self):
+        return self.title
+    
+    # def get_absoluute_url(self):
+    #     return reverse_lazy('')
