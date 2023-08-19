@@ -113,11 +113,18 @@ class CollectionAdmin(admin.ModelAdmin):
 
 
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'image_url')
+    list_display = ('pk', 'image', 'user')
     list_display_links = None
-    search_fields = ('image_url',)
-    list_editable = ('image_url',)
-    list_filter = ('image_url',)
+    search_fields = ('user',)
+    list_editable = ('image',)
+    list_filter = ('image', 'user')
+
+
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'title')
+    list_editable = ('title',)
+    list_filter = ('title',)
+    search_fields = ('title',)
 
 
 admin.site.register(Product, ProductAdmin)
@@ -134,3 +141,4 @@ admin.site.register(Style, StyleAdmin)
 admin.site.register(Designer, DesignerAdmin)
 admin.site.register(Color, ColorAdmin)
 admin.site.register(Collection, CollectionAdmin)
+admin.site.register(Tag, TagAdmin)

@@ -1,13 +1,7 @@
 from django.db import models
 from django.db.models.fields import EmailField, CharField, TextField, BooleanField
 from django.urls import reverse_lazy
-
-class AbstractModel(models.Model):
-    created_at=models.DateTimeField(auto_now_add=True, verbose_name='create at')
-    update_at=models.DateTimeField(auto_now=True, verbose_name='update at')
-
-    class Meta:
-        abstract=True
+from .Abstact_models import AbstractModel
 
 class Subscriber(AbstractModel):
     email = EmailField(max_length=50, unique=True, db_index=True, verbose_name='subscriber')
@@ -18,6 +12,8 @@ class Subscriber(AbstractModel):
         ordering = ['pk']                                                                                                                    
 
 
+from account.models import User
+
 class Contact(AbstractModel):
     name = CharField(max_length=30, verbose_name='name')
     email = EmailField(max_length=50, verbose_name='email')
@@ -25,6 +21,7 @@ class Contact(AbstractModel):
     subject = CharField(max_length=50, verbose_name='subject')
     message = TextField(verbose_name='message')
     status = BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
 
     def __str__(self):
         return self.subject
@@ -33,21 +30,6 @@ class Contact(AbstractModel):
         verbose_name = 'contact'
         verbose_name_plural = 'contacts'
         ordering = ['-pk']
-
-
-class Tag(AbstractModel):
-    title = models.CharField(max_length=20, unique=True, db_index=True, verbose_name='Tag')
-
-    # class Meta:
-    #     verbouse_name = 'Tag'
-    #     verbouse_name_plural = 'tags'
-    #     ordering = ['title']
-
-    def __str__(self):
-        return self.title
-    
-    def get_absolute_url(self):
-        return reverse_lazy('tag', kwargs={'tag': self.title})
     
 
 class HomeSlider(AbstractModel):
@@ -57,6 +39,8 @@ class HomeSlider(AbstractModel):
     second_line = models.CharField(max_length=50, verbose_name='second line')
     price = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='price')
     published_at = models.BooleanField(default=False)
+    deleted_at = models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
 
     # class Meta:
     #     verbouse_name = 'Slider'
@@ -68,3 +52,5 @@ class HomeSlider(AbstractModel):
     
     # def get_absoluute_url(self):
     #     return reverse_lazy('')
+
+

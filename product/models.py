@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.urls import reverse_lazy
 
 
-from core.models import AbstractModel, Tag
+from core.Abstact_models import AbstractModel
 from account.models import User
 
 
@@ -11,6 +11,7 @@ class Category(AbstractModel):
     title = models.CharField(max_length=50, unique=True, db_index=True, verbose_name='Category')
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, parent_link='parents', related_name='parents')
     slug = models.SlugField(max_length=100, unique=True, db_index=True, verbose_name='Category_slug')
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
     
     def get_absolute_url(self):
         return reverse_lazy('category', kwargs={'category':self.title})
@@ -26,6 +27,7 @@ class Category(AbstractModel):
 
 class DiscountType(AbstractModel):
     title = models.CharField(max_length=50, unique=True, verbose_name='Discont')
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
     
     def __str__(self) -> str:
         return self.pk
@@ -41,6 +43,8 @@ class Discount(AbstractModel):
     sum = models.DecimalField(max_digits=10, decimal_places=2)
     date_begin = models.DateField()
     date_end = models.DateField()
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    deleted_at = models.BooleanField(default=False)
     
     def __str__(self) -> str:
         return self.title
@@ -60,6 +64,7 @@ class ProductReview(AbstractModel):
     text = models.TextField()
     rating = models.DecimalField(max_digits=5, decimal_places=3, blank=True)
     published_at = models.BooleanField(default=False)
+    deleted_at = models.BooleanField(default=False)
   
     def __str__(self) -> str:
         return f'{self.user} {self.product}'
@@ -75,6 +80,7 @@ class Store(AbstractModel):
     address = models.CharField(max_length=100, unique=True)
     post = models.IntegerField(blank=True)
     location = models.CharField(max_length=255, blank=True, unique=True)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
    
     def __str__(self) -> str:
         return self.pk
@@ -86,6 +92,7 @@ class Store(AbstractModel):
 
 class Unit(AbstractModel):
     title = models.CharField(max_length=100, unique=True)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
 
     class Meta:
         verbose_name = 'Unit'
@@ -94,16 +101,11 @@ class Unit(AbstractModel):
     def __str__(self) -> str:
         return self.title
 
-class Image(AbstractModel):
-    image_url = models.ImageField(upload_to='product_images/', unique=True, db_index=True,)
-
-    def __str__(self) -> str:
-        return self.pk
-
 
 class Color(AbstractModel):
     title = models.CharField(max_length=50, unique=True, db_index=True, verbose_name='Color')
     slug = models.SlugField(max_length=100, unique=True, db_index=True, verbose_name='color_slug')
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
     
     def __str__(self):
         return self.title
@@ -117,6 +119,7 @@ class Color(AbstractModel):
 class Designer(AbstractModel):
     name = models.CharField(max_length=100, unique=True, db_index=True, verbose_name='Designer')
     slug = models.SlugField(max_length=100, unique=True, db_index=True, verbose_name='Varian_slug')
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def __str__(self) -> str:
         return self.name
@@ -133,6 +136,7 @@ class Designer(AbstractModel):
 class Style(AbstractModel):
     title = models.CharField(max_length=50, unique=True, db_index=True, verbose_name='Style')
     slug = models.SlugField(max_length=100, unique=True, db_index=True)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
    
     def __str__(self) -> str:
         return self.title
@@ -149,6 +153,7 @@ class Style(AbstractModel):
 class Brand(AbstractModel):
     title = models.CharField(max_length=50, unique=True, db_index=True, verbose_name='Brand')  
     slug = models.SlugField(max_length=100, unique=True, db_index=True)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def __str__(self) -> str:
         return self.title
@@ -166,6 +171,7 @@ class Collection(AbstractModel):
     title = models.CharField(max_length=100, db_index=True)
     brand_id = models.ForeignKey(Brand, on_delete=models.PROTECT)
     slug = models.SlugField(max_length=100, unique=True, db_index=True)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def __str__(self) -> str:
         return self.title
@@ -180,6 +186,17 @@ class Collection(AbstractModel):
         ordering = ['brand_id']
 
 
+class Tag(AbstractModel):
+    title = models.CharField(max_length=20, unique=True, db_index=True, verbose_name='Tag')
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    
+    def __str__(self):
+        return self.title
+    
+    def get_absolute_url(self):
+        return reverse_lazy('tag', kwargs={'tag': self.title})
+
+
 class Product(AbstractModel): #11
     title = models.CharField(max_length=50, unique=True, db_index=True, verbose_name='Product')
     slug = models.SlugField(max_length=100, unique=True, db_index=True)
@@ -192,6 +209,9 @@ class Product(AbstractModel): #11
     archive = models.BooleanField(default=False, verbose_name='Archived')
     style_id = models.ForeignKey(Style, on_delete=models.PROTECT, blank=True, null=True, related_name='style')
     tag = models.ManyToManyField(Tag, related_name='product_tag')
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    publised_at = models.BooleanField(default=True)
+    deleted_at = models.BooleanField(default=False)
 
     def get_absolute_url(self):
         return reverse_lazy('product/', kwargs={'product':self.title})
@@ -203,6 +223,22 @@ class Product(AbstractModel): #11
         verbose_name = 'product'
         verbose_name_plural = 'products'
         ordering = ['-pk']
+
+
+class Image(AbstractModel):
+    image = models.ImageField(upload_to='blog_image/', verbose_name='Image')
+    user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='creater')
+
+    class Meta:
+        verbose_name = 'post'
+        verbose_name_plural = 'posts'
+        ordering = ['pk']
+
+    def __str__(self) -> str:
+        return f'{self.title} {self.author}'
+
+    def get_absolute_url(self):
+        return reverse_lazy('post', kwargs={'post':f'{self.title}{self.author}'})
 
 
 class Variant(AbstractModel):
@@ -227,3 +263,8 @@ class Variant(AbstractModel):
         verbose_name = 'variant'
         verbose_name_plural = 'variants'
         ordering = ['title']
+
+
+
+
+

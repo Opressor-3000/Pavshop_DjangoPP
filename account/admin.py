@@ -1,13 +1,31 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
 
 from .models import *
 
 
 class AccountAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'first_name', 'last_name', 'phone', 'email' )
-    search_fields = ('email',)
-    list_filter = ('email',)
+    fieldsets = (
+        (None, {"fields": ("username", "password")}),
+        (_("Personal info"), {"fields": ("first_name", "last_name", "email")}),
+        (
+            _("Permissions"),
+            {
+                "fields": (
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                ),
+            },
+        ),
+        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+    )
+    # list_display = ('pk', 'first_name', 'last_name', 'phone', 'email' )
+    # search_fields = ('email',)
+    # list_filter = ('email',)
 
 class ProductBasketAdmin(admin.ModelAdmin):
     list_display = ('pk',  'user','variant', 'count')

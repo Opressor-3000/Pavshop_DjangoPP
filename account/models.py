@@ -3,14 +3,14 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser
-from core.models import AbstractModel
+from core.Abstact_models import AbstractModel
 from django.urls import reverse_lazy
 
 class User(AbstractUser):
-    # username =None
-    # email = models.EmailField(('email address'), unique=True)
-    # USERNAME_FIELD = 'email'
-    # REQUIRED_FIELDS = []
+    username = None
+    email = models.EmailField(('email address'), unique=True)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
     phone = models.CharField(max_length=20, db_index=True, unique=True, verbose_name='phone')
     avatar = models.ImageField(upload_to='avatars/')
     bloger = models.BooleanField(default=False, verbose_name='Bloger')
@@ -29,12 +29,8 @@ class User(AbstractUser):
         return reverse_lazy('account', kwargs={'account': [self.first_name, self.last_name]})
 
 
-from product.models import Variant, Discount
 
     
-class WishList(AbstractModel):
-    user =  models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user', related_name='wishlistuser')
-    variant = models.ForeignKey(Variant, on_delete=models.CASCADE, verbose_name='variant', related_name='wishlistvariant')
 
     class Meta:
         verbose_name = 'users_wish'
@@ -59,6 +55,7 @@ class Address(AbstractModel):
    
 class Status(AbstractModel):
     title = models.CharField(max_length=50, unique=True, db_index=True, verbose_name='Order status')
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
 
     class Meta:
         verbose_name = 'status'
@@ -74,6 +71,15 @@ class Order(AbstractModel):
         verbose_name = 'order'
         verbose_name_plural = 'orders' 
         ordering = ['-pk']
+
+
+from product.models import Variant, Discount
+
+    
+class WishList(AbstractModel):
+    user =  models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user', related_name='wishlistuser')
+    variant = models.ForeignKey(Variant, on_delete=models.CASCADE, verbose_name='variant', related_name='wishlistvariant')
+    deleted_at = models.BooleanField(default=False, verbose_name='delete at from Wishlist')
 
 
 class ProductToBasket(AbstractModel):
