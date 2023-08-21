@@ -76,7 +76,7 @@ class WishList(AbstractModel):
     deleted_at = models.BooleanField(default=False, db_index=True, verbose_name='delete at from Wishlist')
 
     class Meta:
-        unique_together = ['title', 'brand_id']
+        unique_together = ['user', 'variant']
         verbose_name = 'users_wishs'
         verbose_name_plural = 'wishlists'
         ordering = ['-pk']
@@ -88,7 +88,7 @@ class WishList(AbstractModel):
 class ProductToBasket(AbstractModel):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     order = models.ForeignKey(Order, on_delete=models.PROTECT, verbose_name='Order', related_name='order')
-    variant = models.ForeignKey(Variant, on_delete=models, verbose_name='Variant', related_name='variant')
+    variant = models.ForeignKey(Variant, on_delete=models.PROTECT, verbose_name='Variant', related_name='variant')
     count = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Count')
     discount_id = models.ForeignKey(Discount, on_delete=models.CASCADE, blank=True, null=True, verbose_name='discount')
 

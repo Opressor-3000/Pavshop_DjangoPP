@@ -30,7 +30,7 @@ class DiscountType(AbstractModel):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     
     def __str__(self) -> str:
-        return self.pk
+        return self.title
     
     def get_absolute_url(self, **kwargs):
         return reverse_lazy('product', kwargs={'discounttype': self.title })
@@ -38,9 +38,12 @@ class DiscountType(AbstractModel):
     
 class Discount(AbstractModel):
     title = models.CharField(max_length=100, unique=True, verbose_name='Discont')
-    code = models.CharField(max_length=50)
+    code = models.CharField(max_length=50, blank=True)
     type_id = models.ForeignKey(DiscountType, on_delete=models.PROTECT, related_name='types')
-    sum = models.DecimalField(max_digits=10, decimal_places=2)
+    sum = models.DecimalField(max_digits=10, decimal_places=2, blank=True)
+    discount_size = models.DecimalField(max_digits=8, decimal_places=2)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, blank=True, related_name='discount_category')
+    collection = models.ManyToManyField('Collection', blank=True)
     date_begin = models.DateField()
     date_end = models.DateField()
     user = models.ForeignKey(User, on_delete=models.PROTECT)
@@ -78,7 +81,7 @@ class ProductReview(AbstractModel):
 class Store(AbstractModel):
     title = models.CharField(max_length=50, unique=True, default='Pavshop')
     address = models.CharField(max_length=100, unique=True)
-    post = models.IntegerField(blank=True)
+    post = models.CharField(max_length=6, blank=True)
     location = models.CharField(max_length=255, blank=True, unique=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
    
@@ -200,15 +203,15 @@ class Tag(AbstractModel):
 class Product(AbstractModel): #11
     title = models.CharField(max_length=50, unique=True, db_index=True, verbose_name='Product')
     slug = models.SlugField(max_length=100, unique=True, db_index=True)
-    category_id = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='category')
+    category_id = models.ManyToManyField('Category', related_name='category')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='fabric price')
     brand_id = models.ForeignKey(Brand, on_delete=models.PROTECT, blank=True, null=True, related_name='brand')
     collection_id = models.ForeignKey(Collection, on_delete=models.CASCADE, blank=True, null=True, related_name='collection')
-    views = models.IntegerField(verbose_name='viewer')
+    views = models.IntegerField(verbose_name='viewer', blank=True)
     description = models.TextField(blank=True, verbose_name='Description')
     archive = models.BooleanField(default=False, verbose_name='Archived')
     style_id = models.ForeignKey(Style, on_delete=models.PROTECT, blank=True, null=True, related_name='style')
-    tag = models.ManyToManyField(Tag, related_name='product_tag')
+    tag = models.ManyToManyField(Tag, related_name='product_tag', blank=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     publised_at = models.BooleanField(default=True)
     deleted_at = models.BooleanField(default=False)
@@ -227,18 +230,18 @@ class Product(AbstractModel): #11
 
 class Image(AbstractModel):
     image = models.ImageField(upload_to='blog_image/', verbose_name='Image')
-    user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='creater')
+    user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='creater', related_name='image')
 
     class Meta:
-        verbose_name = 'post'
-        verbose_name_plural = 'posts'
+        verbose_name = 'Image'
+        verbose_name_plural = 'Images'
         ordering = ['pk']
 
     def __str__(self) -> str:
-        return f'{self.title} {self.author}'
+        return f'{self.image}'
 
     def get_absolute_url(self):
-        return reverse_lazy('post', kwargs={'post':f'{self.title}{self.author}'})
+        return reverse_lazy('post', kwargs={'image':f'{self.image}'})
 
 
 class Variant(AbstractModel):

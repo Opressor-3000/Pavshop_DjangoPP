@@ -11,11 +11,14 @@ class AccountAdmin(admin.ModelAdmin):
     change_user_password_template = None
     fieldsets = (
         (None, {"fields": ("username", "password")}),
-        (_("Personal info"), {"fields": ("first_name", "last_name", "email", )}),
+        (_("Personal info"), {"fields": ("first_name", "last_name", "email", "phone", )}),
         (
             _("Permissions"),
             {
                 "fields": (
+                    "saller",
+                    "bloger",
+                    "avatar",
                     "is_active",
                     "is_staff",
                     "is_superuser",
@@ -26,9 +29,11 @@ class AccountAdmin(admin.ModelAdmin):
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
-    # list_display = ('pk', 'first_name', 'last_name', 'phone', 'email' )
-    # search_fields = ('email',)
-    # list_filter = ('email',)
+    list_display = ('username', 'first_name','last_name', 'saller', 'bloger', 'is_active', 'is_staff')
+    list_display_links = ('username', 'first_name', 'last_name')
+    search_fields = ('first_name', 'last_name', 'username', 'phone', 'is_active', 'is_staff')
+    list_filter = ('username', 'first_name', 'last_name', 'phone')
+    list_editable = ('is_active', 'bloger', 'saller', )
 
 class ProductBasketAdmin(admin.ModelAdmin):
     list_display = ('pk',  'user','variant', 'count')
