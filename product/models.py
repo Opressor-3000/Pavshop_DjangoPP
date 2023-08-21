@@ -204,7 +204,7 @@ class Product(AbstractModel): #11
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='fabric price')
     brand_id = models.ForeignKey(Brand, on_delete=models.PROTECT, blank=True, null=True, related_name='brand')
     collection_id = models.ForeignKey(Collection, on_delete=models.CASCADE, blank=True, null=True, related_name='collection')
-    views = models.IntegerField(null=True, verbose_name='viewer')
+    views = models.IntegerField(verbose_name='viewer')
     description = models.TextField(blank=True, verbose_name='Description')
     archive = models.BooleanField(default=False, verbose_name='Archived')
     style_id = models.ForeignKey(Style, on_delete=models.PROTECT, blank=True, null=True, related_name='style')
@@ -252,6 +252,7 @@ class Variant(AbstractModel):
     quantity = models.IntegerField(verbose_name='Quantity')
     unit = models.ForeignKey(Unit, on_delete=models.PROTECT, null=True, verbose_name='Unit')
     tag = models.ManyToManyField(Tag, related_name='variant_tag')
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, parent_link='parents', related_name='parents')
   
     def get_absolute_url(self):
         return reverse_lazy('variant', kwargs={'product':self.title})

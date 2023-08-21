@@ -1,14 +1,17 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import User
 
 
 from .models import *
 
-
+@admin.register(User)
 class AccountAdmin(admin.ModelAdmin):
+    add_form_template = "admin/auth/user/add_form.html"
+    change_user_password_template = None
     fieldsets = (
         (None, {"fields": ("username", "password")}),
-        (_("Personal info"), {"fields": ("first_name", "last_name", "email")}),
+        (_("Personal info"), {"fields": ("first_name", "last_name", "email", )}),
         (
             _("Permissions"),
             {
@@ -60,7 +63,7 @@ class StatusAdmin(admin.ModelAdmin):
     list_editable = ('title',)
 
 
-admin.site.register(User, AccountAdmin)
+# admin.site.register(User, AccountAdmin)
 admin.site.register(ProductToBasket,ProductBasketAdmin)
 admin.site.register(Address, AddressAdmin)
 admin.site.register(WishList, WishlistAdmin)

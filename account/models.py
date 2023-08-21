@@ -5,20 +5,24 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser
 from core.Abstact_models import AbstractModel
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+
 
 class User(AbstractUser):
-    username = None
-    email = models.EmailField(('email address'), unique=True)
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
-    phone = models.CharField(max_length=20, db_index=True, unique=True, verbose_name='phone')
-    avatar = models.ImageField(upload_to='avatars/')
+    REQUIRED_FIELDS = ['username', 'phone']
+
+    email = models.EmailField(_('email address'), unique=True)
+    phone = models.CharField(max_length=20, db_index=True, unique=True,verbose_name='phone')
+    avatar = models.ImageField(upload_to='avatars/', blank=True)
+    saller = models.BooleanField(default=False, verbose_name='Saller')
     bloger = models.BooleanField(default=False, verbose_name='Bloger')
+    deleted_at = models.BooleanField(default=False, verbose_name='delete Account')
 
     class Meta:
         verbose_name = 'user'
         verbose_name_plural = 'users'
-        ordering = ['pk']
+        ordering = ['-pk']
 
     def __str__(self):
         if self.get_full_name():
@@ -29,29 +33,19 @@ class User(AbstractUser):
         return reverse_lazy('account', kwargs={'account': [self.first_name, self.last_name]})
 
 
-
-    
-
-    class Meta:
-        verbose_name = 'users_wish'
-        verbose_name_plural = 'wishlists'
-        ordering = ['-pk']
-
-    def get_absolute_url(self):
-        return reverse_lazy('account', kwargs={'account': [self.first_name, self.last_name]})
-
-
 class Address(AbstractModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     company_name = models.CharField(max_length=50, blank=True, verbose_name='Company')
     address = models.CharField(max_length=100, verbose_name='Address')
     city = models.CharField(max_length=50, verbose_name='City/Town')
     country = models.CharField(max_length=50, verbose_name='Country')
+    deleted_at = models.BooleanField(default=False, verbose_name='delete at Address')
 
     class Meta:
         verbose_name = 'user_address'
         verbose_name_plural = 'addresses'
         ordering = ['-pk']
+
    
 class Status(AbstractModel):
     title = models.CharField(max_length=50, unique=True, db_index=True, verbose_name='Order status')
@@ -64,8 +58,8 @@ class Status(AbstractModel):
 
         
 class Order(AbstractModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='username', related_name='user_id')
-    status = models.ForeignKey(Status, on_delete=models.CASCADE, verbose_name='status', related_name='status')
+    user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='username', related_name='user_id')
+    status = models.ForeignKey(Status, on_delete=models.PROTECT, verbose_name='status', related_name='status')
 
     class Meta:
         verbose_name = 'order'
@@ -79,13 +73,22 @@ from product.models import Variant, Discount
 class WishList(AbstractModel):
     user =  models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user', related_name='wishlistuser')
     variant = models.ForeignKey(Variant, on_delete=models.CASCADE, verbose_name='variant', related_name='wishlistvariant')
-    deleted_at = models.BooleanField(default=False, verbose_name='delete at from Wishlist')
+    deleted_at = models.BooleanField(default=False, db_index=True, verbose_name='delete at from Wishlist')
+
+    class Meta:
+        unique_together = ['title', 'brand_id']
+        verbose_name = 'users_wishs'
+        verbose_name_plural = 'wishlists'
+        ordering = ['-pk']
+
+    def get_absolute_url(self):
+        return reverse_lazy('account', kwargs={'account': [self.first_name, self.last_name]})
 
 
 class ProductToBasket(AbstractModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
     order = models.ForeignKey(Order, on_delete=models.PROTECT, verbose_name='Order', related_name='order')
-    variant = models.ForeignKey(Variant, on_delete=models.CASCADE, verbose_name='Variant', related_name='variant')
+    variant = models.ForeignKey(Variant, on_delete=models, verbose_name='Variant', related_name='variant')
     count = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Count')
     discount_id = models.ForeignKey(Discount, on_delete=models.CASCADE, blank=True, null=True, verbose_name='discount')
 

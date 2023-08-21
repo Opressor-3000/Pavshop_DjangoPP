@@ -12,7 +12,7 @@ class PostReview(AbstractModel):
     post = models.ForeignKey('Post', on_delete=models.PROTECT, blank=True, related_name='post')
     user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='userrew')
     text = models.TextField(verbose_name='')
-    review = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='reviewsr')
+    review = models.ForeignKey('self', on_delete=models.PROTECT, blank=True, null=True, related_name='reviewsr')
     deleted_at = models.BooleanField(default=False)
 
     class Meta:
