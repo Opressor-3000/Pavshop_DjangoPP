@@ -1,7 +1,12 @@
 from django.db import models
 from django.db.models.fields import EmailField, CharField, TextField, BooleanField
 from django.urls import reverse_lazy
+
+
 from .Abstact_models import AbstractModel
+from account.models import User
+from product.models import Variant
+
 
 class Subscriber(AbstractModel):
     email = EmailField(max_length=50, unique=True, db_index=True, verbose_name='subscriber')
@@ -9,10 +14,11 @@ class Subscriber(AbstractModel):
     class Meta:
         verbose_name = 'subscriber'
         verbose_name_plural = 'subscribers'
-        ordering = ['pk']                                                                                                                    
+        ordering = ['pk']
 
+    def __str__(self) -> str:
+        return f'{self.email}'                                                                                                     
 
-from account.models import User
 
 class Contact(AbstractModel):
     name = CharField(max_length=30, verbose_name='name')
@@ -37,20 +43,20 @@ class HomeSlider(AbstractModel):
     slide = models.ImageField(upload_to='slide_image/', verbose_name='slide')
     first_line = models.CharField(max_length=50, verbose_name='first line')
     second_line = models.CharField(max_length=50, verbose_name='second line')
-    price = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='price')
+    variant = models.ForeignKey(Variant, on_delete=models.CASCADE, verbose_name='variant_in_slider')
     published_at = models.BooleanField(default=False)
     deleted_at = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
 
     # class Meta:
-    #     verbouse_name = 'Slider'
-    #     verbouse_name_plural = 'Sliders'
+    #     verbouse_name = 'slider'
+    #     verbouse_name_plural = 'sliders'
     #     ordering = ['-pk']
 
     def __str__(self):
         return self.title
     
-    # def get_absoluute_url(self):
-    #     return reverse_lazy('')
+    def get_absoluute_url(self):
+        return reverse_lazy('homepage', kwargs={'slider': self.title })
 
 

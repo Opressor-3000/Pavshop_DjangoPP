@@ -11,6 +11,7 @@ from .models import Post
 class PostList(ListView):
     model = Post
     template_name = 'templates/blog_list.html'
+    
 
 
 class PostDetail(DetailView):

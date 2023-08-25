@@ -3,9 +3,11 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser
-from core.Abstact_models import AbstractModel
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+
+
+from core.Abstact_models import AbstractModel
 
 
 class User(AbstractUser):
@@ -46,6 +48,9 @@ class Address(AbstractModel):
         verbose_name_plural = 'addresses'
         ordering = ['-pk']
 
+    def __str__(self) -> str:
+        return f'{self.company_name} address:{self.address}'
+
    
 class Status(AbstractModel):
     title = models.CharField(max_length=50, unique=True, db_index=True, verbose_name='Order status')
@@ -56,15 +61,22 @@ class Status(AbstractModel):
         verbose_name_plural = 'statuses'
         ordering = ['pk']
 
+    def __str__(self) -> str:
+        return f'{self.title}'
+
         
 class Order(AbstractModel):
     user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='username', related_name='user_id')
     status = models.ForeignKey(Status, on_delete=models.PROTECT, verbose_name='status', related_name='status')
+    address = models.ForeignKey(Address, on_delete=models.PROTECT, verbose_name='delivery_address', related_name='address_delivery')
 
     class Meta:
         verbose_name = 'order'
         verbose_name_plural = 'orders' 
         ordering = ['-pk']
+
+    def __str__(self) -> str:
+        return f'{self.pk} {self.status}'
 
 
 from product.models import Variant, Discount
@@ -83,6 +95,9 @@ class WishList(AbstractModel):
 
     def get_absolute_url(self):
         return reverse_lazy('account', kwargs={'account': [self.first_name, self.last_name]})
+    
+    def __str__(self) -> str:
+        return f'{self.user} wish:{self.variant}'
 
 
 class ProductToBasket(AbstractModel):
@@ -96,5 +111,8 @@ class ProductToBasket(AbstractModel):
         verbose_name = 'product_to_basket'
         verbose_name_plural = 'products_to_basket'
         ordering = ['-pk']
+
+    def __str__(self) -> str:
+        return f'{self.user} {self.variant} count:{self.count}'
     
 

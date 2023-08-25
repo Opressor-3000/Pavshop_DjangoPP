@@ -1,14 +1,34 @@
 from typing import Any, Dict
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView
 from django.db.models.query import QuerySet
 
 
 from .models import User, ProductToBasket, Address
+from .forms import RegisterForm
 from core import urls
 
 
-class UserAccount(DeleteView):
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST, files=request.FILES)
+        if form.is_valid():
+            user = form.save()
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            return redirect(reverse_lazy('core:homepage'))
+    else:
+        form = RegisterForm
+
+    context = {
+        "form": form
+    }
+
+    return render(request, 'register.html', context)
+
+
+class UserAccount(DeleteView):  
     model = User
     template_name = 'templates/account.html'
     context_object_name = 'account'

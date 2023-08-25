@@ -4,127 +4,127 @@ from .models import *
 
 class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ['title']}
-    list_display = ('pk', 'title', 'price', 'views', 'archive')
-    list_display_links = ('title', 'views')
+    list_display = ('pk', 'title', 'brand_id', 'collection_id', 'designer', 'price', 'publised_at', 'archive', 'user')
+    list_display_links = ('title', 'brand_id', 'collection_id', 'designer', 'user')
     search_fields = ('title', 'price')
-    list_editable = ('price', 'archive')
-    list_filter = ('title', 'price', 'views', 'archive')
+    list_editable = ('publised_at', 'archive',)
+    list_filter = ('brand_id', 'category_id', 'style_id', 'collection_id', 'designer', 'price', 'archive')
 
 
 class VariantAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ['title']}
-    list_display = ('pk', 'title', 'price', 'quantity', 'unit')
-    list_display_links = ('unit',)
-    search_fields = ('title', 'price', 'quantity', 'unit')
-    list_editable = ('price', 'quantity')
-    list_filter = ('title', 'price', 'quantity', 'unit')
+    list_display = ('pk', 'title', 'product_id', 'price', 'color', 'unit', 'user')
+    list_display_links = ('title',)
+    search_fields = ('title', 'price', 'unit')
+    list_editable = ('price',)
+    list_filter = ('title', 'price', 'unit', 'product_id','discount_id', 'parent', 'user')
 
 
 class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ['title']}
-    list_display = ('pk', 'title', 'parent')
-    list_display_links = None
-    search_fields = ('title',)
-    list_editable = ('parent',)
-    list_filter = ('parent',)
+    list_display = ('pk', 'title', 'parent', 'user')
+    list_display_links = ('title',)
+    search_fields = ('title', 'parent', 'user')
+    list_filter = ('parent', 'user',)
 
 
 class DiscountAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'type_id', 'sum', 'date_begin', 'date_end')
-    search_fields = ('pk', 'title', 'sum', 'date_begin', 'date_end')
-    list_editable = ('sum', 'date_begin', 'date_end')
-    list_filter = ('title', 'type_id', 'sum', 'date_begin', 'date_end')
+    list_display = ('pk', 'title', 'type_id', 'code', 'amount', 'decrease_by', 'price_sum', 'other_product', 'discount_persent', 'date_begin', 'date_end', 'user', 'deleted_at')
+    search_fields = ('pk', 'title', 'code', 'amount', 'decrease_by', 'price_sum', 'other_product', 'discount_persent', 'date_begin', 'date_end', 'user', 'deleted_at')
+    list_filter = ('title', 'type_id', 'amount', 'decrease_by', 'price_sum', 'other_product', 'discount_persent', 'date_begin', 'date_end', 'user',)
+    list_display_links = ('title',)
+    list_editable = ('deleted_at',)
 
 
 class DiscountTypeAdmin(admin.ModelAdmin):
     list_display = ('pk', 'title')
-    list_display_links = None
+    list_display_links = ('title',)
     search_fields = ('title',)
-    list_editable = ('title',)
     list_filter = ('title',)
 
 
 class ProductReviewAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'user', 'product', 'rating', 'published_at')
-    list_display_links = ('user', 'product')
-    search_fields = ('user', 'product', 'published_at')
+    list_display = ('pk', 'user', 'product', 'review', 'rating', 'published_at', 'deleted_at')
+    list_display_links = ('review', 'product')
+    search_fields = ('user', 'review', 'rating', 'product', 'published_at')
     list_editable = ('published_at',)
-    list_filter = ('user', 'product', 'published_at')
+    list_filter = ('user', 'review', 'product', 'deleted_at', 'published_at')
 
 
 class StoreAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'address', 'post', 'location')
-    search_fields = ('title', 'address', 'post')
-    list_editable = ('title','address', 'post', 'location')
+    list_display = ('pk', 'title', 'address', 'post', 'location', 'user', 'deleted_at')
+    list_display_links = ('title',)
+    search_fields = ('title', 'address', 'post', 'user', 'deleted_at')
+    list_editable = ('deleted_at',)
     list_filter = ('title', 'address', 'post')
 
 
 class UnitAdmin(admin.ModelAdmin):    
     list_display = ('pk', 'title')
-    list_display_links = None
-    search_fields = ('title',)
-    list_editable = ('title',)
+    list_display_links = ('title',)
+    search_fields = ('title',)                      
     list_filter = ('title',)
 
 
 class BrandAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ['title']}
-    list_display = ('pk', 'title')
-    list_display_links = None
-    search_fields = ('title',)
-    list_editable = ('title',)
-    list_filter = ('title',)
+    list_display = ('pk', 'title', 'user')
+    list_display_links = ('title',)
+    search_fields = ('title', 'user')
+    list_filter = ('title', 'user')
 
 
 class StyleAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ['title']}
     list_display = ('pk', 'title')
-    list_display_links = None
+    list_display_links = ('title',)
     search_fields = ('title',)
-    list_editable = ('title',)
     list_filter = ('title',)
 
 
 class DesignerAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ['name']}
-    list_display = ('pk', 'name')
-    list_display_links = None
+    list_display = ('pk', 'name', 'user')
+    list_display_links = ('name',)
     search_fields = ('name',)
-    list_editable = ('name',)
-    list_filter = ('name',)
+    list_filter = ('name', 'user')
 
 
 class ColorAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ['title']}
     list_display = ('pk', 'title')
-    list_display_links = None
+    list_display_links = ('title',)
     search_fields = ('title',)
-    list_editable = ('title',)
     list_filter = ('title',)
 
 
 class CollectionAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ['title', 'brand_id']}
     list_display = ('pk', 'title', 'brand_id', 'user')
-    list_display_links = ['brand_id']
+    list_display_links = ['title']
     search_fields = ('title',)
-    list_editable = ('title',)
     list_filter = ('title',)
 
 
 class ImageAdmin(admin.ModelAdmin):
     list_display = ('pk', 'image', 'user')
-    list_display_links = None
+    list_display_links = ('user',)
     search_fields = ('user',)
-    list_editable = ('image',)
     list_filter = ('image', 'user')
 
 
 class TagAdmin(admin.ModelAdmin):
     list_display = ('pk', 'title')
-    list_editable = ('title',)
+    list_display_links = ('title',)
     list_filter = ('title',)
     search_fields = ('title',)
+
+class VariantToStoreAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'variant', 'store', 'quantity')
+    list_display_links = ('variant',)
+    list_filter = ('variant', 'store')
+    search_fields = ('quantity', 'variant', 'store')
+
 
 
 admin.site.register(Product, ProductAdmin)
@@ -142,3 +142,4 @@ admin.site.register(Designer, DesignerAdmin)
 admin.site.register(Color, ColorAdmin)
 admin.site.register(Collection, CollectionAdmin)
 admin.site.register(Tag, TagAdmin)
+admin.site.register(VariantToStore, VariantToStoreAdmin)

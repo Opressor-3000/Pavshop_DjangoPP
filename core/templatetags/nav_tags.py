@@ -1,7 +1,15 @@
 from django import template
-from product.models import Category, Product, Style
+
+
+from product.models import Category, Variant, Style
+from account.models import User
+
 
 register = template.Library()
+
+@register.simple_tag
+def get_user(request):
+    user = request.user
 
 @register.simple_tag
 def get_categories():
@@ -20,6 +28,7 @@ def get_style():
 
 @register.simple_tag
 def get_new():
+
     pass
 
 @register.simple_tag

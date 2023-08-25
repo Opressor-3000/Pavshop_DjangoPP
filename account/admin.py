@@ -36,36 +36,36 @@ class AccountAdmin(admin.ModelAdmin):
     list_editable = ('is_active', 'bloger', 'saller', )
 
 class ProductBasketAdmin(admin.ModelAdmin):
-    list_display = ('pk',  'user','variant', 'count')
-    list_display_links = ('user', 'variant')
-    search_fields = ('user', 'variant')
-    list_filter = ('user', 'variant')
+    list_display = ('pk', 'order' , 'user', 'variant', 'count', 'discount_id')
+    list_display_links = ('order', 'variant')
+    search_fields = ('user', 'order', 'variant')
+    list_filter = ('user', 'order', 'variant', 'count', 'discount_id')
 
 
 class AddressAdmin(admin.ModelAdmin):
     list_display = ('pk', 'user', 'company_name', 'address', 'city', 'country')
-    list_display_links = ('company_name', 'address', 'city', 'country')
+    list_display_links = ('company_name', 'address')
     search_fields = ('company_name', 'address', 'city', 'country')
     list_filter = ('user', 'company_name', 'address', 'city', 'country')
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'user','status')
+    list_display = ('pk', 'user','status', 'address')
     list_display_links = ('pk', 'user','status')
-    search_fields = ('user',)
-    list_filter = ('user', 'status')
+    search_fields = ('pk', 'user', 'address')
+    list_filter = ('user', 'status', 'address')
 
 
 class WishlistAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'user', 'variant')
+    list_display = ('pk', 'user', 'variant', 'deleted_at')
     list_display_links = ('user', 'variant')
     search_fields = ('user', 'variant')
-    list_filter = ('user', 'variant')
+    list_filter = ('user', 'variant', 'deleted_at')
 
 
 class StatusAdmin(admin.ModelAdmin):
     list_display = ('pk', 'title')
-    list_editable = ('title',)
+    list_display_links = ('title',)
 
 
 # admin.site.register(User, AccountAdmin)

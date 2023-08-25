@@ -12,7 +12,7 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus maximus vehicula. 
           Sed feugiat, tellus vel tristique posuere, diam</p>
         <ol class="breadcrumb">
-          <li><a href="#">Home</a></li>
+          <li><a href="{% url 'core:homepage' %}">Home</a></li>
           <li class="active">Data</li>
         </ol>
       </div>
@@ -37,7 +37,7 @@
                     
                     <!-- Short By -->
                     <select class="selectpicker">
-                      <p>for s in sorts_by </p>
+                      {% for s in sorts_by %}
                       <option>Sort By</option>
                       <p> endfor </p>
                     </select>
