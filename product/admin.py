@@ -10,6 +10,8 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ('publised_at', 'archive',)
     list_filter = ('brand_id', 'category_id', 'style_id', 'collection_id', 'designer', 'price', 'archive')
 
+class VariantImageInlines(admin.TabularInline):
+    model = Image
 
 class VariantAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ['title']}
@@ -18,6 +20,7 @@ class VariantAdmin(admin.ModelAdmin):
     search_fields = ('title', 'price', 'unit')
     list_editable = ('price',)
     list_filter = ('title', 'price', 'unit', 'product_id','discount_id', 'parent', 'user')
+    inlines = (VariantImageInlines,)
 
 
 class CategoryAdmin(admin.ModelAdmin):

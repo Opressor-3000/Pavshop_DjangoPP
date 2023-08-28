@@ -4,6 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 from .models import *
 from product.models import Discount   
+from core.forms import AbstractForm
 
 
 class RegisterForm:
@@ -23,8 +24,6 @@ class RegisterForm:
 
 
 class UserRegister(UserCreationForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
 
     class Meta:
         model = User
@@ -32,15 +31,17 @@ class UserRegister(UserCreationForm):
 
 
 class LogInAccount(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+
 
     class Meta:
         model = User
         fields = ['email', 'password']
 
 
-class UserWishList(forms.ModelForm):
+class UserWishList(AbstractForm):
+    # user = super().get_user()
+    
+
     class Meta:
         model = WishList
         fields = ['variant']

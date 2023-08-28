@@ -10,13 +10,13 @@ from .models import Post
 
 class PostList(ListView):
     model = Post
-    template_name = 'templates/blog_list.html'
+    template_name = 'blog/blog_list.html'
     
 
 
 class PostDetail(DetailView):
     model = Post
-    template_name = 'templates/blog_detail.html'
+    template_name = 'blog/blog_detail.html'
 
     
 

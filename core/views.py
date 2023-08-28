@@ -16,25 +16,23 @@ def about_us(request):
 
 class Contact(CreateView):
     model = Contact
-    template_name = 'templates/contact.html'
+    template_name = 'core/contact.html'
 
 # def contact(request):
 #     return render("contact.html")
 
 
 class HomePage(ListView):
-    # paginate_by = 8
-    model = Product
-    template_name = 'templates/index.html'
+    paginate_by = 9
+    model = Variant
+    template_name = 'core/index.html'
     context_object_name = 'toplist'
-    allow_empty = False
-
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        return context
+    allow_empty = True
     
     def get_queryset(self) -> QuerySet[Any]:
-        return Variant.objects.filter(quantity__gt = 1).order_by('-created_at')
+        variants = Variant.objects.filter(varianttostore__quantity__gte = 1)
+        print(variants)
+        return variants
     
 
 

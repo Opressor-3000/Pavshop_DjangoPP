@@ -4,17 +4,22 @@ from django import forms
 from .models import *
 
 
+class AbstractForm(forms.ModelForm):
+    
+    def get_user(request):
+        user = request.user.pk
+        return user
+
+
 class Contact(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
         
     class Meta:
         model = Contact
+        fields = ['email']
 
 
 class Subscriber(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
 
     class Meta:
         model = Subscriber
+        fields = ['email']

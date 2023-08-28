@@ -1,7 +1,7 @@
 from django.db.models import CheckConstraint, CharField, ForeignKey, SlugField, BooleanField, IntegerField, DecimalField, ManyToManyField, DateField, TextField, ImageField, PROTECT, CASCADE, Q, F
 from django.utils import timezone
 from django.urls import reverse_lazy
-
+from mptt.models import MPTTModel, TreeForeignKey
 
 from core.Abstact_models import AbstractModel
 from account.models import User
@@ -9,7 +9,7 @@ from account.models import User
 
 class Category(AbstractModel):
     title = CharField(max_length=50, db_index=True, verbose_name='Category')
-    parent = ForeignKey('self', on_delete=CASCADE, null=True, blank=True, parent_link='parents', related_name='parents')
+    parent = TreeForeignKey('self', on_delete=CASCADE, null=True, blank=True, parent_link='parents', related_name='parents')
     slug = SlugField(max_length=100, unique=True, db_index=True, verbose_name='Category_slug')
     user = ForeignKey(User, on_delete=PROTECT)
     
@@ -191,6 +191,7 @@ class Collection(AbstractModel):
     brand_id = ForeignKey(Brand, on_delete=PROTECT)
     slug = SlugField(max_length=100, unique=True, db_index=True)
     user = ForeignKey(User, on_delete=PROTECT)
+    published_at = BooleanField(default=False, verbose_name='published at Coll')
     deleted_at = BooleanField(default=False)
 
     def __str__(self) -> str:
@@ -248,7 +249,9 @@ class Product(AbstractModel): #11
 
 class Image(AbstractModel):
     image = ImageField(upload_to='blog_image/', verbose_name='Image')
+    variant = ForeignKey('Variant', verbose_name='Image', on_delete=CASCADE)
     user = ForeignKey(User, on_delete=PROTECT, verbose_name='creater', related_name='user_add_image')
+    is_main = BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Image'
@@ -266,13 +269,13 @@ class Variant(AbstractModel):
     title = CharField(max_length=100, unique=True, db_index=True, verbose_name='variant')
     color = ForeignKey(Color, on_delete=CASCADE, verbose_name='color')
     slug = SlugField(max_length=100, unique=True, db_index=True, verbose_name='Varian_slug')
-    image_id = ManyToManyField(Image, verbose_name='Image')
-    product_id = ForeignKey(Product, on_delete=CASCADE)
+    product_id = ForeignKey(Product, on_delete=CASCADE, related_name='variantofproduct', verbose_name='product id')
     price = DecimalField(max_digits=10, decimal_places=2, db_index=True, verbose_name='price')
     discount_id = ManyToManyField(Discount, verbose_name='Discont', blank=True)
     unit = ForeignKey(Unit, on_delete=PROTECT, null=True, verbose_name='Unit')
-    tag = ManyToManyField(Tag, related_name='variant_tag')
+    tag = ManyToManyField(Tag, blank=True, related_name='variant_tag')
     parent = ManyToManyField('self', blank=True)
+    in_stock = BooleanField(default=False, verbose_name='In stock')
     user = ForeignKey(User, on_delete=PROTECT, related_name='user_add_variant', verbose_name='variant_creator')
   
     def get_absolute_url(self):
@@ -280,7 +283,11 @@ class Variant(AbstractModel):
     
     def __str__(self) -> str:
         return f'{self.title} color:{self.color} ({self.unit})'
-    
+    def get_main_img(self):
+        image = Image.objects.filter(variant = self).filter(is_main = True).first()
+        if image:
+            return image.image.url
+        return ''
     class Meta:
         verbose_name = 'variant'
         verbose_name_plural = 'variants'
@@ -299,5 +306,5 @@ class VariantToStore(AbstractModel):
         ordering = ['store']
 
     def __str__(self) -> str:
-        return f'{self.variant} sotore:{self.store}, quantity:{self.quaantity}'
+        return f'{self.variant} sotore:{self.store}, quantity:{self.quantity}'
 

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 {% load static %}
 
 {% block content %}
@@ -11,11 +11,11 @@
     <div class="tp-banner-container">
       <div class="tp-banner">
         <ul>
-          <!-- for i in discount -->
+          {% for d in discount %}
           <!-- SLIDE  -->
           <li data-transition="random" data-slotamount="7" data-masterspeed="300"  data-saveperformance="off" > 
             <!-- MAIN IMAGE --> 
-            <img src="images/slide-bg-1.jpg"  alt="slider"  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat"> 
+            <img src="{{ d.image.url }}"  alt="slider"  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat"> 
             <!-- LAYERS --> 
             <!-- LAYER NR. 1 -->
             <div class="tp-caption font-playfair sfb tp-resizeme" 
@@ -105,27 +105,22 @@
       
       <!-- New Arrival -->
       <div class="arrival-block single-img-demos"> 
-        {% for p in product %}
-        <!-- Item -->
+        {% for v in toplist %}
         <div class="item"> 
           <!-- Images --> 
-          <div class="position-center-center">
-             <a href="" data-lighter>
-              <i class="icon-magnifier">
-              <img class="img-1" src="#" alt=""> 
-                <!-- Overlay  -->
-                <div class="overlay"> 
-                <!-- Price --> 
-                <span class="price"><small>$</small>price</span>
-            </i></a> 
+          <img class="img-1" src="{{v.get_main_img}}" alt=""> 
+          <!-- Overlay  -->
+          <div class="overlay"> 
+            <!-- Price --> 
+            <span class="price"><small>$</small>{{v.price}}</span>
+            <div class="position-center-center"> <a href="{% url 'product.product' v.slug %}" data-lighter><i class="icon-magnifier"></i></a> </div>
+          </div>
+          <!-- Item Name -->
+          <div class="item-name"> <a href="{% url 'product.product' v.slug %}">{{ v.title }}</a>
+            <p>Lorem ipsum dolor sit amet</p>
           </div>
         </div>
-          <!-- Item Name -->
-        <div class="item-name"> <a href="#">title</a>
-          <p>description </p>
-        </div>
-        {% endfor %}
-      </div>
+      {% endfor %}
     </div>
   </section>
     
@@ -145,11 +140,17 @@
           <!-- Item -->
           <div class="item"> 
             <!-- Item img -->
-            <div class="item-img"> <img class="img-1" src="images/product-1.jpg" alt="" > 
+            <div class="item-img"> <img class="img-1" src="{% static 'images/product-1.jpg' %}" alt="" > 
               <!-- Overlay -->
               <div class="overlay">
                 <div class="position-center-center">
-                  <div class="inn"><a href="images/product-1.jpg" data-lighter><i class="icon-magnifier"></i></a> <a href="#."><i class="icon-basket"></i></a> <a href="#." ><i class="icon-heart"></i></a></div>
+                  <div class="inn">
+                    <a href="images/product-1.jpg" data-lighter>
+                      <i class="icon-magnifier"></i>
+                    </a> 
+                    <a href="#."><i class="icon-basket"></i></a> 
+                    <a href="#." ><i class="icon-heart"></i></a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -208,7 +209,7 @@
           </div>
           
           <!-- Img -->
-          <div class="col-sm-6"> <img class="img-responsive" src="images/testi-avatar.jpg" alt=""> </div>
+          <div class="col-sm-6"> <img class="img-responsive" src="{% static 'images/testi-avatar.jpg' %}" alt=""> </div>
         </div>
       </div>
     </section>
@@ -236,4 +237,4 @@
     </section>
     
 
-    {% endblock %}
+{% endblock %}
