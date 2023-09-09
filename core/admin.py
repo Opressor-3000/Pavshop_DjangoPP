@@ -1,6 +1,8 @@
 from django.contrib import admin
 
+
 from .models import *
+
 
 class ContactAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'email', 'phone', 'subject')

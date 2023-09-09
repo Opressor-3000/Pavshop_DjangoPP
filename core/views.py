@@ -1,10 +1,12 @@
 from datetime import datetime
 
+
 from django.shortcuts import render, redirect
 from typing import Any, Dict
 from django.db import models
 from django.views.generic import ListView, DetailView, CreateView
 from django.db.models.query import QuerySet
+
 
 from product.models import Product, Variant, Discount, Category, Brand, Style
 from .models import *

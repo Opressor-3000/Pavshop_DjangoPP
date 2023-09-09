@@ -1,4 +1,4 @@
-from django.db.models import CheckConstraint, CharField, ForeignKey, SlugField, BooleanField, IntegerField, DecimalField, ManyToManyField, DateField, TextField, ImageField, PROTECT, CASCADE, Q, F
+from django.db.models import CheckConstraint, CharField, ForeignKey, DateTimeField, SlugField, BooleanField, IntegerField, DecimalField, ManyToManyField, DateField, TextField, ImageField, PROTECT, CASCADE, Q, F
 from django.utils import timezone
 from django.urls import reverse_lazy
 from mptt.models import MPTTModel, TreeForeignKey
@@ -7,23 +7,30 @@ from core.Abstact_models import AbstractModel
 from account.models import User
 
 
-class Category(AbstractModel):
+class Category(MPTTModel):
     title = CharField(max_length=50, db_index=True, verbose_name='Category')
     parent = TreeForeignKey('self', on_delete=CASCADE, null=True, blank=True, parent_link='parents', related_name='parents')
     slug = SlugField(max_length=100, unique=True, db_index=True, verbose_name='Category_slug')
     user = ForeignKey(User, on_delete=PROTECT)
-    
-    def get_absolute_url(self):
-        return reverse_lazy('product_list', kwargs={'category':self.title})
+
+    created_at = DateTimeField(auto_now_add=True, verbose_name='create at')
+    update_at = DateTimeField(auto_now=True, verbose_name='update at')
     
     def __str__(self) -> str:
         return self.title
     
-    class Meta:
-        unique_together = ['title', 'parent']
+    def get_absolute_url(self):
+        return reverse_lazy('categories', kwargs={'category': self.title})
+    
+    class MPTTMeta:
+        order_insertion_by = ['title']
+        level_attr = 'level'
+
+    class META:
         verbose_name = 'category'
         verbose_name_plural = 'categories'
-        ordering = ['title']
+        unique_together = ['title', 'parent']
+    
 
 
 class DiscountType(AbstractModel):
@@ -215,7 +222,7 @@ class Tag(AbstractModel):
         return self.title
     
     def get_absolute_url(self):
-        return reverse_lazy('tag', kwargs={'tag': self.title})
+        return reverse_lazy('product_list', kwargs={'tag': self.title})
 
 
 class Product(AbstractModel): #11
@@ -279,10 +286,11 @@ class Variant(AbstractModel):
     user = ForeignKey(User, on_delete=PROTECT, related_name='user_add_variant', verbose_name='variant_creator')
   
     def get_absolute_url(self):
-        return reverse_lazy('variant', kwargs={'product':self.title})
+        return reverse_lazy('product', kwargs={'product':self.slug})
     
     def __str__(self) -> str:
         return f'{self.title} color:{self.color} ({self.unit})'
+    
     def get_main_img(self):
         image = Image.objects.filter(variant = self).filter(is_main = True).first()
         if image:

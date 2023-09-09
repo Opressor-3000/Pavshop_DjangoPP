@@ -32,7 +32,7 @@ class User(AbstractUser):
         return self.username
     
     def get_absolute_url(self):
-        return reverse_lazy('account', kwargs={'account': [self.first_name, self.last_name]})
+        return reverse_lazy('user', kwargs={'user': self.id})
 
 
 class Address(AbstractModel):
@@ -94,7 +94,7 @@ class WishList(AbstractModel):
         ordering = ['-pk']
 
     def get_absolute_url(self):
-        return reverse_lazy('account', kwargs={'account': [self.first_name, self.last_name]})
+        return reverse_lazy('account', kwargs={'wishlist': self.user})
     
     def __str__(self) -> str:
         return f'{self.user} wish:{self.variant}'
@@ -111,6 +111,9 @@ class ProductToBasket(AbstractModel):
         verbose_name = 'product_to_basket'
         verbose_name_plural = 'products_to_basket'
         ordering = ['-pk']
+
+    def get_absolute_url(self):
+        return reverse_lazy('shopcart', kwargs={'shopcartlist': self.user})
 
     def __str__(self) -> str:
         return f'{self.user} {self.variant} count:{self.count}'

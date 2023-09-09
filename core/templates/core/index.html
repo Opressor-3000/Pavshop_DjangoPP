@@ -83,7 +83,7 @@
                 style="z-index: 8;"><a href="#." class="btn">{{ p.linkword }}</a> 
             </div>
           </li>
-         <!-- endfor  -->
+        {% endfor %}
         </ul>
       </div>
     </div>
@@ -108,15 +108,15 @@
         {% for v in toplist %}
         <div class="item"> 
           <!-- Images --> 
-          <img class="img-1" src="{{v.get_main_img}}" alt=""> 
+          <img class="img-1" src="{{ v.get_main_img }}" alt=""> 
           <!-- Overlay  -->
           <div class="overlay"> 
             <!-- Price --> 
-            <span class="price"><small>$</small>{{v.price}}</span>
-            <div class="position-center-center"> <a href="{% url 'product.product' v.slug %}" data-lighter><i class="icon-magnifier"></i></a> </div>
+            <span class="price"><small>$</small>{{ v.price }}</span>
+            <div class="position-center-center"> <a href="#" data-lighter><i class="icon-magnifier"></i></a> </div>
           </div>
           <!-- Item Name -->
-          <div class="item-name"> <a href="{% url 'product.product' v.slug %}">{{ v.title }}</a>
+          <div class="item-name"> <a href="#">{{ v.title }}</a>
             <p>Lorem ipsum dolor sit amet</p>
           </div>
         </div>

@@ -1,7 +1,6 @@
  
+{% extends 'core/base.html' %}
 {% load static %}
-{% extends 'base.html' %}
-
 {% block content %}
   
   <!--======= SUB BANNER =========-->
@@ -9,13 +8,6 @@
     <div class="position-center-center">
       <div class="container">
         <h4>REGISTER</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus maximus vehicula. 
-          Sed feugiat, tellus vel tristique posuere, diam</p>
-        <ol class="breadcrumb">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Pages</a></li>
-          <li class="active">REGISTER</li>
-        </ol>
       </div>
     </div>
   </section>
@@ -30,22 +22,49 @@
         <!-- Payments Steps -->
         <div class="shopping-cart"> 
           
-          <!-- SHOPPING INFORMATION -->
+ <!-- SHOPPING INFORMATION -->
           <div class="cart-ship-info register">
             <div class="row"> 
               
               <!-- ESTIMATE SHIPPING & TAX -->
-              <div class="col-sm-12">
+              <div class="col-sm-6">
                 <h6>REGISTER</h6>
-                <form method="post">
+                <form method="POST" action="">
+                    {% csrf_token %}
                   <ul class="row">
                     
-                    <!-- Name -->
                     <li class="col-md-6">
-                      
+                      <label>{{form.first_name.label }}
+                        {{form.first_name }}
+                      </label>
+                    </li>
+
+                    <li class="col-md-6">
+                      <label> {{form.last_name.label }}
+                        {{form.last_name }}
+                      </label>
+                    </li>
+                    <li class="col-md-6">
+                      <label>{{form.email.label }}
+                        {{form.email }}
+                      </label>
+                    </li>
+                    <li class="col-md-6">
+                      <label> {{form.phone.label }}
+                        {{form.phone }}
+                      </label>
+                    </li>
+                    <li class="col-md-6">
+                      <label> {{form.password1.label }}
+                        {{form.password1 }}
+                      </label>
                     </li>
                     
-                    <!-- BUTTON -->
+                    <li class="col-md-6">
+                      <label> {{form.password2.label }}
+                        {{form.password2 }}
+                      </label>
+                    </li>
                     <li class="col-md-6">
                       <button type="submit" class="btn">REGISTER NOW</button>
                     </li>
