@@ -10,6 +10,7 @@ from django.db.models.query import QuerySet
 
 from product.models import Product, Variant, Discount, Category, Brand, Style
 from .models import *
+from core.templatetags.nav_tags import get_discount
 
 
 def about_us(request):
@@ -30,10 +31,18 @@ class HomePage(ListView):
     template_name = 'core/index.html'
     context_object_name = 'toplist'
     allow_empty = True
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        discount = get_discount()
+        discount_prod = Variant.objects.filter(discount_id__in = discount)
+        context['discount_prod']=discount_prod[:3]
+   
+        # context['discount'] = Variant.objects.filter(discount_id=discount).order_by('-discount_id__created_at')[:3]
+        return context
     
-    def get_queryset(self) -> QuerySet[Any]:
+    def get_queryset(self) -> QuerySet[Any]:    
         variants = Variant.objects.filter(varianttostore__quantity__gte = 1)
-        print(variants)
         return variants
     
 

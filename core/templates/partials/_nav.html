@@ -1,0 +1,183 @@
+{% load static %}
+{% load nav_tags %}
+{% categories as cat %}
+
+{% load mptt_tags %}
+
+<header>
+  <div class="sticky">
+    <div class="container"> 
+      
+      <!-- Logo -->
+      <div class="logo"> <a href="{% url 'core:homepage' %}"><img class="img-responsive" src="{% static 'images/logo.png' %}" alt="" ></a> </div>
+      <nav class="navbar ownmenu">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-open-btn" aria-expanded="false"> 
+            <span class="sr-only">Toggle navigation</span> 
+            <span class="icon-bar">
+              <i class="fa fa-navicon"></i>
+            </span> 
+          </button>
+        </div>
+        
+         <!-- NAV -->
+        <div class="collapse navbar-collapse" id="nav-open-btn">
+          <ul class="nav">
+            <li class="dropdown active"> <a href="{% url 'core:homepage' %}" class="dropdown-toggle" data-toggle="dropdown">Main</a>
+              <ul class="dropdown-menu">
+                <li> <a href="{% url 'product:product_list' %}"> New Arrival</a> </li>
+                <li> <a href="{% url 'product:product_list' %}"> Popular</a> </li>
+                <li> <a href="{% url 'product:product_list' %}"> Discounts</a> </li>
+              </ul>
+            </li>
+
+            <li class="dropdown"> <a href="#." class="dropdown-toggle" data-toggle="dropdown">Categories</a>
+              <ul class="dropdown-menu">  
+                {% recursetree cat %}
+                        <li> <a href="/product/category/{{.get_absolute_url}}/">{{ node.title }}</a></li>
+                        {% if not node.is_leaf_node %}
+                            <ul class="children">
+                                {{ children }}
+                            </ul>
+                        {% endif %}
+                  {% endrecursetree %}
+                </ul>
+            </li>
+
+            <!-- Two Link Option -->
+            <li class="dropdown"> <a href="#." class="dropdown-toggle" data-toggle="dropdown">Brand</a>
+              <div class="dropdown-menu two-option">
+                <div class="row">
+                  <ul class="col-sm-6">
+                    {% for brn in brand %}
+                    <li> <a href="{% url 'product:product_list' %}?brand={{ brn.id }}">{{ brn.title }}</a></li>
+                    {% endfor %}
+                  </ul>
+                  <ul class="col-sm-6">
+                    {% for c in collections %}
+                    <li> <a href="{% url 'product:product_list' %}">deodornts</a></li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </li>
+            
+            <li> <a href="#"> Style </a>
+              <ul class="dropdown-menu">
+                {% for stl in style %}
+                <li> <a href="{% url 'product:product_list' %}?style={{ stl.id }}">style</a> </li>>
+                {% endfor %}
+              </ul>
+            </li>
+            
+            <!-- MEGA MENU -->
+            <li class="dropdown megamenu"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Store</a>
+              <div class="dropdown-menu">
+                <div class="row"> 
+                  
+                  <!-- Shop Pages -->
+                  <div class="col-md-3">
+                    <h6>Shop Pages</h6>
+                    <ul>
+                      <li> <a href="{% url 'account:shopcart' %}">Shopping Cart</a> </li>
+                      <li> <a href="#">Checkout</a> </li>
+                    </ul>
+                  </div>
+                  
+                  <!-- TOp Rate Products -->
+                  <div class="col-md-4">
+                    <h6>Top Rate Products</h6>
+                    <div class="top-rated">
+                      <ul>
+                        {% for p in get_top_rate() %}
+                        <li>
+                          <div class="media-left">
+                            <div class="cart-img"> <a href="#"> <img class="media-object img-responsive" src="{% static 'images/cart-img-1.jpg' %}" alt="..."> </a> </div>
+                          </div>
+                          <div class="media-body">
+                            <h6 class="media-heading">{{ p.title }}</h6>
+                            <div class="stars"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
+                            <span class="price">{{ p.price }} USD</span> </div>
+                        </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <!-- New Arrival -->
+                  <div class="col-md-5">
+                    <h5>NEW ARRIVAL 2016 <span>(Best Collection)</span></h5>
+                    <img class="nav-img" src="{% static 'images/nav-img.png' %}" alt="" >
+                    <p>Lorem ipsum dolor sit amet,<br>
+                      consectetur adipiscing elit. <br>
+                      Donec faucibus maximus<br>
+                      vehicula.</p>
+                    <a href="#." class="btn btn-small btn-round">SHOP NOW</a> </div>
+                </div>
+              </div>
+            </li>
+            <li> <a href="contact.html"> contact</a> </li>
+          </ul>
+        </div>
+        
+        <!-- Nav Right -->
+        <div class="nav-right">
+          <ul class="navbar-right">
+            
+            <!-- USER INFO -->
+            <li class="dropdown user-acc"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" ><i class="icon-user"></i> </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <h6>HELLO! {{user.first_name}} {{ user.last_name }}</h6>
+                </li>
+                <li><a href="#">MY CART</a></li>
+                <li><a href="#">ACCOUNT INFO</a></li>
+                <li><a href="#">LOG OUT</a></li>
+              </ul>
+            </li>
+            
+            <!-- USER BASKET -->
+            <li class="dropdown user-basket"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="icon-basket-loaded"></i> </a>
+              <ul class="dropdown-menu">
+                {% for c in cart %}
+                <li>
+                  <div class="media-left">
+                    <div class="cart-img"> <a href="{% url 'product:product' variant_slug %}"> <img class="media-object img-responsive" src="{{ c.image.url }}" alt="..."> </a> </div>
+                  </div>
+                  <div class="media-body">
+                    <h6 class="media-heading">WOOD CHAIR</h6>
+                    <span class="price">{% get_cost %} USD</span> <span class="qty">QTY: {% get_quantity %}</span> </div>
+                </li>
+                {% endfor %}
+                <li>
+                  <h5 class="text-center">SUBTOTAL: {% get_subtotal %} USD</h5>
+                </li>
+                <li class="margin-0">
+                  <div class="row">
+                    <div class="col-xs-6"> <a href="{% url 'account:shopcart' %}" class="btn">VIEW CART</a></div>
+                    <div class="col-xs-6 "> <a href="{% url 'account:checkout' %}" class="btn">CHECK OUT</a></div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            
+            <!-- SEARCH BAR -->
+            <li class="dropdown"> <a href="javascript:void(0);" class="search-open"><i class=" icon-magnifier"></i></a>
+              <div class="search-inside animated bounceInUp"> <i class="icon-close search-close"></i>
+                <div class="search-overlay"></div>
+                <div class="position-center-center">
+                  <div class="search">
+                    <form>
+                      <input type="search" placeholder="Search Shop">
+                      <button type="submit"><i class="icon-check"></i></button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>

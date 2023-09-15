@@ -41,7 +41,7 @@ class RegisterForm(UserCreationForm):
     #     return super().clean()
 
 
-class LogInAccount(ModelForm):
+class UserAuthForm(AuthenticationForm):
 
     class Meta:
         model = User

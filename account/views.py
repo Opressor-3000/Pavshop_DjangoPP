@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView
 from django.db.models.query import QuerySet
+from django.contrib.auth.views import LoginView
 
 
 from .models import User, ProductToBasket, Address
@@ -34,7 +35,7 @@ from core import urls
 class UserAccount(DeleteView):  
     model = User
     template_name = 'account/account.html'
-    context_object_name = 'account'
+    context_object_name = 'user'
 
 class UserRegister(CreateView):
     form_class = RegisterForm
@@ -48,7 +49,7 @@ class UserRegister(CreateView):
         print(form.errors)
         return super().form_invalid(form)
 
-class UserAuth(CreateView):
+class UserAuth(LoginView):
     model = User
     template_name = 'account/login.html'
     context_object_name = 'data'
@@ -58,6 +59,9 @@ class Basket(ListView):
     model = ProductToBasket
     template_name = 'account/shopping_cart.html'
     context_object_name = 'shopcart'
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return super().get_queryset()
 
 
 class Checkout(CreateView):
