@@ -12,36 +12,41 @@ class RegisterForm(UserCreationForm):
     last_name = CharField(label='Last Name', widget=TextInput(attrs={"class": "col-md-6", "placeholder": "Enter last nema"}))
     phone = CharField(label='Your Phone', widget=TextInput(attrs={"class": "col-md-6", "placeholder": "Enter your phone"}))
     email = EmailField(label='Your E-mail', widget=EmailInput(attrs={"class": "col-md-6", "placeholder": "Enter your e-mail"}))
-    password1 = CharField(label='Password', widget=PasswordInput(attrs={"class": "col-md-6", "placeholder": "Enter password"}))
-    password2 = CharField(label='Confirm Password', widget=PasswordInput(attrs={"class": "col-md-6", "placeholder": "Enter confirm password"}))
+    password1 = CharField(
+        label=("Password"),
+        strip=False,
+        widget=PasswordInput(attrs={"autocomplete": "new-password"})
+    )
+    password2 = CharField(
+        label=("Password confirmation"),
+        widget=PasswordInput(attrs={"autocomplete": "new-password"}),
+        strip=False,
+    )
+
 
     class Meta:
-        attrs={"class": "col-md-6", "placeholder": "Enter confirm password"}
+        # attrs={"class": "col-md-6", "placeholder": "Enter confirm password"}
         model = User
-        fields = ['email', 'first_name', 'last_name', 'phone', 'password1', 'password2']
+        fields = ['email', 'first_name', 'last_name', 'phone']
         widget = {
             'first_name':TextInput(attrs={"class": "col-md-6", "placeholder": "Enter first name"}),
             'last_name':TextInput(attrs={"class": "col-md-6", "placeholder": "Enter last name"}),
             'phone':TextInput(attrs={"class": "col-md-6", "placeholder": "Enter your phone"}),
-            'email':TextInput(attrs={"class": "col-md-6", "placeholder": "Enter your e-mail"}),
-            'password1':PasswordInput(attrs={"class": "col-md-6", "placeholder": "Enter password"}),
-            'password2':PasswordInput(attrs={"class": "col-md-6", "placeholder": "Enter confirm password"})
+            'email':TextInput(attrs={"class": "col-md-6", "placeholder": "Enter your e-mail"})
         }
-
-    def password_clean(self):
-        data = self.cleaned_data
-        if data['password1'] != data["password2"]:
-            self.add_error("password2", "Confirm password does not match")
-        return super().clean()        
-    
-    # def username_clean(self):
-    #     data = self.cleaned_data
-    #     data['username'] = str(data['first_name']) + str(data['last_name'])
-    #     print(super().clean())
-    #     return super().clean()
 
 
 class UserAuthForm(AuthenticationForm):
+    username = EmailField(widget=TextInput(attrs={
+        'name': 'email',
+        'class': 'col-md-12',
+        'placeholder': 'email'
+    }))
+    password = EmailField(widget=TextInput(attrs={
+        'name': 'password',
+        'class': 'col-md-12',
+        'placeholder': 'password'
+    }))
 
     class Meta:
         model = User
@@ -73,4 +78,3 @@ class Shopcart(ModelForm):
     class Meta:
         model = ProductToBasket
         fields = ['variant']
-

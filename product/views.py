@@ -30,8 +30,20 @@ class ProductList(ListView):
     
     def get_queryset(self) -> QuerySet[Any]:
         if self.request.method == 'GET':
-            queryset = Variant.objects.all()
+            queryset = super().get_queryset()
             req = self.request.GET
+            if req.get['search']:
+                queryset = queryset.filter(
+                    Q(title__icontains=req.get['search']) | 
+                    Q(product__brand_id__icontains=req.get['search']) | 
+                    Q(product__collection__icontais=req.get['search']) | 
+                    Q(product__title__icontains=req.get['search']) | 
+                    Q(product__style__icontains=req.get['search']) | 
+                    Q(color__icontains=req.get['search']) | 
+                    Q(product__category_id__icontains=req.get['search']) |
+                    Q(tag__icontains=req.get['search']) | 
+                    Q(product__tag__icontains=req.get['search'])
+                ).distinct
             if req.getlist['brand']:
                 queryset = queryset.filter(product__brand__in=req.getlist['brand'])
             if req.getlist['style']:

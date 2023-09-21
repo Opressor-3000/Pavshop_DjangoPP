@@ -10,6 +10,7 @@
 <meta name="author" content="Yusif">
 <title>title</title>
 
+{% block css %}
 <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
 <link rel="stylesheet" type="text/css' %" href="{% static 'rs-plugin/css/settings.css' %}" media="screen" />
 
@@ -22,7 +23,7 @@
 <link href="{% static 'css/main.css' %}" rel="stylesheet">
 <link href="{% static 'css/style.css' %}" rel="stylesheet">
 <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
-
+{% endblock css %}
 <!-- JavaScripts -->
 <script src="{% static 'js/modernizr.js' %}"></script>
 

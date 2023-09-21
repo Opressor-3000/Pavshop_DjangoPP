@@ -25,22 +25,6 @@ register = template.Library()
         7   Store
 '''
 
-@register.simple_tag
-def get_discount(): #  показать действующие дисконты в которых есть товары 
-    discount = Discount.objects.filter(deleted_at=False)
-    return discount
-
-
-@register.simple_tag
-def get_popular():
-    global popular
-    popular = Variant.objects.annotate(Count('order'))
-    return popular
-
-@register.simple_tag
-def get_newarrivals():
-    return Variant.objects.order_by('-created_at')[:4]
-
 
 @register.simple_tag
 def get_styles():
@@ -59,12 +43,18 @@ def get_stores():
 
 @register.simple_tag
 def get_top_rate():
-    return popular[:3]
+    return Variant.objects.annotate(Count('order'))[:3]
 
 
 @register.simple_tag
-def get_shopcart():
-    return Variant.objects.filter()
+def get_shopcart(request):
+    variant = Variant.objects.filter(varianttostore__quantity__gt=0)
+    return variant.producttobasket__variant.filter(user=request.GET.get['user'], status=1)
+
+@register.simple_tag
+def variant_in_current_order(request):
+    variantstobasket = Variant.object.filter(producttobasket__user__id=request.GET.get['user'], producttobasket__order__status__id=1)
+    return variantstobasket
 
 
 from django import template
@@ -79,4 +69,17 @@ def categories():
     categories = Category.objects.all()
     # categories = cat.product__category.filter(variant__varianttostore__quantity__gt=0)
     return categories
+
+def current_price(variant):
+    current_discount = variant.discount__discounts.filter(deleted_at=False, date_begin__gte=datetime.now(), date_end__lte=datetime.now())
+    if current_discount['discount_id'] == Discount.objects.get(id=1):
+        return variant
+    if current_discount['discount_id'] == Discount.objects.get(id=2):
+        pass
+    if current_discount['discount_id'] == Discount.objects.get(id=3):
+        pass
+    if current_discount['discount_id'] == Discount.objects.get(id=1):
+        pass
+
+
 

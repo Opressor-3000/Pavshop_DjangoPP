@@ -29,7 +29,7 @@ class User(AbstractUser):
     def __str__(self):
         if self.get_full_name():
             return self.get_full_name()
-        return self.username
+        return f'{self.first_name} "{self.username}" {self.last_name}'
     
     def get_absolute_url(self):
         return reverse_lazy('user', kwargs={'user': self.id})

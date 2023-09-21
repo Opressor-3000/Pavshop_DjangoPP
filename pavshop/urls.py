@@ -21,8 +21,9 @@ from pavshop import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
+    path('', include('core.urls'), name='core'),
+    path('', include('social_django.urls', namespace='social')),
     path('account/', include('account.urls'), name='account'),
     path('blog/', include('blog.urls'), name='bloglist'),
     path('products/', include('product.urls'), name='product'),
-    path('', include('core.urls'), name='core'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

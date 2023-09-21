@@ -134,7 +134,7 @@ class ColorAdmin(admin.ModelAdmin):
 
 
 class CollectionAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ['title', 'brand_id']}
+    prepopulated_fields = {"slug": ['brand_id', 'title']}
     list_display = ('pk', 'title', 'brand_id', 'user')
     list_display_links = ['title']
     search_fields = ('title',)

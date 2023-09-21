@@ -6,11 +6,11 @@ from typing import Any, Dict
 from django.db import models
 from django.views.generic import ListView, DetailView, CreateView
 from django.db.models.query import QuerySet
+from django.db.models import Count, Sum
 
 
 from product.models import Product, Variant, Discount, Category, Brand, Style
 from .models import *
-from core.templatetags.nav_tags import get_discount
 
 
 def about_us(request):
@@ -34,16 +34,18 @@ class HomePage(ListView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        discount = get_discount()
-        discount_prod = Variant.objects.filter(discount_id__in = discount)
+        discount = Discount.objects.filter(deleted_at=False, date_begin__gte=datetime.now(), date_end__lte=datetime.now())
+        discount_prod = Variant.objects.filter(discount_id__in=discount)
         context['discount_prod']=discount_prod[:3]
    
         # context['discount'] = Variant.objects.filter(discount_id=discount).order_by('-discount_id__created_at')[:3]
         return context
     
     def get_queryset(self) -> QuerySet[Any]:    
-        variants = Variant.objects.filter(varianttostore__quantity__gte = 1)
+        variants = Variant.objects.filter(varianttostore__quantity__gte=1)
         return variants
     
 
 
+
+# Variant.objects.order_by('-created_at')[:4]

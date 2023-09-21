@@ -52,7 +52,7 @@ class Discount(AbstractModel):
     decrease_by = DecimalField(max_digits=10, decimal_places=2, blank=True) # сумма на которую надо снизить стоимость
     price_sum = DecimalField(max_digits=10, decimal_places=2, blank=True, null=True) # сумму которую надо набрать что бы активировать скидку
     other_product = ForeignKey('Product', blank=True, null=True, on_delete=CASCADE) # подарок
-    discount_persent = DecimalField(max_digits=8, blank=True, decimal_places=2) # процент скидки на которую надо снизить стоимость товара  
+    discount_persent = DecimalField(max_digits=4, blank=True, decimal_places=2) # процент скидки на которую надо снизить стоимость товара  
     date_begin = DateField() 
     date_end = DateField() 
     user = ForeignKey(User, on_delete=PROTECT)
@@ -73,6 +73,10 @@ class Discount(AbstractModel):
                 check = Q(discount_persent__lte=100), 
                 name = 'persent',
             ),
+            CheckConstraint(
+                check = Q(date_begin__lt=F('date_end')),
+                name = 'discount_time'
+            )
         ]
 
 class ProductReview(AbstractModel):
@@ -202,7 +206,7 @@ class Collection(AbstractModel):
     deleted_at = BooleanField(default=False)
 
     def __str__(self) -> str:
-        return f'{self.brand_id} {self.title}'
+        return self.title
     
     def get_absolute_url(self):
         return reverse_lazy('collection', kwargs={'collection':self.title})
@@ -278,7 +282,7 @@ class Variant(AbstractModel):
     slug = SlugField(max_length=100, unique=True, db_index=True, verbose_name='Varian_slug')
     product_id = ForeignKey(Product, on_delete=CASCADE, related_name='variantofproduct', verbose_name='product id')
     price = DecimalField(max_digits=10, decimal_places=2, db_index=True, verbose_name='price')
-    discount_id = ManyToManyField(Discount, verbose_name='Discont', blank=True)
+    discount_id = ManyToManyField(Discount, verbose_name='Discont', blank=True, related_name='discounts')
     unit = ForeignKey(Unit, on_delete=PROTECT, null=True, verbose_name='Unit')
     tag = ManyToManyField(Tag, blank=True, related_name='variant_tag')
     parent = ManyToManyField('self', blank=True)
