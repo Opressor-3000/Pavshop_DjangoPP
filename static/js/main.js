@@ -263,3 +263,22 @@ jQuery(document).ready(function($){
 });
 
 
+// Add wishlist
+$(document).on("click", ".add_wishlist", function() {
+	var _pid=$(this).attr('data-product');
+	var _vm = $(this);
+	$.ajax({
+		url:"{{ url('add_wishlist/') }}",
+		data: {
+			product:_pid
+		},
+		dataType:'json',
+		success:function(res){
+			if(res.bool==true){
+				_vm.addClass('disable_wishlist').removeClass('add_wishlist');
+			}
+		}
+	});
+});
+
+

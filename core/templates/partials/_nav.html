@@ -1,11 +1,9 @@
 {% load static %}
 {% load nav_tags %}
+{% load cat_tag %}
+{% load brand_tag %}
+{% load shopcart_tag %}
 {% categories as cat %}
-{% get_shopcart as shopcart %}
-{% get_top_rate as toprate %}
-{% get_stores as stores %}
-{% get_brands as brands %}
-{% get_syles as styles %}
 
 
 {% load mptt_tags %}
@@ -31,7 +29,7 @@
           <ul class="nav">
             <li class="dropdown active"> <a href="{% url 'core:homepage' %}" class="dropdown-toggle" data-toggle="dropdown">Main</a>
               <ul class="dropdown-menu">
-                <li> <a href="{% url 'product:product_list' %}?new={% newarrs %}"> New Arrival</a> </li>
+                <li> <a href="{% url 'product:product_list' %}?new={{ new_arrivals }}"> New Arrival</a> </li>
                 <li> <a href="{% url 'product:product_list' %}"> Popular</a> </li>
                 <li> <a href="{% url 'product:product_list' %}"> Discounts</a> </li>
               </ul>
@@ -95,15 +93,16 @@
                     <h6>Top Rate Products</h6>
                     <div class="top-rated">
                       <ul>
-                        {% for p in get_top_rate() %}
+                        {% get_top_rate as toprate %}
+                        {% for tr in toprate %}
                         <li>
                           <div class="media-left">
                             <div class="cart-img"> <a href="#"> <img class="media-object img-responsive" src="{% static 'images/cart-img-1.jpg' %}" alt="..."> </a> </div>
                           </div>
                           <div class="media-body">
-                            <h6 class="media-heading">{{ p.title }}</h6>
+                            <h6 class="media-heading">{{ tr.title }}</h6>
                             <div class="stars"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
-                            <span class="price">{{ p.price }} USD</span> </div>
+                            <span class="price">{{ tr.price }} USD</span> </div>
                         </li>
                         {% endfor %}
                       </ul>
@@ -145,18 +144,19 @@
             <!-- USER BASKET -->
             <li class="dropdown user-basket"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="icon-basket-loaded"></i> </a>
               <ul class="dropdown-menu">
-                {% for c in shopcart %}
+                {% get_shopcart as shopcart %}
+                {% for sc in shopcart %}
                 <li>
                   <div class="media-left">
-                    <div class="cart-img"> <a href="{% url 'product:product' variant_slug %}"> <img class="media-object img-responsive" src="{{ c.image.url }}" alt="..."> </a> </div>
+                    <div class="cart-img"> <a href="{% url 'product:product' variant_slug %}"> <img class="media-object img-responsive" src="{{ sc.image.url }}" alt="..."> </a> </div>
                   </div>
                   <div class="media-body">
                     <h6 class="media-heading">WOOD CHAIR</h6>
-                    <span class="price">{% c.price %} USD</span> <span class="qty">QTY: {% c.count %} </span> </div>
+                    <span class="price">{% sc.price %} USD</span> <span class="qty">QTY: {% sc.count %} </span> </div>
                 </li>
                 {% endfor %}
                 <li>
-                  <h5 class="text-center">SUBTOTAL: {% get_subtotal %} USD</h5>
+                  <h5 class="text-center">SUBTOTAL: {% get_subtotal as subtotal %} USD</h5>
                 </li>
                 <li class="margin-0">
                   <div class="row">

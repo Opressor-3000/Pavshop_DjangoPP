@@ -9,6 +9,7 @@ from rest_framework import generics
 
 from .serializers import ProductSerializer
 from .models import Variant, Product
+from core.utils import count_variant
 # from core.templatetags.nav_tags import get_discount
 
 
@@ -30,7 +31,7 @@ class ProductList(ListView):
     
     def get_queryset(self) -> QuerySet[Any]:
         if self.request.method == 'GET':
-            queryset = super().get_queryset()
+            queryset = count_variant()
             req = self.request.GET
             if req.get['search']:
                 queryset = queryset.filter(
@@ -64,6 +65,8 @@ class ProductList(ListView):
                 queryset = queryset.filter(price__gte=req.get['minprice'])
             if req.getlist['maxprice']:
                 queryset = queryset.filter(price__lte=req.get['maxprice'])
+            if req.getlist['new_arrivals']:
+                queryset = queryset.order_by('-created_at')
             return queryset
             
             

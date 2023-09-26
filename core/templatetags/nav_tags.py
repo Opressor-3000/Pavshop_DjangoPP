@@ -32,28 +32,19 @@ def get_styles():
 
 
 @register.simple_tag
-def get_brands():
-    return Brand.objects.filter(product__variant__varianttostore__quantity__gt=0)
-
-
-@register.simple_tag
 def get_stores():
     return Store.objects.all()
 
 
-@register.simple_tag
-def get_top_rate():
-    return Variant.objects.annotate(Count('order'))[:3]
+# @register.simple_tag
+# def get_shopcart1(user):
+#     variant = Variant.objects.filter(varianttostore__quantity__gt=0)
+#     return variant.producttobasket__variant.filter(user=user, status=1)
 
 
 @register.simple_tag
-def get_shopcart(request):
-    variant = Variant.objects.filter(varianttostore__quantity__gt=0)
-    return variant.producttobasket__variant.filter(user=request.GET.get['user'], status=1)
-
-@register.simple_tag
-def variant_in_current_order(request):
-    variantstobasket = Variant.object.filter(producttobasket__user__id=request.GET.get['user'], producttobasket__order__status__id=1)
+def variant_in_current_order(user):
+    variantstobasket = Variant.object.filter(producttobasket__user__id=user, producttobasket__order__status__id=1)
     return variantstobasket
 
 

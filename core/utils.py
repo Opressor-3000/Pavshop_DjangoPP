@@ -1,8 +1,9 @@
 from functools import wraps
 
 from product.models import Category, Brand, Style, Collection, Variant
-from account.models import Order
+from account.models import Order, ProductToBasket
 from core.templatetags.nav_tags import get_shopcart
+from django.db.models import Count, Sum, Q
 
 class BaseMixin:
   def get_mainmenu_context(self, **kwargs):
@@ -22,3 +23,12 @@ class CustomMixin:
     @wraps
     def inner(*args, **kwargs):
       pass
+
+
+'''  показать товары у которых суммарное кол-во в стоке больше чем суммарное кол-во в заказах 1, 2 
+     Вычисляем кол-во variant в наличии (не оплаченные  и не зарезервированне ) во всех store  filter('quant__gt=0')'''
+
+def count_variant():
+  count_to_store = Variant.objects.annotate(quantit = Sum('varianttostore__quantity') - Sum('variant__count')).filter(quantit__gt=0)
+  return count_to_store
+
