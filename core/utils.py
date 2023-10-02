@@ -2,7 +2,6 @@ from functools import wraps
 
 from product.models import Category, Brand, Style, Collection, Variant
 from account.models import Order, ProductToBasket
-from core.templatetags.nav_tags import get_shopcart
 from django.db.models import Count, Sum, Q
 
 class BaseMixin:
@@ -15,8 +14,7 @@ class CustomMixin:
     def inner(*args, **kwargs):
       order_is_processed = Order.objects.filter(user=kwargs['user'], status=1)
       return func(*args, **kwargs)
-    
-    
+      
     return inner
 
   def discount_price(func):
@@ -29,6 +27,5 @@ class CustomMixin:
      Вычисляем кол-во variant в наличии (не оплаченные  и не зарезервированне ) во всех store  filter('quant__gt=0')'''
 
 def count_variant():
-  count_to_store = Variant.objects.annotate(quantit = Sum('varianttostore__quantity') - Sum('variant__count')).filter(quantit__gt=0)
-  return count_to_store
-
+  return Variant.objects.annotate(quantit = Sum('varianttostore__quantity') - Sum('variant__count')).filter(quantit__gt=0)
+  

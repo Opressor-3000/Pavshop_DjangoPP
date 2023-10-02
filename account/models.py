@@ -5,16 +5,31 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-
+from django.contrib.auth.validators import UnicodeUsernameValidator
 
 from core.Abstact_models import AbstractModel
 
 
 class User(AbstractUser):
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'phone']
+    username_validator = UnicodeUsernameValidator
 
-    email = models.EmailField(_('email address'), unique=True)
+    username = models.CharField(
+        _("username"),
+        max_length=150,
+        unique=False,
+        null=True,
+        help_text=_(
+            "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+        ),
+        validators=[username_validator],
+        error_messages={
+            "unique": _("A user with that username already exists."),
+        },
+    )
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+    
+    email = models.EmailField(_('email address'), unique=True,blank=True)
     phone = models.CharField(max_length=20, db_index=True, unique=True,verbose_name='phone')
     avatar = models.ImageField(upload_to='avatars/', blank=True)
     saller = models.BooleanField(default=False, verbose_name='Saller')
@@ -29,7 +44,7 @@ class User(AbstractUser):
     def __str__(self):
         if self.get_full_name():
             return self.get_full_name()
-        return f'{self.first_name} "{self.username}" {self.last_name}'
+        return f'{self.first_name} {self.last_name}'
     
     def get_absolute_url(self):
         return reverse_lazy('user', kwargs={'user': self.id})
@@ -101,7 +116,7 @@ class WishList(AbstractModel):
 
 
 class ProductToBasket(AbstractModel):
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='user_basket')
     order = models.ForeignKey(Order, on_delete=models.PROTECT, verbose_name='Order', related_name='order')
     variant = models.ForeignKey(Variant, on_delete=models.PROTECT, verbose_name='Variant', related_name='variant')
     count = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Count')

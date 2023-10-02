@@ -1,108 +1,156 @@
 {% load static %}
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 
 {% block content %}
   
-  <!--======= SUB BANNER =========-->
-  <section class="sub-bnr" data-stellar-background-ratio="0.5">
-    <div class="position-center-center">
-      <div class="container">
-        <h4>LOGIN</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus maximus vehicula. 
-          Sed feugiat, tellus vel tristique posuere, diam</p>
-        <ol class="breadcrumb">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">PAGES</a></li>
-          <li class="active">LOGIN</li>
-        </ol>
-      </div>
-    </div>
-  </section>
+
   
   <!-- Content -->
   <div id="content"> 
-    
+
     <!--======= PAGES INNER =========-->
     <section class="chart-page padding-top-100 padding-bottom-100">
       <div class="container"> 
-        
-        <!-- Payments Steps -->
-        <div class="shopping-cart"> 
+
+        <!--======= PRODUCT DESCRIPTION =========-->
+        <div class="item-decribe"> 
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs animate fadeInUp" data-wow-delay="0.4s" role="tablist">
+            <li role="presentation" class="active"><a href="#descr" role="tab" data-toggle="tab">SHOPPING CART</a></li>
+            <li role="presentation"><a href="#wishlist" role="tab" data-toggle="tab">WISHLIST</a></li>
+            <li role="presentation"><a href="#review" role="tab" data-toggle="tab">MY REVIEWS</a></li>
+            <li role="presentation"><a href="#posts" role="tab" data-toggle="tab">MY POSTS</a></li>
+          </ul>
           
-          <!-- SHOPPING INFORMATION -->
-          <div class="cart-ship-info">
-            <div class="row"> 
+          <!-- Tab panes -->
+          <div class="tab-content animate fadeInUp" data-wow-delay="0.4s"> 
+            <!-- SHOPPING CART -->
+            <div role="tabpanel" class="tab-pane fade in active" id="descr">
+              <div class="shopping-cart"> 
+          
+                <!-- SHOPPING INFORMATION -->
+                <div class="cart-ship-info">
+                  <div class="row"> 
+                    
+                    <!-- ESTIMATE SHIPPING & TAX -->
+                    <div class="col-sm-7">
+                      <h6>LOGIN YOUR ACCOUNT</h6>
+                      <form>
+                        <ul class="row">
+                          
+                          <!-- Name -->
+                          <li class="col-md-12">
+                            <label> USERNAME
+                              <input type="text" name="first-name" value="" placeholder="">
+                            </label>
+                          </li>
+                          <!-- LAST NAME -->
+                          <li class="col-md-12">
+                            <label> PASSWORD
+                              <input type="password" name="last-name" value="" placeholder="">
+                            </label>
+                          </li>
+                          
+                          <!-- LOGIN -->
+                          <li class="col-md-4">
+                            <button type="submit" class="btn">LOGIN</button>
+                          </li>
+                          
+                          <!-- CREATE AN ACCOUNT -->
+                          <li class="col-md-4">
+                            <div class="checkbox margin-0 margin-top-20">
+                              <input id="checkbox1" class="styled" type="checkbox">
+                              <label for="checkbox1"> Stay me Login</label>
+                            </div>
+                          </li>
+                          
+                          <!-- FORGET PASS -->
+                          <li class="col-md-4">
+                            <div class="checkbox margin-0 margin-top-20 text-right">
+                              <a href="#.">Forget Password</a>
+                            </div>
+                          </li>
+                        </ul>
+                      </form>
+                      
+                    </div>
+                    
+                    <!-- SUB TOTAL -->
+                    <div class="col-sm-5">
+                      <h6>LOGIN WITH</h6>
+                      
+                      <ul class="login-with">
+                        <li>
+                            <a href="#."><i class="fa fa-facebook"></i>FACEBOOK</a>
+                          
+                          </li>
+                          
+                          <li>
+                            <a href="#."><i class="fa fa-google"></i>GOOGLE</a>
+                          
+                          </li>
+                          
+                          <li>
+                            <a href="#."><i class="fa fa-twitter"></i>TWITTER</a>
+                          
+                          </li>
+                      
+                      </ul>
+                      
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- WISHLIST -->
+            <div role="tabpanel" class="tab-pane fade" id="wishlist">
+              <h6>3 REVIEWS FOR SHIP YOUR IDEA</h6>
               
-              <!-- ESTIMATE SHIPPING & TAX -->
-              <div class="col-sm-7">
-                <h6>LOGIN YOUR ACCOUNT</h6>
-                <form>
-                  <ul class="row">
-                    
-                    <!-- Name -->
-                    <li class="col-md-12">
-                      <label> USERNAME
-                        <input type="text" name="first-name" value="" placeholder="">
-                      </label>
-                    </li>
-                    <!-- LAST NAME -->
-                    <li class="col-md-12">
-                      <label> PASSWORD
-                        <input type="password" name="last-name" value="" placeholder="">
-                      </label>
-                    </li>
-                    
-                    <!-- LOGIN -->
-                    <li class="col-md-4">
-                      <button type="submit" class="btn">LOGIN</button>
-                    </li>
-                    
-                    <!-- CREATE AN ACCOUNT -->
-                    <li class="col-md-4">
-                      <div class="checkbox margin-0 margin-top-20">
-                        <input id="checkbox1" class="styled" type="checkbox">
-                        <label for="checkbox1"> Stay me Login</label>
-                      </div>
-                    </li>
-                    
-                    <!-- FORGET PASS -->
-                    <li class="col-md-4">
-                      <div class="checkbox margin-0 margin-top-20 text-right">
-                        <a href="#.">Forget Password</a>
-                      </div>
-                    </li>
-                  </ul>
-                </form>
-                
+              <!-- REVIEW PEOPLE 1 -->
+              <div class="media">
+                <div class="media-left"> 
+                  <!--  Image -->
+                  <div class="avatar"> <a href="#"> <img class="media-object" src="images/avatar-1.jpg" alt=""> </a> </div>
+                </div>
+                <!--  Details -->
+                <div class="media-body">
+                  <p class="font-playfair">“Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                    labore et dolore magna aliqua.”</p>
+                  <h6>TYRION LANNISTER <span class="pull-right">MAY 10, 2016</span> </h6>
+                </div>
               </div>
               
-              <!-- SUB TOTAL -->
-              <div class="col-sm-5">
-                <h6>LOGIN WITH</h6>
-                
-                <ul class="login-with">
-                	<li>
-                    	<a href="#."><i class="fa fa-facebook"></i>FACEBOOK</a>
-                    
-                    </li>
-                    
-                    <li>
-                    	<a href="#."><i class="fa fa-google"></i>GOOGLE</a>
-                    
-                    </li>
-                    
-                    <li>
-                    	<a href="#."><i class="fa fa-twitter"></i>TWITTER</a>
-                    
-                    </li>
-                
-                </ul>
-                
-                
+              <!-- REVIEW PEOPLE 1 -->
+              {% for r in review %}
+              <div class="media">
+                <div class="media-left"> 
+                  <!--  Image -->
+                  <div class="avatar"> <a href="#"> <img class="media-object" src="{{ r.avatar }}" alt=""> </a> </div>
+                </div>
+                <!--  Details -->
+                <div class="media-body">
+                  <p class="font-playfair">{{ r.text }}</p>
+
+                  <h6><span class="pull-right">{{ r.date }}</span> </h6>
+                </div>
               </div>
+              
+            </div>
+            
+            <!-- MY REVIEWS -->
+            <div role="tabpanel" class="tab-pane fade" id="review"> 
+            </div>
+            
+            <!-- MY POSTS -->
+            <div role="tabpanel" class="tab-pane fade" id="posts"> 
             </div>
           </div>
         </div>
+
+        <!-- Payments Steps -->
+
       </div>
     </section>
     

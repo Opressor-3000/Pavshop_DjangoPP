@@ -37,7 +37,7 @@ class ProductList(ListView):
                 queryset = queryset.filter(
                     Q(title__icontains=req.get['search']) | 
                     Q(product__brand_id__icontains=req.get['search']) | 
-                    Q(product__collection__icontais=req.get['search']) | 
+                    Q(product__collection__icontains=req.get['search']) | 
                     Q(product__title__icontains=req.get['search']) | 
                     Q(product__style__icontains=req.get['search']) | 
                     Q(color__icontains=req.get['search']) | 

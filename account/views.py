@@ -5,7 +5,10 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView, View
 from django.db.models.query import QuerySet
+from django.contrib.auth import logout as django_logout, authenticate, login as django_login
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
 from .tasks import send_email
 from django.utils.encoding import force_str
@@ -20,7 +23,7 @@ from .utils import account_activation_token
 from .models import User
 
 
-class UserAccount(DeleteView):  
+class UserAccount(ListView):  
     model = User
     template_name = 'account/account.html'
     context_object_name = 'user'
@@ -31,36 +34,34 @@ class ActivateView(View):
         uidb64 = kwargs.get("uidb64")
         token = kwargs.get("token")
         try:
-            uid = force_str(urlsafe_base64_decode(uid))
-            user = User.object.get(pk=uid)
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
         except(TypeError, ValueError, OverflowError, user.DoesNotExist):
             user = None
 
-        if user is not None and account_activation_token.check_token(user, token):
+        if user and account_activation_token.check_token(user, token):
             user.is_active = True
             user.save()
             return redirect('account:login')
         else:
-            return render(request, 'activation.html')
+            return render(request, 'account/activation.html')
 
 
 class UserRegister(CreateView):
     form_class = RegisterForm
     template_name = 'account/register.html'
-    success_url = reverse_lazy('account/login')
+    success_url = reverse_lazy('account:login')
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         response = super().form_valid(form)
         user = form.save(commit=False)
         user.is_active = False
         user.save()
-        current_site = self.request.META['HTTP_HOST']
+        current_site =get_current_site(self.request)
         send_email(user, current_site)
-
         return response
 
     def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
-        print(request.POST)
         return super().post(request, *args, **kwargs)
     
     def form_invalid(self, form: BaseModelForm) -> HttpResponse:    
@@ -68,13 +69,31 @@ class UserRegister(CreateView):
     
 
 class LoginView(LoginView):
-    model = User
-    form_class = UserAuthForm
+    redirect_authenticated_user = True
     template_name = 'account/login.html'
-    context_object_name = 'data'
+    form_class = UserAuthForm
 
+    def get_success_url(self):
+        return reverse_lazy('core:homepage')
+    
+def login(request):
+    if request.method == "POST":
+        form = UserAuthForm(data=request.POST)
+        if form.is_valid():
+            user = authenticate(email=form.cleaned_data["email"], password=form.cleaned_data["password"])
+            if user:
+                django_login(request, user)
+                return redirect(reverse_lazy("core:homepage"))
+    else: form = UserAuthForm()
 
-class Basket(ListView):
+    context = {
+        "form": form
+    }
+
+    return render(request, "account/login.html", context)
+    
+
+class Basket(LoginRequiredMixin, ListView):
     model = ProductToBasket
     template_name = 'account/shopping_cart.html'
     context_object_name = 'shopcart'
@@ -83,17 +102,21 @@ class Basket(ListView):
         return super().get_queryset()
 
 
-class Checkout(CreateView):
+class Checkout(LoginRequiredMixin, CreateView):
     model = Address
     template_name = 'account/checkout.html'
 
 
-class Wishlist(ListView):  
+class Wishlist(LoginRequiredMixin, ListView):  
     model = User
     template_name = 'account/wishlist.html'
     context_object_name = 'wishlist'
 
+    def add_to_wishlist(self):
+        pass
 
+@login_required
 def logout(request):
-    return render('index.html')
+    django_logout(request)
+    return redirect(reverse_lazy('account:login'))
 

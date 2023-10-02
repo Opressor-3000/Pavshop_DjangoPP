@@ -42,7 +42,7 @@ class UserAuthForm(AuthenticationForm):
         'class': 'col-md-12',
         'placeholder': 'email'
     }))
-    password = EmailField(widget=TextInput(attrs={
+    password = CharField(widget=TextInput(attrs={
         'name': 'password',
         'class': 'col-md-12',
         'placeholder': 'password'

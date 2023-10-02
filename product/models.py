@@ -260,7 +260,7 @@ class Product(AbstractModel): #11
 
 class Image(AbstractModel):
     image = ImageField(upload_to='blog_image/', verbose_name='Image')
-    variant = ForeignKey('Variant', verbose_name='Image', on_delete=CASCADE)
+    variant = ForeignKey('Variant', verbose_name='Image', on_delete=CASCADE, blank=True, null=True)
     user = ForeignKey(User, on_delete=PROTECT, verbose_name='creater', related_name='user_add_image')
     is_main = BooleanField(default=False)
 

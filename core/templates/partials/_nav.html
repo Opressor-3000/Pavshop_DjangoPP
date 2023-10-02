@@ -1,8 +1,10 @@
 {% load static %}
-{% load nav_tags %}
 {% load cat_tag %}
+{% load top_tag %}
 {% load brand_tag %}
-{% load shopcart_tag %}
+{% load shopcart_tags %}
+{% load subtotal_tag %}
+{% load new_arrival_tag %}
 {% categories as cat %}
 
 
@@ -29,6 +31,7 @@
           <ul class="nav">
             <li class="dropdown active"> <a href="{% url 'core:homepage' %}" class="dropdown-toggle" data-toggle="dropdown">Main</a>
               <ul class="dropdown-menu">
+                {% new_arrival_tag as new_arrivals %}
                 <li> <a href="{% url 'product:product_list' %}?new={{ new_arrivals }}"> New Arrival</a> </li>
                 <li> <a href="{% url 'product:product_list' %}"> Popular</a> </li>
                 <li> <a href="{% url 'product:product_list' %}"> Discounts</a> </li>
@@ -132,31 +135,38 @@
             <!-- USER INFO -->
             <li class="dropdown user-acc"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" ><i class="icon-user"></i> </a>
               <ul class="dropdown-menu">
+                {% if request.user.is_authenticated %}
                 <li>
-                  <h6>HELLO! {{user.first_name}} {{ user.last_name }}</h6>
+                  <h6>HELLO! {{user.first_name}}</h6>
                 </li>
-                <li><a href="#">MY CART</a></li>
-                <li><a href="#">ACCOUNT INFO</a></li>
-                <li><a href="#">LOG OUT</a></li>
+                <li><a href="{% url 'account:shopcart' %}">MY CART</a></li>
+                <li><a href="{% url 'account:profile' %}">ACCOUNT</a></li>
+                <li><a href="{% url 'account:logout' %}">LOG OUT</a></li>
+                {% else %}
+                <li><a href="{% url 'account:login' %}">LOGIN</a></li>
+                <li><a href="{% url 'account:register' %}">SIGN IN</a></li>
+                {% endif %}
               </ul>
             </li>
             
             <!-- USER BASKET -->
+            {% if request.user.is_authenticated %}
             <li class="dropdown user-basket"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="icon-basket-loaded"></i> </a>
               <ul class="dropdown-menu">
-                {% get_shopcart as shopcart %}
+                {% get_shopcarts request as shopcart %}
+                {}
                 {% for sc in shopcart %}
                 <li>
                   <div class="media-left">
-                    <div class="cart-img"> <a href="{% url 'product:product' variant_slug %}"> <img class="media-object img-responsive" src="{{ sc.image.url }}" alt="..."> </a> </div>
+                    <div class="cart-img"> <a href="{{ variant.get_absolute_url }}"> <img class="media-object img-responsive" src="{{ sc.image.url }}" alt="..."> </a> </div>
                   </div>
                   <div class="media-body">
-                    <h6 class="media-heading">WOOD CHAIR</h6>
-                    <span class="price">{% sc.price %} USD</span> <span class="qty">QTY: {% sc.count %} </span> </div>
+                    <h6 class="media-heading"> {{ sc.variant.title }} </h6>
+                    <span class="price">{{ sc.variant.price }} USD</span> <span class="qty">QTY: {{ sc.count }} </span> </div>
                 </li>
                 {% endfor %}
                 <li>
-                  <h5 class="text-center">SUBTOTAL: {% get_subtotal as subtotal %} USD</h5>
+                  <h5 class="text-center">SUBTOTAL:  USD</h5>
                 </li>
                 <li class="margin-0">
                   <div class="row">
@@ -166,6 +176,7 @@
                 </li>
               </ul>
             </li>
+            {% endif %}
             
             <!-- SEARCH BAR -->
             <li class="dropdown"> <a href="javascript:void(0);" class="search-open"><i class=" icon-magnifier"></i></a>
@@ -173,8 +184,9 @@
                 <div class="search-overlay"></div>
                 <div class="position-center-center">
                   <div class="search">
-                    <form>
-                      <input type="search" placeholder="Search Shop">
+                    <form action="{% url 'product:product_list'%}" method="get">
+                      
+                      <input name="search" type="search"  placeholder="Search Shop">
                       <button type="submit"><i class="icon-check"></i></button>
                     </form>
                   </div>

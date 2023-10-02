@@ -32,7 +32,7 @@ class AccountAdmin(admin.ModelAdmin):
     list_display = ('username', 'first_name','last_name', 'saller', 'bloger', 'is_active', 'is_staff')
     list_display_links = ('username', 'first_name', 'last_name')
     search_fields = ('first_name', 'last_name', 'username', 'phone', 'is_active', 'is_staff')
-    list_filter = ('username', 'first_name', 'last_name', 'phone')
+    list_filter = ('first_name', 'last_name', 'phone')
     list_editable = ('is_active', 'bloger', 'saller', )
 
 class ProductBasketAdmin(admin.ModelAdmin):

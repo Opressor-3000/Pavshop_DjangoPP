@@ -14,3 +14,5 @@
 5. git checkout zaur 
 6. git pull origin dev
 
+
+git branch yusif && git add . && git commit -m 'add validation email' && git push origin yusif && git checkout dev && git pull origin dev && git merge yusif && git push origin dev && git checkout yusif

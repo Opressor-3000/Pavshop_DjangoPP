@@ -144,7 +144,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-LOGIN_REDIRECT_URL = reverse_lazy('account:profile')
+LOGIN_REDIRECT_URL = reverse_lazy('account:homepage')
 LOGOUT_REDIRECT_URL = reverse_lazy('account:login')
 
 STATIC_URL = '/static/'
@@ -160,10 +160,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = "pavshop.backend.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-EMAIL_HOST = 'smpt.gmail.com'
-EMAIL_PORT = '587'
-EMAIL_HOST_USER = 'fexriiphone@gmail.com'
-EMAIL_HOST_PASSWORD = 'sgbcyzxzmlnsokmr'
+EMAIL_HOST = "smtp.gmail.com"
+
 EMAIL_USE_TLS = True
+
+EMAIL_PORT = 587
+
+EMAIL_HOST_USER = "fexriiphone@gmail.com"
+
+EMAIL_HOST_PASSWORD = "oftx ayxd jyqk fdzc "
