@@ -107,28 +107,28 @@
       
       <!-- New Arrival -->
       <div class="arrival-block single-img-demos"> 
-        {% for v in toplist %}
+        {% for new in new_arrival %}
         <div class="item"> 
           <!-- Images --> 
-          <img class="img-1" src="{{ v.get_main_img }}" alt=""> 
+          <img class="img-1" src="{{ new.get_main_img }}" alt=""> 
           <!-- Overlay  -->
           <div class="overlay"> 
             <!-- Price --> 
-            <span class="price"><small>$</small>{{ v.price }}</span>
+            <span class="price"><small>$</small>{{ new.price }}</span>
             <div class="position-center-center"> 
               <a href="#" data-lighter>
                 <i class="icon-magnifier"></i>
               </a> 
               <a href="#."><i class="icon-basket"></i></a> 
               {% if user.is_authenticated %}
-              <button class="add_wishlist" data-product="{{ v.id }}"><i class="icon-heart"></i></button>
+              <button class="add_wishlist" data-product="{{ new.id }}"><i class="icon-heart"></i></button>
               {% else %}
               <button class="disable_wishlist"><i class="icon-heart"></i></button>
               {% endif %}
             </div>
           </div>
           <!-- Item Name -->
-          <div class="item-name"> <a href="#">{{ v.title }}</a>
+          <div class="item-name"> <a href="#">{{ new.title }}</a>
             <p>Lorem ipsum dolor sit amet</p>
           </div>
         </div>
@@ -148,19 +148,19 @@
 
         <!-- Popular Item Slide -->
         <div class="papular-block block-slide single-img-demos"> 
-          {% for pop in product %}
+          {% for pop in popular_prod %}
           <!-- Item -->
           <div class="item"> 
             <!-- Item img -->
-            <div class="item-img"> <img class="img-1" src="{% static 'images/product-1.jpg' %}" alt="" > 
+            <div class="item-img"> <img class="img-1" src="{{ pop.get_main_img }}" alt="" > 
               <!-- Overlay -->
               <div class="overlay">
                 <div class="position-center-center">
                   <div class="inn">
-                    <a href="images/product-1.jpg" data-lighter>
+                    <a href="{{ pop.get_main_img }}" data-lighter>
                       <i class="icon-magnifier"></i>
                     </a> 
-                    <a href="#."><i class="icon-basket"></i></a> 
+                    <a href=""><i class="icon-basket"></i></a> 
                     {% if user.is_authenticated %}
                     <button class="add_wishlist" data-product=""><i class="icon-heart"></i></button>
                     {% else %}
@@ -175,7 +175,7 @@
               <p>Lorem ipsum dolor sit amet</p>
             </div>
             <!-- Price --> 
-            <span class="price"><small>$</small>299</span> 
+            <span class="price"><small>$</small>{{ pop.get_price }}</span> 
           </div>
           {% endfor %}
         </div>

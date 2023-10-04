@@ -15,7 +15,9 @@ urlpatterns = [
     path('shopping_cart/', Basket.as_view(), name = 'shopcart'),
     path('logout/', logout, name='logout'),
     path('', UserAccount.as_view(), name = 'profile'),
-    path("activate/<uidb64>/<token>/", ActivateView.as_view(), name='activation')
+    path("activate/<uidb64>/<token>/", ActivateView.as_view(), name='activation'),
+    path("updateitem", update_item, name='updateitem'),
+
 ]
 
     

@@ -15,4 +15,16 @@
 6. git pull origin dev
 
 
-git branch yusif && git add . && git commit -m 'add validation email' && git push origin yusif && git checkout dev && git pull origin dev && git merge yusif && git push origin dev && git checkout yusif
+git add . && git commit -m 'add order in cart' && git push origin yusif && git checkout dev && git pull origin dev && git merge yusif && git push origin dev && git checkout yusif
+
+
+
+
+     {% for discount in var.get_discount %}
+                  {% if discount.type_id == 2 %}
+                  <div class="on-sale"> {{ var.discount.discount_persent }}% <span>OFF</span> </div>
+                  {% endif %}
+                  {% if discount.type_id == 3 %}
+                  <div class="on-sale"> {{ var.discount.decrease_by }}% <span>OFF</span> </div>
+                  {% endif %}
+                  {% endfor %}

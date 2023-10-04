@@ -8,4 +8,4 @@ register = template.Library()
 
 @register.simple_tag
 def get_brands():
-    return Brand.objects.filter(product__variant__varianttostore__quantity__gt=0)
+    return Brand.objects.filter(brand__variantofproduct__varianttostore__quantity__gt=0).distinct

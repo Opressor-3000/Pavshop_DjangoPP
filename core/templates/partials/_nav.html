@@ -2,9 +2,9 @@
 {% load cat_tag %}
 {% load top_tag %}
 {% load brand_tag %}
+{% load style_tag %}
 {% load shopcart_tags %}
 {% load subtotal_tag %}
-{% load new_arrival_tag %}
 {% categories as cat %}
 
 
@@ -29,19 +29,17 @@
          <!-- NAV -->
         <div class="collapse navbar-collapse" id="nav-open-btn">
           <ul class="nav">
-            <li class="dropdown active"> <a href="{% url 'core:homepage' %}" class="dropdown-toggle" data-toggle="dropdown">Main</a>
+            <li class="dropdown active"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Main</a>
               <ul class="dropdown-menu">
-                {% new_arrival_tag as new_arrivals %}
-                <li> <a href="{% url 'product:product_list' %}?new={{ new_arrivals }}"> New Arrival</a> </li>
-                <li> <a href="{% url 'product:product_list' %}"> Popular</a> </li>
-                <li> <a href="{% url 'product:product_list' %}"> Discounts</a> </li>
+                <li> <a href="{% url 'product:product_list' %}?new_arrival=true"> New Arrival</a> </li>
+                <li> <a href="{% url 'product:product_list' %}?popupal=true"> Popular</a> </li>
+                <li> <a href="{% url 'product:product_list' %}?discount=true"> Discounts</a> </li>
               </ul>
             </li>
-
             <li class="dropdown"> <a href="#." class="dropdown-toggle" data-toggle="dropdown">Categories</a>
               <ul class="dropdown-menu">  
                 {% recursetree cat %}
-                        <li> <a href="/product/category/{{.get_absolute_url}}/">{{ node.title }}</a></li>
+                        <li> <a href="{% url 'product:product_list' %}?category={{ node.id}}">{{ node.title }}</a></li>
                         {% if not node.is_leaf_node %}
                             <ul class="children">
                                 {{ children }}
@@ -56,25 +54,29 @@
               <div class="dropdown-menu two-option">
                 <div class="row">
                   <ul class="col-sm-6">
-                    {% for brn in brand %}
-                    <li> <a href="{% url 'product:product_list' %}?brand={{ brn.id }}">{{ brn.title }}</a></li>
+                    {% get_brands as brands %}
+                    {% for brn in brands %}
+                    <li> <a href="{% url 'product:product_list' %}?brand={{ brn.id }}" class="collection-toggle">{{ brn.title }}</a></li>
                     {% endfor %}
                   </ul>
                   <ul class="col-sm-6">
                     {% for c in collections %}
-                    <li> <a href="{% url 'product:product_list' %}">deodornts</a></li>
+                    <li> <a href="{% url 'product:product_list' %}?collection={{ c.id }}">deodornts</a></li>
                     {% endfor %}
                   </ul>
                 </div>
               </div>
             </li>
-            
-            <li> <a href="#"> Style </a>
-              <ul class="dropdown-menu">
-                {% for stl in style %}
-                <li> <a href="{% url 'product:product_list' %}?style={{ stl.id }}">style</a> </li>>
+
+
+            <li class="dropdown"> <a href="#." class="dropdown-toggle" data-toggle="dropdown">Style</a>
+              <ul class="dropdown-menu">  
+                {% get_style as styles %}
+                {% for stl in styles %}
+                <li> <a href="{% url 'product:product_list' %}?style={{ stl.slug }}">{{stl.title}}</a> </li>
+                
                 {% endfor %}
-              </ul>
+                </ul>
             </li>
             
             <!-- MEGA MENU -->
@@ -137,7 +139,7 @@
               <ul class="dropdown-menu">
                 {% if request.user.is_authenticated %}
                 <li>
-                  <h6>HELLO! {{user.first_name}}</h6>
+                  <h6>HELLO! {{ user.first_name }}</h6>
                 </li>
                 <li><a href="{% url 'account:shopcart' %}">MY CART</a></li>
                 <li><a href="{% url 'account:profile' %}">ACCOUNT</a></li>
@@ -184,8 +186,7 @@
                 <div class="search-overlay"></div>
                 <div class="position-center-center">
                   <div class="search">
-                    <form action="{% url 'product:product_list'%}" method="get">
-                      
+                    <form  action="{% url 'product:product_list'%}" method="get">
                       <input name="search" type="search"  placeholder="Search Shop">
                       <button type="submit"><i class="icon-check"></i></button>
                     </form>

@@ -1,9 +1,9 @@
-from typing import Any, Dict
+from typing import Any
 from django.forms.models import BaseModelForm
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DeleteView, View
+from django.views.generic import ListView, CreateView, View
 from django.db.models.query import QuerySet
 from django.contrib.auth import logout as django_logout, authenticate, login as django_login
 from django.contrib.auth.views import LoginView
@@ -13,14 +13,15 @@ from django.contrib.sites.shortcuts import get_current_site
 from .tasks import send_email
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
+import json
 
 
 from .models import User, ProductToBasket, Address
 from account.forms import RegisterForm
 from .forms import RegisterForm, UserAuthForm
-from core import urls
 from .utils import account_activation_token
 from .models import User
+from product.models import Variant
 
 
 class UserAccount(ListView):  
@@ -119,4 +120,30 @@ class Wishlist(LoginRequiredMixin, ListView):
 def logout(request):
     django_logout(request)
     return redirect(reverse_lazy('account:login'))
+
+def add_to_basket(request):
+    if request.method == "POST":
+        pass
+
+def update_item(request):
+    data = json.loads(request.data)
+    productid = data['productId']
+    action = data['action']
+    user = request.user.id
+    product = Variant.objects.get(id=productid)
+    order, created = ProductToBasket.objects.get_or_create(user=user, order=1)
+
+    prodtobask = 1
+
+    order_item, created = 1
+
+    if action == 'add':
+        ProductToBasket.count += 1
+    elif action == 'remove' and ProductToBasket.count > 1:
+        ProductToBasket.count -= 1
+
+    if ProductToBasket.count <= 0:
+        ProductToBasket.objects.delete()
+
+    return JsonResponse('item was added', safe=False)
 

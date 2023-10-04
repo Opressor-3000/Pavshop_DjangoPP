@@ -11,7 +11,7 @@ from django.http import JsonResponse
 
 
 from.utils import count_variant
-from product.models import Product, Variant, Discount, Category, Brand, Style
+from product.models import Product, Variant, Discount, Category, Brand, Style, Image
 from .models import *
 from account.models import WishList
 
@@ -39,7 +39,10 @@ class HomePage(ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         discount = Discount.objects.filter(deleted_at=False, date_begin__gte=datetime.now(), date_end__lte=datetime.now())
-        context['discount_prod'] = self.count_variants.filter(discount_id__in=discount)[:3]
+        if discount:
+            context['discount_prod'] = self.count_variants.filter(discount_id__in=discount)[:3]
+        else:
+            context['discount_prod'] = self.count_variants.order_by('-created_at')[:3]
         context['new_arrival'] = self.count_variants.order_by('-created_at')
         context['popular_prod'] = self.count_variants.annotate(total_count = Sum('variant__count')).filter(variant__order=2).order_by('total_count')[:8]
         return context
@@ -47,6 +50,9 @@ class HomePage(ListView):
     
     def get_queryset(self) -> QuerySet[Any]:    
         return self.count_variants.filter(varianttostore__quantity__gte=1).order_by('-created_at')[:8]
+    
+    def get_main_image(self):
+        return Image.ob
     
 
 

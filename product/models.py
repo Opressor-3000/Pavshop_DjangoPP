@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db.models import CheckConstraint, CharField, ForeignKey, DateTimeField, SlugField, BooleanField, IntegerField, DecimalField, ManyToManyField, DateField, TextField, ImageField, PROTECT, CASCADE, Q, F
 from django.utils import timezone
 from django.urls import reverse_lazy
@@ -49,7 +51,7 @@ class Discount(AbstractModel):
     code = CharField(max_length=50, blank=True, unique=True) #
     type_id = ForeignKey(DiscountType, on_delete=PROTECT, related_name='types') #
     amount = IntegerField(blank=True) # кол-во продуктов которая должна быть в ордере что бы получитть скидку
-    decrease_by = DecimalField(max_digits=10, decimal_places=2, blank=True) # сумма на которую надо снизить стоимость
+    decrease_by  = DecimalField(max_digits=10, decimal_places=2, blank=True) # сумма на которую надо снизить стоимость
     price_sum = DecimalField(max_digits=10, decimal_places=2, blank=True, null=True) # сумму которую надо набрать что бы активировать скидку
     other_product = ForeignKey('Product', blank=True, null=True, on_delete=CASCADE) # подарок
     discount_persent = DecimalField(max_digits=4, blank=True, decimal_places=2) # процент скидки на которую надо снизить стоимость товара  
@@ -300,6 +302,26 @@ class Variant(AbstractModel):
         if image:
             return image.image.url
         return ''
+     
+    
+    def get_discount(self):
+        return Discount.objects.filter(deleted_at=False, date_begin__gte=datetime.now(), date_end__lte=datetime.now()).filter(variant__discounts=self)
+    
+    def discount_type(self):
+        discount_list = []
+        discount = self.get_discount()
+        for disc in discount:
+            discount_list.append(disc.type_id)
+        return discount_list
+
+    def get_discount_price(self):
+        price_dict = {}
+        for disc in self.discount_type():
+            if disc == 2:
+                return self.price - self.price * (self.discount_id__discount_persent / 100)
+            if disc == 3 and self.filter(discount__decrease_by__lt=self.price):
+                return self.price - self.discount_id__decrease_by
+    
     class Meta:
         verbose_name = 'variant'
         verbose_name_plural = 'variants'
@@ -308,7 +330,7 @@ class Variant(AbstractModel):
 
 class VariantToStore(AbstractModel):
     variant = ForeignKey(Variant, on_delete=CASCADE, verbose_name='variant', related_name='varianttostore')
-    store = ForeignKey(Store, on_delete=CASCADE, verbose_name='store', related_name='variantinstore')
+    store = ForeignKey(Store, on_delete=CASCADE, verbose_name='store', related_name='store')
     quantity = IntegerField()
 
     class Meta:
@@ -318,5 +340,5 @@ class VariantToStore(AbstractModel):
         ordering = ['store']
 
     def __str__(self) -> str:
-        return f'{self.variant} sotore:{self.store}, quantity:{self.quantity}'
+        return f'{self.variant} store:{self.store}, quantity:{self.quantity}'
 
