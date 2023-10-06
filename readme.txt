@@ -15,7 +15,7 @@
 6. git pull origin dev
 
 
-git add . && git commit -m 'add order in cart' && git push origin yusif && git checkout dev && git pull origin dev && git merge yusif && git push origin dev && git checkout yusif
+git add . && git commit -m 'add shopcart template run' && git push origin yusif && git checkout dev && git pull origin dev && git merge yusif && git push origin dev && git checkout yusif
 
 
 

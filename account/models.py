@@ -80,8 +80,8 @@ class Status(AbstractModel):
     def __str__(self) -> str:
         return f'{self.title}'
     
-    def get_order_status(self):
-        return 
+    def get_order_status(self, user):
+        pass
 
         
 class Order(AbstractModel):
@@ -96,17 +96,18 @@ class Order(AbstractModel):
 
     def __str__(self) -> str:
         return f'{self.pk} {self.status}'
-    
+    @property
     def lastorder(self, user):
         userorder = Order.objects.filter(status=1, user=user)
         return userorder.aggregate(Max('id'))
     
-    def get_subtotal(self, user):
+    @property
+    def subtotal(self, user):
         order = self.lastorder(user)
         return Variant.objects.aggregate(Sum('price')).filter(order__variantinptb__in=order)
     
     def alluserorder(self, user):
-        return Order.objects.filter(user=user)
+        pass
 
 
 from product.models import Variant, Discount
@@ -133,10 +134,10 @@ class WishList(AbstractModel):
 class ProductToBasket(AbstractModel):
     user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='user_basket')
     order = models.ForeignKey(Order, on_delete=models.PROTECT, verbose_name='Order', related_name='order')
-    variant = models.ForeignKey(Variant, on_delete=models.PROTECT, verbose_name='Variant', related_name='variantinptb')
+    variant = models.ForeignKey(Variant, on_delete=models.PROTECT, verbose_name='Variant', related_name='variantinbasket')
     count = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Count')
     discount_id = models.ForeignKey(Discount, on_delete=models.CASCADE, blank=True, null=True, verbose_name='discount')
-
+    
     def get_list_product_from_order(self, user, status):
         order = Order.alluserorder(user, status)
         return Variant.objects.filter(variantinptb=order)

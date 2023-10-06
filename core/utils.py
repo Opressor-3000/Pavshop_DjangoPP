@@ -23,12 +23,4 @@ class CustomMixin:
     def inner(*args, **kwargs):
       pass
   
-def get_discount():
-  Discount.objects.filter(deleted_at=False, date_begin__gte=datetime.now(), date_end__lte=datetime.now())
-
-'''  показать товары у которых суммарное кол-во в стоке больше чем суммарное кол-во в заказах 1, 2 
-     Вычисляем кол-во variant в наличии (не оплаченные  и не зарезервированне ) во всех store  filter('quant__gt=0')'''
-
-def count_variant():
-  return Variant.objects.annotate(quantit = Sum('varianttostore__quantity') - Sum('variantinptb__count')).filter(quantit__gt=0)
   

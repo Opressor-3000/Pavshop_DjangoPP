@@ -11,8 +11,8 @@ from rest_framework import generics
 
 
 from .serializers import ProductSerializer
-from .models import Variant, Product, Discount
-from core.utils import count_variant, get_discount
+from .models import Variant, Product, Image
+from .utils import count_variant, get_current_discount
 # from core.templatetags.nav_tags import get_discount
 
 
@@ -22,6 +22,10 @@ class ProductDetail(DetailView):
     context_object_name = 'product'
     slug_url_kwarg = 'variant_slug'
 
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['image'] = Image.objects.filter(variant=self)
+        return context
 
 class ProductList(ListView):
     paginate_by = 9
@@ -51,15 +55,13 @@ class ProductList(ListView):
                     Q(tag__title__icontains=req.get('search')) | 
                     Q(product_id__tag__title__icontains=req.get('search'))
                 ).distinct()
-            if req.get('discount'):
-                discount = get_discount()
-                queryset = queryset.filter(discount_id__in=discount)[:3]
+            if req.get('discounts'):
+                discount = get_current_discount()
+                queryset = queryset.filter(discount_id__in=discount)
             if req.getlist('brand'):
                 queryset = queryset.filter(product_id__brand_id__title__in=req.getlist('brand'))
             if req.getlist('style'):
-                queryset = queryset.filter(product_id__style_id__slug__contains=req.getlist('style'))
-            # if req.getlist('store'):
-            #     queryset = queryset.varianttostore__varianttostore.filter(quantity__gt=req.getlist('store'))
+                queryset = queryset.filter(product_id__style_id__title__contains=req.getlist('style'))
             if req.getlist('color'):
                 queryset = queryset.filter(color__title__in=req.getlist('color'))
             if req.getlist('discount'):
@@ -79,7 +81,7 @@ class ProductList(ListView):
             elif req.get('old_arrival'):
                 queryset = queryset.order_by('created_at')
             elif req.get('popular'):
-                queryset = queryset.annotate(total_count = Sum('variant__count')).filter(variant__order=2).order_by('total_count')
+                queryset = queryset.filter(variantinbasket__order=2).annotate(total_count = Sum('variantinbasket__count')).order_by('total_count')
             return queryset
             
             

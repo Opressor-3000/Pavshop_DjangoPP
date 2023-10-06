@@ -65,6 +65,9 @@ class Discount(AbstractModel):
     
     def get_absolute_url(self):
         return reverse_lazy('product/', kwargs={'product':self.title})
+    
+    def get_current_discount(self):
+        return self.objects.get(id=1)
 
     class Meta:
         verbose_name = 'discont'
@@ -297,16 +300,22 @@ class Variant(AbstractModel):
     def __str__(self) -> str:
         return f'{self.title} color:{self.color} ({self.unit})'
     
+    @property
     def get_main_img(self):
         image = Image.objects.filter(variant = self).filter(is_main = True).first()
         if image:
             return image.image.url
         return ''
-     
-    
+    @property
+    def get_product(self):
+       
+        return Product.objects.get(variantofproduct__id=self.id)
+
+    @property
     def get_discount(self):
         return Discount.objects.filter(deleted_at=False, date_begin__gte=datetime.now(), date_end__lte=datetime.now()).filter(variant__discounts=self)
     
+    @property
     def discount_type(self):
         discount_list = []
         discount = self.get_discount()
@@ -314,6 +323,7 @@ class Variant(AbstractModel):
             discount_list.append(disc.type_id)
         return discount_list
 
+    @property
     def get_discount_price(self):
         price_dict = {}
         for disc in self.discount_type():

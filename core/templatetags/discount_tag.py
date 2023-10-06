@@ -1,12 +1,12 @@
 from django import template
 
 
-from product.models import Variant, Discount
-from core.utils import count_variant
+from product.models import Discount
+from product.utils import get_current_discount
 
 
 register = template.Library()
 
 @register.simple_tag
 def get_style():
-    discount = Discount.objects.all()
+    return get_current_discount[:3]

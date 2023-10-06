@@ -2,7 +2,7 @@ from django import template
 
 
 from product.models import Style
-from core.utils import count_variant
+from product.utils import count_variant
 
 
 register = template.Library()

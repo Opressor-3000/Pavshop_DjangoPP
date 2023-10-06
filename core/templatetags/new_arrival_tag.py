@@ -1,4 +1,4 @@
-from core.utils import count_variant
+from product.utils import count_variant
 
 
 

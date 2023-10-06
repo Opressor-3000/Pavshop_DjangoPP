@@ -1,18 +1,17 @@
+{% extends 'core/base.html' %}
+{% load cart_tag %}
 {% load static %}
-{% extends 'base.html' %}
-
 {% block content %}
   
   <!--======= SUB BANNER =========-->
   <section class="sub-bnr" data-stellar-background-ratio="0.5">
     <div class="position-center-center">
       <div class="container">
-        <h4>SHOPPING CART</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus maximus vehicula. 
-          Sed feugiat, tellus vel tristique posuere, diam</p>
+        <h4></h4>
+        <p></p>
         <ol class="breadcrumb">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">SHOP</a></li>
+          <li><a href="#"></a></li>
+          <li><a href="#"></a></li>
           <li class="active">SHOPPING CART</li>
         </ol>
       </div>
@@ -54,19 +53,20 @@
               <li class="col-sm-1"> </li>
             </ul>
           </div>
+          {% for sc in shopcart %}
           
           <!-- Cart Details -->
           <ul class="row cart-details">
             <li class="col-sm-6">
               <div class="media"> 
                 <!-- Media Image -->
-                <div class="media-left media-middle"> <a href="#." class="item-img"> <img class="media-object" src="images/cart-img-1.jpg" alt=""> </a> </div>
+                <div class="media-left media-middle"> <a href="{% url 'product:product' sc.slug %}" class="item-img"> <img class="media-object" src="{% static 'images/cart-img-3.jpg' %}" alt=""> </a> </div>
                 
                 <!-- Item Name -->
                 <div class="media-body">
                   <div class="position-center-center">
-                    <h5>wood chair</h5>
-                    <p>Lorem ipsum dolor sit amet</p>
+                    <h5>{{ sc.title }}</h5>
+                    <p>{{ sc.get_product}}</p>
                   </div>
                 </div>
               </div>
@@ -74,7 +74,7 @@
             
             <!-- PRICE -->
             <li class="col-sm-2">
-              <div class="position-center-center"> <span class="price"><small>$</small>299</span> </div>
+              <div class="position-center-center"> <span class="price"><small>$</small>{{ sc.price }}</span> </div>
             </li>
             
             <!-- QTY -->
@@ -84,8 +84,6 @@
                   <!-- QTY -->
                   <select class="selectpicker">
                     <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
                   </select>
                 </div>
               </div>
@@ -93,108 +91,15 @@
             
             <!-- TOTAL PRICE -->
             <li class="col-sm-2">
-              <div class="position-center-center"> <span class="price"><small>$</small>299</span> </div>
+              <div class="position-center-center"> <span class="price"><small>$</small>{{ sc.total.price }}</span> </div>
             </li>
             
             <!-- REMOVE -->
             <li class="col-sm-1">
-              <div class="position-center-center"> <a href="#."><i class="icon-close"></i></a> </div>
+              <div class="position-center-center"> <a href=""><i class="icon-close"></i></a> </div>
             </li>
           </ul>
-          
-          <!-- Cart Details -->
-          <ul class="row cart-details">
-            <li class="col-sm-6">
-              <div class="media"> 
-                <!-- Media Image -->
-                <div class="media-left media-middle"> <a href="#." class="item-img"> <img class="media-object" src="images/cart-img-2.jpg" alt=""> </a> </div>
-                
-                <!-- Item Name -->
-                <div class="media-body">
-                  <div class="position-center-center">
-                    <h5>STOOL</h5>
-                    <p>Lorem ipsum dolor sit amet</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-            
-            <!-- PRICE -->
-            <li class="col-sm-2">
-              <div class="position-center-center"> <span class="price"><small>$</small>299</span> </div>
-            </li>
-            
-            <!-- QTY -->
-            <li class="col-sm-1">
-              <div class="position-center-center">
-                <div class="quinty"> 
-                  <!-- QTY -->
-                  <select class="selectpicker">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                  </select>
-                </div>
-              </div>
-            </li>
-            
-            <!-- TOTAL PRICE -->
-            <li class="col-sm-2">
-              <div class="position-center-center"> <span class="price"><small>$</small>299</span> </div>
-            </li>
-            
-            <!-- REMOVE -->
-            <li class="col-sm-1">
-              <div class="position-center-center"> <a href="#."><i class="icon-close"></i></a> </div>
-            </li>
-          </ul>
-          
-          <!-- Cart Details -->
-          <ul class="row cart-details">
-            <li class="col-sm-6">
-              <div class="media"> 
-                <!-- Media Image -->
-                <div class="media-left media-middle"> <a href="#." class="item-img"> <img class="media-object" src="images/cart-img-3.jpg" alt=""> </a> </div>
-                
-                <!-- Item Name -->
-                <div class="media-body">
-                  <div class="position-center-center">
-                    <h5>wood SPOON</h5>
-                    <p>Lorem ipsum dolor sit amet</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-            
-            <!-- PRICE -->
-            <li class="col-sm-2">
-              <div class="position-center-center"> <span class="price"><small>$</small>299</span> </div>
-            </li>
-            
-            <!-- QTY -->
-            <li class="col-sm-1">
-              <div class="position-center-center">
-                <div class="quinty"> 
-                  <!-- QTY -->
-                  <select class="selectpicker">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                  </select>
-                </div>
-              </div>
-            </li>
-            
-            <!-- TOTAL PRICE -->
-            <li class="col-sm-2">
-              <div class="position-center-center"> <span class="price"><small>$</small>299</span> </div>
-            </li>
-            
-            <!-- REMOVE -->
-            <li class="col-sm-1">
-              <div class="position-center-center"> <a href="#."><i class="icon-close"></i></a> </div>
-            </li>
-          </ul>
+          {%endfor%}
         </div>
       </div>
     </section>
@@ -222,11 +127,7 @@
               <h6>grand total</h6>
               <div class="grand-total">
                 <div class="order-detail">
-                  <p>WOOD CHAIR <span>$598 </span></p>
-                  <p>STOOL <span>$199 </span></p>
-                  <p>WOOD SPOON <span> $139</span></p>
-                  
-                  <!-- SUB TOTAL -->
+                 
                   <p class="all-total">TOTAL COST <span> $998</span></p>
                 </div>
               </div>

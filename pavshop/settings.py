@@ -146,6 +146,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 
 LOGIN_REDIRECT_URL = reverse_lazy('account:homepage')
 LOGOUT_REDIRECT_URL = reverse_lazy('account:login')
+LOGIN_URL=reverse_lazy('account:login')
 
 STATIC_URL = '/static/'
 

@@ -100,7 +100,13 @@ class Basket(LoginRequiredMixin, ListView):
     context_object_name = 'shopcart'
 
     def get_queryset(self) -> QuerySet[Any]:
-        return super().get_queryset()
+        if self.request.user.is_authenticated:
+            print(self.request.user.id,"+++++")
+            print(ProductToBasket.objects.filter(user=self.request.user))
+
+            return Variant.objects.filter(variantinbasket__user=self.request.user)
+       
+        
 
 
 class Checkout(LoginRequiredMixin, CreateView):

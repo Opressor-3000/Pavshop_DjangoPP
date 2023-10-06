@@ -4,16 +4,14 @@ from datetime import datetime
 from django.shortcuts import render, redirect
 from typing import Any, Dict
 from django.db import models
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, CreateView
 from django.db.models.query import QuerySet
-from django.db.models import Count, Sum
-from django.http import JsonResponse
 
 
-from.utils import count_variant
-from product.models import Product, Variant, Discount, Category, Brand, Style, Image
+
+from product.utils import count_variant
+from product.models import Variant, Discount, Image
 from .models import *
-from account.models import WishList
 
 
 def about_us(request):
@@ -44,7 +42,8 @@ class HomePage(ListView):
         else:
             context['discount_prod'] = self.count_variants.order_by('-created_at')[:3]
         context['new_arrival'] = self.count_variants.order_by('-created_at')
-        context['popular_prod'] = self.count_variants.annotate(total_count = Sum('variant__count')).filter(variant__order=2).order_by('total_count')[:8]
+
+        context['popular_prod'] = self.count_variants
         return context
         
     
@@ -52,7 +51,7 @@ class HomePage(ListView):
         return self.count_variants.filter(varianttostore__quantity__gte=1).order_by('-created_at')[:8]
     
     def get_main_image(self):
-        return Image.ob
+        return Image.objects.filter(variant = self, is_main = True)
     
 
 

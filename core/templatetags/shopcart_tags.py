@@ -9,5 +9,4 @@ register = template.Library()
 
 @register.simple_tag
 def get_shopcarts(request):
-    return Variant.objects.filter(variant__user=request.user, variant__order=1)
-
+    return Variant.objects.filter(variantinbasket__user=request.user, variantinbasket__order=1)
