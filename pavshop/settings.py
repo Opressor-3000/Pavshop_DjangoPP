@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'mptt',
     'social_django',
+    'rest_framework_simplejwt'
     # custom
     'core.apps.CoreConfig',
     'account.apps.AccountConfig',
@@ -147,6 +148,19 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 LOGIN_REDIRECT_URL = reverse_lazy('account:homepage')
 LOGOUT_REDIRECT_URL = reverse_lazy('account:login')
 LOGIN_URL=reverse_lazy('account:login')
+
+REST_FRAMEWORK = {
+   'DEFAULT_AUTHENTICATION_CLASSES':(
+      'rest_framewoirk_simlpejwt.authentication.JWTAuthentication',
+   ),
+   'DEFAULT_RENDERER_CLASSES':(
+      'rest_framework.renderers.JSONRenderer',
+      'rest_framework.renderers.BrowsebleAPIRenderer'
+   ),
+   'DEFAULT_PERMISSION_CLASSES':(
+      'rest_framework.permissions.IsUserOrReadOnly',
+   ),
+}
 
 STATIC_URL = '/static/'
 

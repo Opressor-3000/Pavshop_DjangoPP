@@ -298,7 +298,7 @@ class Variant(AbstractModel):
         return reverse_lazy('product', kwargs={'product':self.slug})
     
     def __str__(self) -> str:
-        return f'{self.title} color:{self.color} ({self.unit})'
+        return f'{self.title} ({self.unit})'
     
     @property
     def get_main_img(self):
