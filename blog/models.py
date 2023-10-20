@@ -31,9 +31,9 @@ class Post(AbstractModel):
     Preview = models.ImageField(upload_to='blog_image/', verbose_name='Preview')
     image = models.ManyToManyField(Image, blank=True, verbose_name='Image')
     published_at = models.BooleanField(default=False, verbose_name='Published at')  
-    tag = models.ManyToManyField(Tag, verbose_name='Tags')
-    category = models.ManyToManyField(Category, blank=True ,verbose_name='About Categories')
-    product = models.ManyToManyField(Product, blank=True ,verbose_name='About Products')
+    tag = models.ManyToManyField(Tag, verbose_name='Tags', related_name='tags')
+    category = models.ManyToManyField(Category, blank=True ,verbose_name='About Categories', related_name='categories')
+    product = models.ManyToManyField(Product, blank=True ,verbose_name='About Products', related_name='productsofpost')
     deleted_at = models.BooleanField(default=False)
 
     class Meta:
