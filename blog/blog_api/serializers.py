@@ -3,7 +3,7 @@ from ..models import *
 
 
 class PostReviewSerializer(ModelSerializer):
-   passl
+   pass
 
 
 class BlogsListSerailizer(ModelSerializer):
