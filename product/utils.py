@@ -15,7 +15,8 @@ def get_current_discount():
 
 def count_variant():
   # quantity_to_store = Variant.objects.aggregate(quantity = Sum(''))
-  return Variant.objects.annotate(quantit = Sum('varianttostore__quantity') - Sum('variantinbasket__count')).filter(quantit__gt=0)
+  # return Variant.objects.annotate(quantit = Sum('varianttostore__quantity') - Sum('variantinbasket__count')).filter(quantit__gt=0)
+  return Variant.objects.all()
 
 
 def current_price(variant):

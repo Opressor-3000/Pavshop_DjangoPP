@@ -308,7 +308,6 @@ class Variant(AbstractModel):
         return ''
     @property
     def get_product(self):
-       
         return Product.objects.get(variantofproduct__id=self.id)
 
     @property

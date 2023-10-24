@@ -10,10 +10,6 @@
       <div class="container">
         <h4></h4>
         <p></p>
-        <ol class="breadcrumb">
-          <li><a href="#"></a></li>
-          <li class="active"></li>
-        </ol>
       </div>
     </div>
   </section>
@@ -45,17 +41,17 @@
             <!-- COntent -->
             <div class="col-md-5">
               <h4>wood chair</h4>
-              <span class="price"><small>$</small>299</span> 
+              <span class="price"><small>$</small>{{ price }}</span> 
               
               <!-- Sale Tags -->
               <div class="on-sale"> 10% <span>OFF</span> </div>
               <ul class="item-owner">
-                <li>Designer :<span> ABC Art</span></li>
-                <li>Brand:<span> LimeWood</span></li>
+                <li>Designer :<span>{{ product.designer }}</span></li>
+                <li>Brand:<span> {{ product.barnd }}</span></li>
               </ul>
               
               <!-- Item Detail -->
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus ligula a scelerisque gravida. Nullam laoreet tortor ac maximus alique met, consectetur adipiscing elit. Vestibulum finibus ligula a scelerisque gravida. Nullam</p>
+              <p>{{ product.description }}</p>
               
               <!-- Short By -->
               <div class="some-info">
@@ -123,7 +119,7 @@
           <!-- Nav tabs -->
           <ul class="nav nav-tabs animate fadeInUp" data-wow-delay="0.4s" role="tablist">
             <li role="presentation" class="active"><a href="#descr" role="tab" data-toggle="tab">DESCRIPTION</a></li>
-            <li role="presentation"><a href="#review" role="tab" data-toggle="tab">REVIEW (03)</a></li>
+            <li role="presentation"><a href="#review" role="tab" data-toggle="tab">REVIEW {{ review.count }}</a></li>
             <li role="presentation"><a href="#tags" role="tab" data-toggle="tab">INFORMATION</a></li>
           </ul>
           
@@ -189,9 +185,11 @@
                 </div>
               </div>
               
-              <!-- ADD REVIEW -->
+              <!-- ADD REVIEW           ########################################       -->
               <h6 class="margin-t-40">ADD REVIEW</h6>
               <form>
+                {% csrf_token %}
+                {% for field in form %}
                 <ul class="row">                  
                   <li class="col-sm-12">
                     <label> *YOUR REVIEW
@@ -228,78 +226,26 @@
         
         <!-- Popular Item Slide -->
         <div class="papular-block block-slide single-img-demos"> 
-          
+          {% for pop in popular_prod %}
           <!-- Item -->
           <div class="item"> 
             <!-- Item img -->
-            <div class="item-img"> <img class="img-1" src="images/product-1.jpg" alt="" > 
+            <div class="item-img"> <img class="img-1" src="{{ pop.get_main_img }}" alt="" > 
               <!-- Overlay -->
               <div class="overlay">
                 <div class="position-center-center">
-                  <div class="inn"><a href="images/product-1.jpg" data-lighter><i class="icon-magnifier"></i></a> <a href="#."><i class="icon-basket"></i></a> <a href="#." ><i class="icon-heart"></i></a></div>
+                  <div class="inn"><a href="{{ pop.get_amin_img }}" data-lighter><i class="icon-magnifier"></i></a> <a href="#."><i class="icon-basket"></i></a> <a href="#." ><i class="icon-heart"></i></a></div>
                 </div>
               </div>
             </div>
             <!-- Item Name -->
-            <div class="item-name"> <a href="#.">stone cup</a>
-              <p>Lorem ipsum dolor sit amet</p>
+            <div class="item-name"> <a href="{% url 'product:product' pop.slug %}">{{ pop.title }}</a>
+              <p>{{ pop.product.description }}</p>
             </div>
             <!-- Price --> 
-            <span class="price"><small>$</small>299</span> </div>
-          
-          <!-- Item -->
-          <div class="item"> 
-            <!-- Item img -->
-            <div class="item-img"> <img class="img-1" src="images/product-2.jpg" alt="" > 
-              <!-- Overlay -->
-              <div class="overlay">
-                <div class="position-center-center">
-                  <div class="inn"><a href="images/product-2.jpg" data-lighter><i class="icon-magnifier"></i></a> <a href="#."><i class="icon-basket"></i></a> <a href="#." ><i class="icon-heart"></i></a></div>
-                </div>
-              </div>
-            </div>
-            <!-- Item Name -->
-            <div class="item-name"> <a href="#.">gray bag</a>
-              <p>Lorem ipsum dolor sit amet</p>
-            </div>
-            <!-- Price --> 
-            <span class="price"><small>$</small>299</span> </div>
-          
-          <!-- Item -->
-          <div class="item"> 
-            <!-- Item img -->
-            <div class="item-img"> <img class="img-1" src="images/product-3.jpg" alt="" > 
-              <!-- Overlay -->
-              <div class="overlay">
-                <div class="position-center-center">
-                  <div class="inn"><a href="images/product-3.jpg" data-lighter><i class="icon-magnifier"></i></a> <a href="#."><i class="icon-basket"></i></a> <a href="#." ><i class="icon-heart"></i></a></div>
-                </div>
-              </div>
-            </div>
-            <!-- Item Name -->
-            <div class="item-name"> <a href="#.">chiar</a>
-              <p>Lorem ipsum dolor sit amet</p>
-            </div>
-            <!-- Price --> 
-            <span class="price"><small>$</small>299</span> </div>
-          
-          <!-- Item -->
-          <div class="item"> 
-            <!-- Item img -->
-            <div class="item-img"> <img class="img-1" src="images/product-4.jpg" alt="" > 
-              <!-- Overlay -->
-              <div class="overlay">
-                <div class="position-center-center">
-                  <div class="inn"><a href="images/product-4.jpg" data-lighter><i class="icon-magnifier"></i></a> <a href="#."><i class="icon-basket"></i></a> <a href="#." ><i class="icon-heart"></i></a></div>
-                </div>
-              </div>
-            </div>
-            <!-- Item Name -->
-            <div class="item-name"> <a href="#.">STool</a>
-              <p>Lorem ipsum dolor sit amet</p>
-            </div>
-            <!-- Price --> 
-            <span class="price"><small>$</small>299</span> </div>
+            <span class="price"><small>$</small>{{ pop.price }}</span> 
+          </div>
+          {% endfor %}
         </div>
       </div>
     </section>

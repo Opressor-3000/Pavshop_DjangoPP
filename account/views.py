@@ -21,13 +21,20 @@ from account.forms import RegisterForm
 from .forms import RegisterForm, UserAuthForm
 from .utils import account_activation_token
 from .models import User
-from product.models import Variant
+from product.models import Variant, ProductReview
+from core.templatetags.shopcart_tags import get_shopcarts
 
 
 class UserAccount(ListView):  
     model = User
     template_name = 'account/account.html'
     context_object_name = 'user'
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['sopping_cart'] = get_shopcarts(self.request)
+        context['user_reviews'] = ProductReview.objects.filter(user=self.request.user)
+        return context
 
 
 class ActivateView(View):

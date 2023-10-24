@@ -1,179 +1,181 @@
-{% load static %}
 {% extends 'core/base.html' %}
-
+{% load static %}
 {% block content %}
   
 
   
-  <!-- Content -->
-  <div id="content"> 
+    <!-- Content -->
+    <div id="content"> 
 
-    <!--======= PAGES INNER =========-->
-    <section class="chart-page padding-top-100 padding-bottom-100">
-      <div class="container"> 
+      <!--======= PAGES INNER =========-->
+      <section class="chart-page padding-top-100 padding-bottom-100">
+        <div class="container"> 
 
-        <!--======= PRODUCT DESCRIPTION =========-->
-        <div class="item-decribe"> 
-          <!-- Nav tabs -->
-          <ul class="nav nav-tabs animate fadeInUp" data-wow-delay="0.4s" role="tablist">
-            <li role="presentation" class="active"><a href="#descr" role="tab" data-toggle="tab">SHOPPING CART</a></li>
-            <li role="presentation"><a href="#wishlist" role="tab" data-toggle="tab">WISHLIST</a></li>
-            <li role="presentation"><a href="#review" role="tab" data-toggle="tab">MY REVIEWS</a></li>
-            <li role="presentation"><a href="#posts" role="tab" data-toggle="tab">MY POSTS</a></li>
-          </ul>
-          
-          <!-- Tab panes -->
-          <div class="tab-content animate fadeInUp" data-wow-delay="0.4s"> 
-            <!-- SHOPPING CART -->
-            <div role="tabpanel" class="tab-pane fade in active" id="descr">
-              <div class="shopping-cart"> 
-          
-                <!-- SHOPPING INFORMATION -->
-                <div class="cart-ship-info">
-                  <div class="row"> 
-                    
-                    <!-- ESTIMATE SHIPPING & TAX -->
-                    <div class="col-sm-7">
-                      <h6>LOGIN YOUR ACCOUNT</h6>
-                      <form>
-                        <ul class="row">
+          <!--======= PRODUCT DESCRIPTION =========-->
+          <div class="item-decribe"> 
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs animate fadeInUp" data-wow-delay="0.4s" role="tablist">
+              <li role="presentation" class="active"><a href="#descr" role="tab" data-toggle="tab">SHOPPING CART</a></li>
+              <li role="presentation"><a href="#wishlist" role="tab" data-toggle="tab">WISHLIST</a></li>
+              <li role="presentation"><a href="#review" role="tab" data-toggle="tab">MY REVIEWS</a></li>
+              <li role="presentation"><a href="#posts" role="tab" data-toggle="tab">MY POSTS</a></li>
+            </ul>
+            
+            <!-- Tab panes -->
+            <div class="tab-content animate fadeInUp" data-wow-delay="0.4s"> 
+              <!-- SHOPPING CART -->
+              <div role="tabpanel" class="tab-pane fade in active" id="descr">
+                <div class="shopping-cart"> 
+            
+                  <!-- SHOPPING INFORMATION -->
+                  <div class="cart-head">
+                    <ul class="row">
+                      <!-- PRODUCTS -->
+                      <li class="col-sm-2 text-left">
+                        <h6>PRODUCTS</h6>
+                      </li>
+                      <!-- NAME -->
+                      <li class="col-sm-4 text-left">
+                        <h6>NAME</h6>
+                      </li>
+                      <!-- PRICE -->
+                      <li class="col-sm-2">
+                        <h6>PRICE</h6>
+                      </li>
+                      <!-- QTY -->
+                      <li class="col-sm-1">
+                        <h6>QTY</h6>
+                      </li>
+                      
+                      <!-- TOTAL PRICE -->
+                      <li class="col-sm-2">
+                        <h6>TOTAL</h6>
+                      </li>
+                      <li class="col-sm-1"> </li>
+                    </ul>
+                  </div>
+                  
+                  {% for sc in shopping_cart %}
+                  <!-- Cart Details -->
+                    <ul class="row cart-details">
+                      <li class="col-sm-6">
+                        <div class="media"> 
+                          <!-- Media Image -->
+                          <div class="media-left media-middle"> <a href="{% url 'product:product' sc.slug %}" class="item-img"> <img class="media-object" src="{% static 'images/cart-img-3.jpg' %}" alt=""> </a> </div>
                           
-                          <!-- Name -->
-                          <li class="col-md-12">
-                            <label> USERNAME
-                              <input type="text" name="first-name" value="" placeholder="">
-                            </label>
-                          </li>
-                          <!-- LAST NAME -->
-                          <li class="col-md-12">
-                            <label> PASSWORD
-                              <input type="password" name="last-name" value="" placeholder="">
-                            </label>
-                          </li>
-                          
-                          <!-- LOGIN -->
-                          <li class="col-md-4">
-                            <button type="submit" class="btn">LOGIN</button>
-                          </li>
-                          
-                          <!-- CREATE AN ACCOUNT -->
-                          <li class="col-md-4">
-                            <div class="checkbox margin-0 margin-top-20">
-                              <input id="checkbox1" class="styled" type="checkbox">
-                              <label for="checkbox1"> Stay me Login</label>
+                          <!-- Item Name -->
+                          <div class="media-body">
+                            <div class="position-center-center">
+                              <h5>{{ sc.title }}</h5>
+                              <p>{{ sc.get_product}}</p>
                             </div>
-                          </li>
-                          
-                          <!-- FORGET PASS -->
-                          <li class="col-md-4">
-                            <div class="checkbox margin-0 margin-top-20 text-right">
-                              <a href="#.">Forget Password</a>
-                            </div>
-                          </li>
-                        </ul>
-                      </form>
+                          </div>
+                        </div>
+                      </li>
                       
-                    </div>
-                    
-                    <!-- SUB TOTAL -->
-                    <div class="col-sm-5">
-                      <h6>LOGIN WITH</h6>
+                      <!-- PRICE -->
+                      <li class="col-sm-2">
+                        <div class="position-center-center"> <span class="price"><small>$</small>{{ sc.price }}</span> </div>
+                      </li>
                       
-                      <ul class="login-with">
-                        <li>
-                            <a href="#."><i class="fa fa-facebook"></i>FACEBOOK</a>
-                          
-                          </li>
-                          
-                          <li>
-                            <a href="#."><i class="fa fa-google"></i>GOOGLE</a>
-                          
-                          </li>
-                          
-                          <li>
-                            <a href="#."><i class="fa fa-twitter"></i>TWITTER</a>
-                          
-                          </li>
+                      <!-- QTY -->
+                      <li class="col-sm-1">
+                        <div class="position-center-center">
+                          <div class="quinty"> 
+                            <!-- QTY -->
+                            <select class="selectpicker">
+                              <option>1</option>
+                            </select>
+                          </div>
+                        </div>
+                      </li>
                       
-                      </ul>
+                      <!-- TOTAL PRICE -->
+                      <li class="col-sm-2">
+                        <div class="position-center-center"> <span class="price"><small>$</small>{{ sc.total.price }}</span> </div>
+                      </li>
                       
-                      
-                    </div>
+                      <!-- REMOVE -->
+                      <li class="col-sm-1">
+                        <div class="position-center-center"> <a href=""><i class="icon-close"></i></a> </div>
+                      </li>
+                    </ul>
+                  {%endfor%}
+                  </div>
+              </div>
+              
+              <!-- WISHLIST -->
+              <div role="tabpanel" class="tab-pane fade" id="wishlist">
+                {% for wish in user_wishlist %}
+
+                {% endfor %}
+                <h6></h6>
+                
+                <!-- REVIEW PEOPLE 1 -->
+                <div class="media">
+                  <div class="media-left"> 
+                    <!--  Image -->
+                    <div class="avatar"> <a href="#"> <img class="media-object" src="images/avatar-1.jpg" alt=""> </a> </div>
+                  </div>
+                  <!--  Details -->
+                  <div class="media-body">
+                    <p class="font-playfair">“Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                      labore et dolore magna aliqua.”</p>
+                    <h6>TYRION LANNISTER <span class="pull-right">MAY 10, 2016</span> </h6>
                   </div>
                 </div>
               </div>
-            </div>
-            
-            <!-- WISHLIST -->
-            <div role="tabpanel" class="tab-pane fade" id="wishlist">
-              <h6>3 REVIEWS FOR SHIP YOUR IDEA</h6>
-              
-              <!-- REVIEW PEOPLE 1 -->
-              <div class="media">
-                <div class="media-left"> 
-                  <!--  Image -->
-                  <div class="avatar"> <a href="#"> <img class="media-object" src="images/avatar-1.jpg" alt=""> </a> </div>
-                </div>
-                <!--  Details -->
-                <div class="media-body">
-                  <p class="font-playfair">“Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua.”</p>
-                  <h6>TYRION LANNISTER <span class="pull-right">MAY 10, 2016</span> </h6>
+                
+              <!-- MY REVIEWS -->
+              <div role="tabpanel" class="tab-pane fade" id="review"> 
+                <div class="media">
+                  <div class="media-left"> 
+                    <!--  Image -->
+                    <div class="avatar"> <img class="media-object" src="{{ r.avatar }}" alt=""> </div>
+                  </div>
+                  <!--  Details -->
+                  {% for review in user_reviews %}
+                  <div class="media-body">
+                    <a href="{% url 'product:product' review.product.slug %}"><h6>{{ review.product.title }}<span class="pull-right">{{ review.date }}</span> </h6></a>
+                    <p class="font-playfair">{{ review.text }}</p>
+                  </div>
+                  {% endfor %}
                 </div>
               </div>
               
-              <!-- REVIEW PEOPLE 1 -->
-            
-              <div class="media">
-                <div class="media-left"> 
-                  <!--  Image -->
-                  <div class="avatar"> <a href="#"> <img class="media-object" src="{{ r.avatar }}" alt=""> </a> </div>
-                </div>
-                <!--  Details -->
-                <div class="media-body">
-                  <p class="font-playfair">{{ r.text }}</p>
-
-                  <h6><span class="pull-right">{{ r.date }}</span> </h6>
-                </div>
+              <!-- MY POSTS -->
+              <div role="tabpanel" class="tab-pane fade" id="posts"> 
+                {% for post in user_posts %}
+                {% endfor %}
               </div>
-              
-            </div>
-            
-            <!-- MY REVIEWS -->
-            <div role="tabpanel" class="tab-pane fade" id="review"> 
-            </div>
-            
-            <!-- MY POSTS -->
-            <div role="tabpanel" class="tab-pane fade" id="posts"> 
             </div>
           </div>
-        </div>
 
         <!-- Payments Steps -->
 
-      </div>
-    </section>
-    
-    <!-- About -->
-    <section class="small-about padding-top-150 padding-bottom-150">
-      <div class="container"> 
-        
-        <!-- Main Heading -->
-        <div class="heading text-center">
-          <h4>about PAVSHOP</h4>
-          <p>Phasellus lacinia fermentum bibendum. Interdum et malesuada fames ac ante ipsumien lacus, eu posuere odio luctus non. Nulla lacinia,
-            eros vel fermentum consectetur, risus purus tempc, et iaculis odio dolor in ex. </p>
-        </div>
-        
-        <!-- Social Icons -->
-        <ul class="social_icons">
-          <li><a href="#."><i class="icon-social-facebook"></i></a></li>
-          <li><a href="#."><i class="icon-social-twitter"></i></a></li>
-          <li><a href="#."><i class="icon-social-tumblr"></i></a></li>
-          <li><a href="#."><i class="icon-social-youtube"></i></a></li>
-          <li><a href="#."><i class="icon-social-dribbble"></i></a></li>
-        </ul>
-      </div>
-    </section>
+          </div>
+          </section>
+          
+          <!-- About -->
+          <section class="small-about padding-top-150 padding-bottom-150">
+            <div class="container"> 
+              
+              <!-- Main Heading -->
+              <div class="heading text-center">
+                <h4>about PAVSHOP</h4>
+                <p>Phasellus lacinia fermentum bibendum. Interdum et malesuada fames ac ante ipsumien lacus, eu posuere odio luctus non. Nulla lacinia,
+                  eros vel fermentum consectetur, risus purus tempc, et iaculis odio dolor in ex. </p>
+              </div>
+              
+              <!-- Social Icons -->
+              <ul class="social_icons">
+                <li><a href="#."><i class="icon-social-facebook"></i></a></li>
+                <li><a href="#."><i class="icon-social-twitter"></i></a></li>
+                <li><a href="#."><i class="icon-social-tumblr"></i></a></li>
+                <li><a href="#."><i class="icon-social-youtube"></i></a></li>
+                <li><a href="#."><i class="icon-social-dribbble"></i></a></li>
+              </ul>
+            </div>
+          </section>
     
 {% endblock %}

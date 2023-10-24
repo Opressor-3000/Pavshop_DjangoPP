@@ -157,7 +157,7 @@
               <div class="overlay">
                 <div class="position-center-center">
                   <div class="inn">
-                    <a href="{{ pop.get_main_img }}" data-lighter>
+                    <a href="" data-lighter>
                       <i class="icon-magnifier"></i>
                     </a> 
                     <a href=""><i class="icon-basket"></i></a> 
@@ -171,11 +171,11 @@
               </div>
             </div>
             <!-- Item Name -->
-            <div class="item-name"> <a href="#.">stone cup</a>
-              <p>Lorem ipsum dolor sit amet</p>
+            <div class="item-name"> <a href="{% url 'product:product' pop.slug %}">{{ pop.title }}</a>
+              <p>{{ pop.product_id.description }}</p>
             </div>
             <!-- Price --> 
-            <span class="price"><small>$</small>{{ pop.get_price }}</span> 
+            <span class="price"><small>$</small>{{ pop.price}}</span> 
           </div>
           {% endfor %}
         </div>

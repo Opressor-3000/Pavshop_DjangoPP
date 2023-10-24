@@ -802,6 +802,9 @@ opacity:0;
 }
 .owl-carousel .owl-video-playing .owl-video-tn, .owl-carousel .owl-video-playing .owl-video-play-icon {
 	display: none;
+
+.sub-bnr {
+	max-height: 450px;
 }
 .owl-carousel .owl-video-tn {
 	opacity: 0;

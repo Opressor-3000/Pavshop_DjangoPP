@@ -15,7 +15,7 @@
 6. git pull origin dev
 
 
-git add . && git commit -m 'api add checkboxies in filter to product list ' && git push origin yusif && git checkout dev && git pull origin dev && git merge yusif && git push origin dev && git checkout yusif
+git add . && git commit -m 'add context add in account template' && git push origin yusif && git checkout dev && git pull origin dev && git merge yusif && git push origin dev && git checkout yusif
 
 
 
