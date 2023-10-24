@@ -282,3 +282,29 @@ $(document).on("click", ".add_wishlist", function() {
 });
 
 
+window.addEventListener('load', async function() {
+	let data = await this.fetch('http://127.0.0.1/blog/',{
+		method: "GET",
+		headers: {
+			"Content-Type": 'applicacation/json'
+		}
+	});
+	let posts = await data.json();
+	let blogContent = this.document.getElementById('blogs');
+
+	for (let blog of blogs) {
+		blogContent.innerHTML += ``
+	}
+})
+
+
+
+
+$('ul.categories li').click( function() {
+   var $cb = $(this).find(":checkbox");
+    if (!$cb.prop("checked")) {
+        $cb.prop("checked", true);
+    } else {
+        $cb.prop("checked", false);
+    }
+ });

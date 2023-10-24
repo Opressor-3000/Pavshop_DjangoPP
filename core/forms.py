@@ -1,24 +1,24 @@
-from django import forms
-
+from django.forms import ModelForm, TextInput
+ 
 
 from .models import *
 
 
-class AbstractForm(forms.ModelForm):
+class AbstractForm(ModelForm):
     
     def get_user(request):
         user = request.user.pk
         return user
 
 
-class Contact(forms.ModelForm):
+class Contact(ModelForm):
         
     class Meta:
         model = Contact
         fields = ['email']
 
 
-class Subscriber(forms.ModelForm):
+class Subscriber(ModelForm):
 
     class Meta:
         model = Subscriber

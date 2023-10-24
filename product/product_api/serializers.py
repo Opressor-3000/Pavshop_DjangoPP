@@ -166,3 +166,10 @@ class VariantToStoreSerializer(ModelSerializer):
       fields = {
          'quantity'
       }
+
+
+class VariantToCategoriesSearchSerializer(ModelSerializer):
+   
+   class Meta:
+      model = Category
+      fields = ['title']
