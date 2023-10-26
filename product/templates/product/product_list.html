@@ -24,32 +24,6 @@
           
           <!-- Item Content -->
           <div class="col-sm-9">
-            <div class="item-display">
-              <div class="row"> 
-                <!-- Products Select -->
-                <div class="col-xs-6">
-                  <div class="pull-left"> 
-                    
-                    <!-- Short By -->
-                    <select class="selectpicker">
-                      {% for s in sorts_by %}
-                      <option>Sort By</option>
-                      {% endfor %}
-                    </select>
-                    <!-- Filter By -->
-                    
-                    <select class="selectpicker">
-                       <p> for f in tags_by </p>
-                      <option>Filter By</option>
-                       <p> endfor  </p>
-                    </select>
-                    
-                    <!-- GRID & LIST --> 
-                    <a href="#." class="grid-style"><i class="icon-grid"></i></a> <a href="#." class="list-style"><i class="icon-list"></i></a> </div>
-                </div>
-                <div class="col-xs-6 text-right"> <span class="product-num">Showing  1 p  1 -  1 p  1 of  1 p  1 products</span> </div>
-              </div>
-            </div>
             
             <!-- Item Slide -->
             <div class="papular-block row single-img-demos"> 
@@ -59,10 +33,8 @@
               <div class="col-md-4">
                 <div class="item"> 
                   <!-- Sale Tags -->
-             
-                  
+                  <div class="on-sale"> 10% <span>OFF</span> </div>
                   <!-- Item img -->
-                  <a
                   <div class="item-img"> <img class="img-1" src="{{ var.get_main_img }}" alt="" >
                     <!-- Overlay -->
                     <div class="overlay">
@@ -71,8 +43,10 @@
                           <a href="{{ var.get_main_img }}" data-lighter>
                             <i class="icon-magnifier"></i></a>
                           <button data-product={{ var.id }} data-action="add_to_cart" class='update_cart' >
-                            <i class="icon-basket"></i></button> 
-                          <a href="#." ><i class="icon-heart"></i></a></div>
+                            <i class="icon-basket"></i>
+                          </button> 
+                          <a href="#." ><i class="icon-heart"></i></a>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -113,20 +87,20 @@
               
               <!-- Category -->
               <h5 class="shop-tittle margin-bottom-30">category</h5>
-              <form action="" class="categorie"></form>
               <ul class="shop-cate categories">
                 {% for cat in categories %}
-                <li><input type="checkbox"><a href="{% url 'product:product_list' %}?category={{ cat.title }}">{{ cat.title }}</a></li>
+                <!-- <li><input class="category_checkbox" type="checkbox">{{ cat.title }}</li> -->
+                <li><input class="category_checkbox"" value={{cat.title}} type="checkbox">
+                  {{ cat.title }}</li>
                 {% endfor %}
               </ul>
               
               <!-- COLOUR -->
               <h5 class="shop-tittle margin-top-60 margin-bottom-30">FILTER BY COLORS</h5>
-              
-              
               <ul class="colors">
               {% for col in colours %}
-                <li><input type="checkbox"><a href="{% url 'product:product_list' %}?color={{ col.title }}">{{ col.title }}</a></li>
+                <li><input value={{col.title}} type="checkbox">
+                  {{ col.title }}</li>
               {% endfor %}
               </ul>
             
@@ -183,3 +157,4 @@
     
 
 {% endblock %}
+

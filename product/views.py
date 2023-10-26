@@ -63,9 +63,9 @@ class ProductList(ListView):
                 discount = get_current_discount()
                 queryset = queryset.filter(discount_id__in=discount)
             if req.getlist('brand'):
-                queryset = queryset.filter(product_id__brand_id__title__in=req.getlist('brand'))
+                queryset = queryset.filter(product_id__brand_id__slug__in=req.getlist('brand'))
             if req.getlist('style'):
-                queryset = queryset.filter(product_id__style_id__title__contains=req.getlist('style'))
+                queryset = queryset.filter(product_id__style_id__slug__in=req.getlist('style'))
             if req.getlist('color'):
                 queryset = queryset.filter(color__title__in=req.getlist('color'))
             if req.getlist('unit'):
@@ -73,7 +73,7 @@ class ProductList(ListView):
             if req.getlist('tag'):
                 queryset = queryset.filter(tag__in=req.getlist('tag'))
             if req.getlist('category'):
-                queryset = queryset.filter(product_id__category_id__in=req.getlist('category'))
+                queryset = queryset.filter(product_id__category_id__title__in=req.getlist('category'))
             if req.getlist('minprice'):
                 queryset = queryset.filter(price__gte=req.get('minprice'))
             if req.getlist('maxprice'):

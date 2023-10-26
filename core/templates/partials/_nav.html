@@ -5,6 +5,7 @@
 {% load style_tag %}
 {% load shopcart_tags %}
 {% load subtotal_tag %}
+{% load posts_tag %}
 {% categories as cat %}
 
 
@@ -41,7 +42,7 @@
             <li class="dropdown"> <a href="#." class="dropdown-toggle" data-toggle="dropdown">Categories</a>
               <ul class="dropdown-menu">  
                 {% recursetree cat %}
-                  <li> <a href="{% url 'product:product_list' %}?category={{ node.id}}">{{ node.title }}</a></li>
+                  <li> <a href="{% url 'product:product_list' %}?category={{ node.title}}">{{ node.title }}</a></li>
                   {% if not node.is_leaf_node %}
                     <ul class="children">
                         {{ children }}
@@ -58,7 +59,7 @@
                   <ul class="col-sm-6">
                     {% get_brands as brands %}
                     {% for brn in brands %}
-                    <li> <a href="{% url 'product:product_list' %}?brand={{ brn.id }}" class="collection-toggle">{{ brn.title }}</a></li>
+                    <li> <a href="{% url 'product:product_list' %}?brand={{ brn.slug }}" class="collection-toggle">{{ brn.title }}</a></li>
                     {% endfor %}
                   </ul>
                   <ul class="col-sm-6">
@@ -83,9 +84,15 @@
 
             <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blogs</a>
               <ul class="dropdown-menu">
-                <li> <a href="{% url 'blog:blog_list' %}?new_post=true"> New Posts</a> </li>
-                <li> <a href="{% url 'blog:blog_list' %}?popupal=true"> Popular Post</a> </li>
-                <li> <a href="{% url 'blog:blog_list' %}?user=true">Authors</a> </li>
+                <li> <a href="{% url 'blog:post_list' %}?new_post=true"> New Posts</a> </li>
+                <li> <a href="{% url 'blog:post_list' %}?popupal=true"> Popular Post</a> </li>
+                <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Authors</a>
+                    <!--<ul class="dropdown-menu">
+                      <li> <a href="{% url 'blog:post_list' %}?new_post=true"> New Posts</a> </li>
+                      <li> <a href="{% url 'blog:post_list' %}?popupal=true"> Popular Post</a> </li>
+                      <li> <a href="{% url 'blog:post_list' %}?user=true">Authors</a> </li>
+                    </ul> -->
+                  </li>
               </ul>
             </li>
             

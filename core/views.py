@@ -38,7 +38,7 @@ class HomePage(ListView):
         context = super().get_context_data(**kwargs)
         discount = Discount.objects.filter(deleted_at=False, date_begin__gte=datetime.now(), date_end__lte=datetime.now())
         if discount:
-            context['discount_prod'] = self.count_variants.filter(discount_id__in=discount)[:3]
+            context['discount_prod'] = self.count_variants.order_by('-created_at')[:3]
         else:
             context['discount_prod'] = self.count_variants.order_by('-created_at')[:3]
         context['new_arrival'] = self.count_variants.order_by('-created_at')
