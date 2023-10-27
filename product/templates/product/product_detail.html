@@ -1,5 +1,5 @@
-{% load static %}
 {% extends 'core/base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -184,13 +184,15 @@
                   <h6>{{ r.first_name }} {{ r.last_name }}<span class="pull-right">{{ r.date }}</span> </h6>
                 </div>
               </div>
+              {% endfor %}
               
               <!-- ADD REVIEW           ########################################       -->
               <h6 class="margin-t-40">ADD REVIEW</h6>
               <form>
                 {% csrf_token %}
-                {% for field in form %}
-                <ul class="row">                  
+                
+                <ul class="row">
+                  {% for field in form %}   
                   <li class="col-sm-12">
                     <label> *YOUR REVIEW
                       <textarea></textarea>
@@ -203,6 +205,7 @@
                   <li class="col-sm-6">
                     <button type="submit" class="btn btn-dark btn-small pull-right no-margin">POST REVIEW</button>
                   </li>
+                  {% endfor %}
                 </ul>
               </form>
             </div>

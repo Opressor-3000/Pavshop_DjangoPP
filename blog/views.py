@@ -27,12 +27,14 @@ class PostList(ListView):
                     Q(tag__icontains=req.get['search']) |
                     Q(author__icontains=req.get['search'])
                 ).distinct
+            if req.getlist('taglist'):
+                queryset.filter(tag_in=req.getlist('taglist'))
             if req.get('popular'):
                 return queryset.annotate(total_count = Count('postreview')).order_by('total_count')
             if req.get('category'):
                 return queryset.filter(category__in=req.get('category'))[:10]
             if req.get('tags'):
-                return queryset.filter(tag__in=req.get('tags'))
+                return queryset.filter(tag__in=req.get('tags'))[:7]
             if req.get('new_post'):
                 return queryset.order_by('-created_at')
             if req.get('user'):

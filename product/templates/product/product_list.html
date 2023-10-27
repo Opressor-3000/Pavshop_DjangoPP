@@ -50,12 +50,13 @@
                       </div>
                     </div>
                   </div>
-                  <!-- Item Name -->
-                  <div class="item-name"> <a href="{{ var.slug.get_absolute_url }}">{{ var.title }}</a>
+                  <!-- Item Name {{ var.slug.get_absolute_url }} -->
+                  <div class="item-name"> <a href="{% url 'product:product' var.slug %}">{{ var.title }}</a>
                     <p>{{ var.product.description }}</p>
                   </div>
                   <!-- Price --> 
-                  <span class="price"><small>$</small>{{ var.price }}</span> </div>
+                  <span class="price"><small>$</small>{{ var.price }}</span> \
+                </div>
               </div>
               {% endfor %}
 

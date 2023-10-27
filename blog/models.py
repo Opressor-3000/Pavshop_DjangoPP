@@ -28,7 +28,7 @@ class Post(AbstractModel):
     slug = models.SlugField(max_length=100, unique=True, db_index=True)
     author = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Author', related_name='author')
     text = models.TextField(verbose_name='Content')
-    Preview = models.ImageField(upload_to='blog_image/', verbose_name='Preview')
+    preview = models.ImageField(upload_to='blog_image/', verbose_name='Preview')
     image = models.ManyToManyField(Image, blank=True, verbose_name='Image')
     published_at = models.BooleanField(default=False, verbose_name='Published at')  
     tag = models.ManyToManyField(Tag, verbose_name='Tags', related_name='tags')

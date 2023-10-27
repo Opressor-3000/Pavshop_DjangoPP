@@ -15,7 +15,7 @@
 6. git pull origin dev
 
 
-git add . && git commit -m 'blog post template sider bar tags view' && git push origin yusif && git checkout dev && git pull origin dev && git merge yusif && git push origin dev && git checkout yusif
+git add . && git commit -m 'fix product detail template ' && git push origin yusif && git checkout dev && git pull origin dev && git merge yusif && git push origin dev && git checkout yusif
 
 
 

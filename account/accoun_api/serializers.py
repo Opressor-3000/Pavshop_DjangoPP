@@ -64,10 +64,10 @@ class StatusOrderSerializer(ModelSerializer):
 
 
 class CurrentUserSerializer(ModelSerializer):
-   def get_user(self):
-      return self.context['request'].user
+   # def get_user(self):
+   #    return self.context['request'].user
    
-   user= get_user()
+   # user = get_user()
    class Meta:
       model = User
       fields = {

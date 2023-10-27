@@ -128,8 +128,8 @@
             </div>
           </div>
           <!-- Item Name -->
-          <div class="item-name"> <a href="#">{{ new.title }}</a>
-            <p>Lorem ipsum dolor sit amet</p>
+          <div class="item-name"> <a href="{{ new.slug.get_absolute_url }}">{{ new.title }}</a>
+            <p>{{ new.product_id.description | truncatechars:30 }}</p>
           </div>
         </div>
         {% endfor %}
@@ -171,8 +171,8 @@
               </div>
             </div>
             <!-- Item Name -->
-            <div class="item-name"> <a href="{% url 'product:product' pop.slug %}">{{ pop.title }}</a>
-              <p>{{ pop.product_id.description }}</p>
+            <div class="item-name"> <a href="{{ pop.slug.get_absolute_url }}">{{ pop.title }}</a>
+              <p>{{ pop.product_id.description | truncatechars:30 }}</p>
             </div>
             <!-- Price --> 
             <span class="price"><small>$</small>{{ pop.price}}</span> 

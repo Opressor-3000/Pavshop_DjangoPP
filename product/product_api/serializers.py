@@ -116,7 +116,7 @@ class ProductSerializer(ModelSerializer):
    designer = DesignerSerializer()
    collection_id = CollectionSerializer()
    style_id = StyleSerializer()
-   parent = PrimaryKeyRelatedField()
+   # parent = PrimaryKeyRelatedField()
    class Meta:
       model = Product
       fields = (

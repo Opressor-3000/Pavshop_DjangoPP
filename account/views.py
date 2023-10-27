@@ -119,6 +119,7 @@ class Basket(LoginRequiredMixin, ListView):
 class Checkout(LoginRequiredMixin, CreateView):
     model = Address
     template_name = 'account/checkout.html'
+    context_object_name = 'checkout'
 
 
 class Wishlist(LoginRequiredMixin, ListView):  

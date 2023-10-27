@@ -15,7 +15,7 @@ class PostReviewSerializer(ModelSerializer):
       }
 
 
-class BlogsListSerializer(ModelSerializer):
+class PostListSerializer(ModelSerializer):
    class Meta:
       model = Post
       fields = {
@@ -109,7 +109,7 @@ class BlogsOfProductSerializer(ModelSerializer):
 
 
 
-class BlogsListSerializer(ModelSerializer):
+class BlogListSerializer(ModelSerializer):
    blogproduct = BlogsOfProductSerializer()
    blogauthor = BlogsOfAuthorSerializer()
    blogtag = BlogsOfTagSerializer()

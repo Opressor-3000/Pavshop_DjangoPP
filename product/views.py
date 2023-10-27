@@ -18,7 +18,7 @@ from .utils import count_variant, get_current_discount
 
 class ProductDetail(DetailView):
     model = Variant
-    template_name = 'products/product_detail.html'
+    template_name = 'product/product_detail.html'
     context_object_name = 'product'
     slug_url_kwarg = 'variant_slug'
 
@@ -86,50 +86,3 @@ class ProductList(ListView):
                 queryset = queryset.filter(variantinbasket__order=2).annotate(total_count = Sum('variantinbasket__count')).order_by('total_count')
             return queryset
             
-            
-        
-#          return Model.objects.filter(column1 = self.kwargs['postfixname'))
-            
-"""
-    Sort_by :  
-                price, discount, popular(order), add_date, review_count, rating
-
-    Filter_by: 
-                brand, collection, category, discount, style, color, unit(комплекты / шт) , tag, designer
-
-    In Variant
-                color
-                discount
-                unit
-                tag
-    In Product 
-                category
-                collection
-                brand
-                designer
-                style
-
-
-testargs = request.GET.getlist('testargs')   
-# getlist gets all parameters with same name!!!!
-
-
-
-# constructing the url:
-
->>> from django.http import QueryDict
->>> q = QueryDict(‘artists=1′).copy()
->>> my_artists = [11,22,33,44]
->>> q.setlist(‘artists’, my_artists)
->>> print q
-<QueryDict: {u’artists’: [11, 22, 33, 44]}>
->>> print q.urlencode()
-artists=11&artists=22&artists=33&artists=44
-
-"""
-
-
-class ProductAPIView(generics.ListAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-

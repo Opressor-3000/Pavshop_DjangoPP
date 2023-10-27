@@ -13,6 +13,7 @@ def get_search_post(request):
 @register.inclusion_tag('partials/sider_bar.py')
 def get_blog_sidebar():
    blog_cats = Category.objects.annotate(cat = Count('categories')).order_by('cat')
+   print('sdfghjkll;oilukyjthrvedcvgbnhyj', blog_cats)
    blog_tags = Tag.objects.annotate(tag = Count('tags')).order_by('tag')
-   blog_recents = Post.objects.annotate(recent = Count('postreview')).order_by('recent')
+   blog_recents = Post.objects.annotate(recent = Count('postreview')).order_by('recent')[:3]
    return {'blog_cats': blog_cats, 'blog_tags': blog_tags, 'blog_recents': blog_recents }
