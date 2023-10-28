@@ -151,16 +151,16 @@ LOGOUT_REDIRECT_URL = reverse_lazy('account:login')
 LOGIN_URL=reverse_lazy('account:login')
 
 REST_FRAMEWORK = {
-   'DEFAULT_AUTHENTICATION_CLASSES': [
+   'DEFAULT_AUTHENTICATION_CLASSES': (
       'rest_framework_simplejwt.authentication.JWTAuthentication',
-   ],
-#    'DEFAULT_RENDERER_CLASSES': [
+   ),
+#    'DEFAULT_RENDERER_CLASSES': (
 #       'rest_framework.renderers.JSONRenderer',
 #       'rest_framework.renderers.BrowsebleAPIRenderer',
-#    ],
-#    'DEFAULT_PERMISSION_CLASSES':[
+#    ),
+#    'DEFAULT_PERMISSION_CLASSES':(
 #       'rest_framework.permissions.IsUserOrReadOnly',
-#    ],
+#    ),
 }
 
 STATIC_URL = '/static/'
@@ -221,7 +221,7 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 
-    "TOKEN_OBTAIN_SERIALIZER": "stories.api.custom.CustomTokenObtainPairSerializer",
+    "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
     "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
     "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
     "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",

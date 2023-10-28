@@ -119,7 +119,7 @@
                         {% for tr in toprate %}
                         <li>
                           <div class="media-left">
-                            <div class="cart-img"> <a href="#"> <img class="media-object img-responsive" src="{{ tr.get_main_img }}" alt="..."> </a> </div>
+                            <div class="cart-img"> <a href="{{ tr.get_absolute_url }}"> <img class="media-object img-responsive" src="{{ tr.get_main_img }}" alt="..."> </a> </div>
                           </div>
                           <div class="media-body">
                             <h6 class="media-heading">{{ tr.title }}</h6>

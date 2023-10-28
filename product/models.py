@@ -284,7 +284,7 @@ class Image(AbstractModel):
 
 class Variant(AbstractModel):
     title = CharField(max_length=100, unique=True, db_index=True, verbose_name='variant')
-    color = ForeignKey(Color, on_delete=CASCADE, verbose_name='color')
+    color = ForeignKey(Color, on_delete=CASCADE, verbose_name='color', related_name='variant_color')
     slug = SlugField(max_length=100, unique=True, db_index=True, verbose_name='Varian_slug')
     product_id = ForeignKey(Product, on_delete=CASCADE, related_name='variantofproduct', verbose_name='product id')
     price = DecimalField(max_digits=10, decimal_places=2, db_index=True, verbose_name='price')
@@ -296,7 +296,7 @@ class Variant(AbstractModel):
     user = ForeignKey(User, on_delete=PROTECT, related_name='user_add_variant', verbose_name='variant_creator')
   
     def get_absolute_url(self):
-        return reverse_lazy('product', kwargs={'product':self.slug})
+        return reverse_lazy('product:product', kwargs={'variant_slug':self.slug})
     
     def __str__(self) -> str:
         return f'{self.title} ({self.unit})'
@@ -313,7 +313,7 @@ class Variant(AbstractModel):
 
     @property
     def get_discount(self):
-        return Discount.objects.filter(deleted_at=False, date_begin__gte=datetime.now(), date_end__lte=datetime.now()).filter(variant__discounts=self)
+        return Discount.objects.filter(discounts=self).filter(deleted_at=False, date_begin__gte=datetime.now(), date_end__lte=datetime.now())
     
     @property
     def discount_type(self):
@@ -322,6 +322,10 @@ class Variant(AbstractModel):
         for disc in discount:
             discount_list.append(disc.type_id)
         return discount_list
+    
+    @property
+    def get_designer(self):
+        pass
 
     @property
     def get_discount_price(self):

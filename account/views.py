@@ -16,11 +16,10 @@ from django.utils.http import urlsafe_base64_decode
 import json
 
 
-from .models import User, ProductToBasket, Address
+from .models import User, ProductToBasket, Address, WishList
 from account.forms import RegisterForm
-from .forms import RegisterForm, UserAuthForm
+from .forms import RegisterForm, UserAuthForm, AddToCartForm
 from .utils import account_activation_token
-from .models import User
 from product.models import Variant, ProductReview
 from core.templatetags.shopcart_tags import get_shopcarts
 
@@ -108,18 +107,30 @@ class Basket(LoginRequiredMixin, ListView):
 
     def get_queryset(self) -> QuerySet[Any]:
         if self.request.user.is_authenticated:
-            print(self.request.user.id,"+++++")
-            print(ProductToBasket.objects.filter(user=self.request.user))
-
             return Variant.objects.filter(variantinbasket__user=self.request.user)
        
-        
-
-
+    
 class Checkout(LoginRequiredMixin, CreateView):
     model = Address
     template_name = 'account/checkout.html'
     context_object_name = 'checkout'
+
+
+class AddToCartView(LoginRequiredMixin, CreateView):
+    form_class = AddToCartForm
+    template_name = 'product/product_detail.html'
+    success_url = reverse_lazy('product:product')
+
+    def get_addtocart(self, *, object_list=None, **kwargs):
+        pass
+
+
+class AddToWishList(LoginRequiredMixin, CreateView):
+    # form_class = AddToWhishlistForm
+    template_name = 1
+    success_url = 2
+
+
 
 
 class Wishlist(LoginRequiredMixin, ListView):  

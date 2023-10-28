@@ -31,23 +31,25 @@
               <!-- Images Slider -->
               <div class="images-slider">
                 <ul class="slides">
-                  {% for img in product.get_image %}
-                  <li data-thumb="{{ img.url }}"> <img class="img-responsive" src="{{ img.url }}"  alt=""> </li>
-                  {% endfor %}
+                  
+                  <li data-thumb="{{ product.get_main_img }}"> <img class="img-responsive" src="{{ product.get_main_img }}"  alt=""> </li>
+                  
                 </ul>
               </div>
             </div>
             
             <!-- COntent -->
             <div class="col-md-5">
-              <h4>wood chair</h4>
+              <h4>{{ product.title }}</h4>
               <span class="price"><small>$</small>{{ price }}</span> 
               
               <!-- Sale Tags -->
+              {% if product.get_discount %}
               <div class="on-sale"> 10% <span>OFF</span> </div>
+              {% endif %}
               <ul class="item-owner">
-                <li>Designer :<span>{{ product.designer }}</span></li>
-                <li>Brand:<span> {{ product.barnd }}</span></li>
+                <li>Designer :<span>  {{ product.product_id.designer.name }}</span></li>
+                <li>Brand:<span> {{ product.brand.title }}</span></li>
               </ul>
               
               <!-- Item Detail -->
@@ -72,26 +74,28 @@
                     <ul class="colors-shop">
                       <!-- сделать тег for который разворачивает список цветов этого товара который в наличии  -->
                       <li><span class="margin-right-20">Colors</span></li>
-                      {% for v in variant  %}
-                      <li><a href="{% url 'product' %}" style="background:blueviolet;"></a></li>
+                      {% for cv in variants  %}
+                      <li><a href="" style="background:{{cv.color.title}};"><button type="submit" class="btn"></button></a></li>
                       {% endfor %}
                     </ul>
                   </li>
 
-                  <!-- сделать тег for который разворачивает список наборов в которых есть этот product -->
+                  <!-- 
+                    <button type="submit" class="btn">REGISTER NOW</button>
+                    
+                    сделать тег for который разворачивает список наборов в которых есть этот product
+                      <form method="post">
+                      {% csrf_token %}
+                        <input type="submit" value="Remove from Cart">
+                      </form>
+                      -->
                   
                   <!-- ADD TO CART -->
                   <li class="col-xs-6"> <a href="#." class="btn">ADD TO CART</a> </li>
-                  <form class="form-check" method="post" action="{% url 'product' %}">
-                      <input class="form-check-input" name="" id="" type="checkbox" value="checkedValue" aria-label="Text for screen reader">
-                  </div>"
                   
-                  <!-- LIKE -->
-                  <li class="col-xs-6">
-                    <form action="{% url 'product' %}" method="post" class="form-check-input" type="checkbox" value="checkedValue">
-                      <input class="icon-heart" name="" id="" type="checkbox" value="checkedValue">
-                    </form></li>
-                  </ul>
+                  <!-- ADD TO WISHLIST  -->
+                  <li class="col-xs-6"> <a href="#." class="like-us"><i class="icon-heart"></i></a> </li>
+                </ul>
                 
                 <!-- INFOMATION -->
                 <div class="inner-info">

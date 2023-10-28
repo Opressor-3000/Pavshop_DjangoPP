@@ -78,3 +78,15 @@ class Shopcart(ModelForm):
     class Meta:
         model = ProductToBasket
         fields = ['variant']
+
+
+class AddToCartForm(ModelForm):
+    class Meta:
+        model = ProductToBasket
+        fields = ['variant', 'count']
+
+
+class RemoveToCart(ModelForm):
+    class Meta:
+        model = ProductToBasket
+        fields = []
