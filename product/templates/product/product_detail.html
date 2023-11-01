@@ -41,7 +41,7 @@
             <!-- COntent -->
             <div class="col-md-5">
               <h4>{{ product.title }}</h4>
-              <span class="price"><small>$</small>{{ price }}</span> 
+              <span class="price"><small>$</small>{{ product.price }}</span> 
               
               <!-- Sale Tags -->
               {% if product.get_discount %}
@@ -49,7 +49,7 @@
               {% endif %}
               <ul class="item-owner">
                 <li>Designer :<span>  {{ product.product_id.designer.name }}</span></li>
-                <li>Brand:<span> {{ product.brand.title }}</span></li>
+                <li>Brand:<span> {{ product.product_id.brand_id.title }}</span></li>
               </ul>
               
               <!-- Item Detail -->
@@ -162,30 +162,16 @@
               <h6>3 REVIEWS FOR SHIP YOUR IDEA</h6>
               
               <!-- REVIEW PEOPLE 1 -->
+              {% for review in product_reviews %}
               <div class="media">
                 <div class="media-left"> 
                   <!--  Image -->
-                  <div class="avatar"> <a href="#"> <img class="media-object" src="images/avatar-1.jpg" alt=""> </a> </div>
+                  <div class="avatar"> <a href="{% url 'product:product_list' %}?user_reviews={{ review.user }}"> <img class="media-object" src="images/avatar-1.jpg" alt=""> </a> </div>
                 </div>
                 <!--  Details -->
                 <div class="media-body">
-                  <p class="font-playfair">“Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua.”</p>
-                  <h6>TYRION LANNISTER <span class="pull-right">MAY 10, 2016</span> </h6>
-                </div>
-              </div>
-              
-              <!-- REVIEW PEOPLE 1 -->
-              {% for r in review %}
-              <div class="media">
-                <div class="media-left"> 
-                  <!--  Image -->
-                  <div class="avatar"> <a href="#"> <img class="media-object" src="{{ r.avatar }}" alt=""> </a> </div>
-                </div>
-                <!--  Details -->
-                <div class="media-body">
-                  <p class="font-playfair">{{ r.text }}</p>
-                  <h6>{{ r.first_name }} {{ r.last_name }}<span class="pull-right">{{ r.date }}</span> </h6>
+                  <p class="font-playfair">“{{ review.text }}”</p>
+                  <h6>{{ review.user.get_full_name }}<span class="pull-right">{{ review.created_at }}</span> </h6>
                 </div>
               </div>
               {% endfor %}
@@ -241,13 +227,13 @@
               <!-- Overlay -->
               <div class="overlay">
                 <div class="position-center-center">
-                  <div class="inn"><a href="{{ pop.get_amin_img }}" data-lighter><i class="icon-magnifier"></i></a> <a href="#."><i class="icon-basket"></i></a> <a href="#." ><i class="icon-heart"></i></a></div>
+                  <div class="inn"><a href="{{ pop.get_main_img }}" data-lighter><i class="icon-magnifier"></i></a> <a href="#."><i class="icon-basket"></i></a> <a href="#." ><i class="icon-heart"></i></a></div>
                 </div>
               </div>
             </div>
             <!-- Item Name -->
             <div class="item-name"> <a href="{% url 'product:product' pop.slug %}">{{ pop.title }}</a>
-              <p>{{ pop.product.description }}</p>
+              <p>{{ pop.product.description | truncatechars:30 }}</p>
             </div>
             <!-- Price --> 
             <span class="price"><small>$</small>{{ pop.price }}</span> 

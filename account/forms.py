@@ -74,6 +74,12 @@ class DiscountCode(ModelForm):
         fields = ['code']
 
 
+class CreateOrder(ModelForm):
+    class Meta:
+        model = Order
+        fields = ['user', 'status']
+
+
 class Shopcart(ModelForm):
     class Meta:
         model = ProductToBasket

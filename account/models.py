@@ -87,7 +87,7 @@ class Status(AbstractModel):
 class Order(AbstractModel):
     user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='username', related_name='user_id')
     status = models.ForeignKey(Status, on_delete=models.PROTECT, verbose_name='status', related_name='status')
-    address = models.ForeignKey(Address, on_delete=models.PROTECT, verbose_name='delivery_address', related_name='address_delivery')
+    address = models.ForeignKey(Address, on_delete=models.PROTECT, verbose_name='delivery_address', related_name='address_delivery', blank=True)
 
     class Meta:
         verbose_name = 'order'

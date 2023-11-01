@@ -10,10 +10,8 @@ from django.db.models import Q, Sum, Count
 from rest_framework import generics
 
 
-from .serializers import ProductSerializer
-from .models import Variant, Product, Image, Category, Color, Tag
+from .models import Variant, Category, Color, Tag
 from .utils import count_variant, get_current_discount
-# from core.templatetags.nav_tags import get_discount
 
 
 class ProductDetail(DetailView):
@@ -25,6 +23,10 @@ class ProductDetail(DetailView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['variants'] = Variant.objects.filter(product_id__variantofproduct=kwargs["object"].id)
+        if not Variant.objects.filter(variantinbasket__order__status_id=2):
+            context['popular_prod'] = Variant.objects.all().order_by('-created_at')
+        else:
+            context['popular_prod'] = Variant.objects.filter(variantinbasket__order__status_id=2).annotate(total_count = Sum('variantinbasket__count')).order_by('total_count')
         return context
 
 class ProductList(ListView):
@@ -72,7 +74,7 @@ class ProductList(ListView):
             if req.getlist('unit'):
                 queryset = queryset.filter(unit__in=req.getlist('unit'))
             if req.getlist('tag'):
-                queryset = queryset.filter(tag__in=req.getlist('tag'))
+                queryset = queryset.filter(tag__title__in=req.getlist('tag'))
             if req.getlist('category'):
                 queryset = queryset.filter(product_id__category_id__title__in=req.getlist('category'))
             if req.getlist('minprice'):
@@ -84,6 +86,10 @@ class ProductList(ListView):
             elif req.get('old_arrival'):
                 queryset = queryset.order_by('created_at')
             elif req.get('popular'):
-                queryset = queryset.filter(variantinbasket__order=2).annotate(total_count = Sum('variantinbasket__count')).order_by('total_count')
+                if queryset.filter(variantinbasket__order__status_id=2):
+                    queryset = queryset.filter(variantinbasket__order__status_id=2).annotate(total_count = Sum('variantinbasket__count')).order_by('total_count')
+                else:
+                    queryset = queryset.order_by('-created_at')
             return queryset
+        
             

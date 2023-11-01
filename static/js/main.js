@@ -282,12 +282,18 @@ $(document).on("click", ".add_wishlist", function() {
 });
 
 
+
+//---------------------------------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
 window.addEventListener('load', async function() {
 	let data = await this.fetch('http://127.0.0.1/blog/',{
 		method: "GET",
 		headers: {
 			"Content-Type": 'applicacation/json'
-		}
+		} 
 	});
 	let posts = await data.json();
 	let blogContent = this.document.getElementById('blogs');
@@ -307,4 +313,22 @@ $('ul.categories li').click( function() {
     } else {
         $cb.prop("checked", false);
     }
+ });
+
+
+ let loginBtn = document.querySelector("#login_btn");
+
+ loginBtn.addEventListener("click", async () => {
+	let email = document.querySelector("#mail").value
+	let password = document.querySelector("#psw").value
+	let data = await fetch("http://127.0.0.1:8000/api/v1/account/token/", {
+		method: "POST",
+		header:{
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(body)
+	});
+	let response = await data.json();
+	localStorage.setItem("pavshop_access_token", response["access"]);
+	localStorage.setItem("pavshop_refresh_token", response["refresh"]);
  });

@@ -16,7 +16,7 @@ from django.utils.http import urlsafe_base64_decode
 import json
 
 
-from .models import User, ProductToBasket, Address, WishList
+from .models import User, ProductToBasket, Address, WishList, Order
 from account.forms import RegisterForm
 from .forms import RegisterForm, UserAuthForm, AddToCartForm
 from .utils import account_activation_token
@@ -100,7 +100,7 @@ def login(request):
     return render(request, "account/login.html", context)
     
 
-class Basket(LoginRequiredMixin, ListView):
+class Basket(LoginRequiredMixin, ListView): 
     model = ProductToBasket
     template_name = 'account/shopping_cart.html'
     context_object_name = 'shopcart'
@@ -110,19 +110,24 @@ class Basket(LoginRequiredMixin, ListView):
             return Variant.objects.filter(variantinbasket__user=self.request.user)
        
     
-class Checkout(LoginRequiredMixin, CreateView):
+class Checkout(LoginRequiredMixin, CreateView):   # способы оплаты
     model = Address
     template_name = 'account/checkout.html'
     context_object_name = 'checkout'
 
 
-class AddToCartView(LoginRequiredMixin, CreateView):
+class AddToCartView(LoginRequiredMixin, CreateView):    #  добавить в корзину 
     form_class = AddToCartForm
     template_name = 'product/product_detail.html'
     success_url = reverse_lazy('product:product')
 
     def get_addtocart(self, *, object_list=None, **kwargs):
         pass
+        # if Order.objects.filter(user=self.request.user).filter(status=2).first():
+        #     1
+        # else:
+        #     2
+
 
 
 class AddToWishList(LoginRequiredMixin, CreateView):

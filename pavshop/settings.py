@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'mptt',
     'social_django',
     'rest_framework_simplejwt',
+    'corsheaders',
     # custom
     'core.apps.CoreConfig',
     'account.apps.AccountConfig',
@@ -54,11 +55,14 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'pavshop.urls'
@@ -123,6 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -138,15 +143,21 @@ USE_TZ = True
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.facebook.FacebookOAuth2',
 )
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1063367630393-551hcmejbqe2j880lsm27fkgijuudbp6.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+SOCIAL_AUTH_FACEBOOK_KEY = ''
+SOCIAL_AUTH_FACEBOOK_SECRET = ''
+
+# SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
  
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-LOGIN_REDIRECT_URL = reverse_lazy('account:homepage')
+LOGIN_REDIRECT_URL = reverse_lazy('core:homepage')
 LOGOUT_REDIRECT_URL = reverse_lazy('account:login')
 LOGIN_URL=reverse_lazy('account:login')
 
