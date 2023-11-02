@@ -132,11 +132,13 @@ CORS_ALLOW_ALL_ORIGINS = True
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr'
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 
@@ -177,6 +179,8 @@ REST_FRAMEWORK = {
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [BASE_DIR, "static"]
+
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
 MEDIA_URL = '/media/'
 

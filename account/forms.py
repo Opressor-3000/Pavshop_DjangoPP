@@ -55,7 +55,6 @@ class UserAuthForm(AuthenticationForm):
 
 class UserWishList(AbstractForm):
     # user = super().get_user()
-    
 
     class Meta:
         model = WishList

@@ -15,7 +15,7 @@
 6. git pull origin dev
 
 
-git add . && git commit -m 'install payment package and othet fix ' && git push origin yusif && git checkout dev && git pull origin dev && git merge yusif && git push origin dev && git checkout yusif
+git add . && git commit -m 'add multilanguage for templates statics' && git push origin yusif && git checkout dev && git pull origin dev && git merge yusif && git push origin dev && git checkout yusif
 
 
 
