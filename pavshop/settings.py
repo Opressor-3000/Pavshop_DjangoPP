@@ -45,11 +45,13 @@ INSTALLED_APPS = [
     'social_django',
     'rest_framework_simplejwt',
     'corsheaders',
+    'drf_yasg',
     # custom
     'core.apps.CoreConfig',
     'account.apps.AccountConfig',
     'product.apps.ProductConfig',
     'blog.apps.BlogConfig',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -132,7 +134,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'fr'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'UTC'
 
@@ -164,6 +166,8 @@ LOGOUT_REDIRECT_URL = reverse_lazy('account:login')
 LOGIN_URL=reverse_lazy('account:login')
 
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+   
    'DEFAULT_AUTHENTICATION_CLASSES': (
       'rest_framework_simplejwt.authentication.JWTAuthentication',
    ),
@@ -193,15 +197,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
+# EMAIL_FILE_PATH = BASE_DIR / "send_mails"
+
 EMAIL_HOST = "smtp.gmail.com"
 
 EMAIL_USE_TLS = True
+
+DEFAULT_FROM_EMAIL  = 'webmaster@my-host.com'
 
 EMAIL_PORT = 587
 
 EMAIL_HOST_USER = "fexriiphone@gmail.com"
 
-EMAIL_HOST_PASSWORD = "oftx ayxd jyqk fdzc "
+EMAIL_HOST_PASSWORD = "oftxayxdjyqkfdzc"
 
 
 SIMPLE_JWT = {

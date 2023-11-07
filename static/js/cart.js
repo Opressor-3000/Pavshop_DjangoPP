@@ -6,7 +6,7 @@ for(var i = 0; i < updateButton.lenght; i++) {
    updateButton[i].addEventListener('click', function(){
       var productId = this.dataset.product
       var action = this.dataset.action
-      console.log('productId', productId, 'action', action)
+      console.log('productId:', productId, 'action:', action)
 
       console.log('USER:', user)
 
@@ -17,12 +17,12 @@ for(var i = 0; i < updateButton.lenght; i++) {
       }
    })
 }
-
+ 
 
 function updateUserOrder(productId, action) {
    console.log('User sending data ...')
 
-   var url = '/updateitem/'
+   var url = '/add_item/'
 
    fetch(url, {
       method: "POST",
@@ -36,6 +36,6 @@ function updateUserOrder(productId, action) {
        return response.json();
    })
    .then((data) => {
-      console.log('Data;', data)
+      console.log('Data:', data)
    });
 }

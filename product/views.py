@@ -1,5 +1,5 @@
 from datetime import datetime
-
+import json
 
 from typing import Any, Dict
 from django.db import models
@@ -8,10 +8,29 @@ from django.views.generic import ListView, DetailView
 from django.db.models.query import QuerySet
 from django.db.models import Q, Sum, Count
 from rest_framework import generics
+from django.http import JsonResponse
+from account.models import ProductToBasket, Order
+
 
 
 from .models import Variant, Category, Color, Tag
 from .utils import count_variant, get_current_discount
+
+
+def updateItem(request):    
+    data = json.loads(request.data)
+    variant = data['productId']
+    action = data['action']
+    user = request.user.id
+
+    order = Order.objects.filter(user=user, status=2)
+    add_to_basket = ProductToBasket.objects.create(user=user, variant=variant, order=order)
+
+    if action == 'add':
+        add_to_basket.count = add_to_basket.count + 1 
+    elif action == 'remove':
+        add_to_basket.count = add_to_basket.count -1
+    return JsonResponse('Item was added!', safe=False)
 
 
 class ProductDetail(DetailView):

@@ -10,6 +10,7 @@ from django.db.models.query import QuerySet
 
 
 from product.utils import count_variant
+from blog.models import Post
 from product.models import Variant, Discount, Image
 from .models import *
 
@@ -43,6 +44,7 @@ class HomePage(ListView):
             context['discount_prod'] = self.count_variants.order_by('-created_at')[:3]
         context['new_arrival'] = self.count_variants.order_by('-created_at')
         context['popular_prod'] = self.count_variants
+        context['last_posts'] = Post.objects.all().order_by('-created_at')[:3]
         return context
         
     

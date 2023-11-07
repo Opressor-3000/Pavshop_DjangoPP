@@ -6,7 +6,7 @@ from .models import ProductToBasket, Order, User
 from .views import UserAccount
 
 
-@receiver(pre_save, sender=User,)
-def create_order(sender, instance, created, **kwargs):
-   pass
+# @receiver(pre_save, sender=User,)
+# def create_order(sender, instance, created, **kwargs):
+#    pass
 

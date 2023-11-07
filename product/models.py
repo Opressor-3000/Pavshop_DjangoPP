@@ -19,7 +19,7 @@ class Category(MPTTModel):
     update_at = DateTimeField(auto_now=True, verbose_name='update at')
     
     def __str__(self) -> str:
-        return self.title
+        return self.titler
     
     def get_absolute_url(self):
         return reverse_lazy('categories', kwargs={'category': self.title})

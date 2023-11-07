@@ -14,14 +14,17 @@ from .tasks import send_email
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 import json
+from django.contrib.auth.views import PasswordResetView,PasswordResetConfirmView,TemplateView
+from django.contrib import messages
 
 
 from .models import User, ProductToBasket, Address, WishList, Order
 from account.forms import RegisterForm
-from .forms import RegisterForm, UserAuthForm, AddToCartForm
+from .forms import RegisterForm, UserAuthForm, AddToCartForm, UserPasswordResetConfirmForm, UserPasswordResetForm
 from .utils import account_activation_token
 from product.models import Variant, ProductReview
 from core.templatetags.shopcart_tags import get_shopcarts
+
 
 
 class UserAccount(ListView):  
@@ -79,7 +82,7 @@ class LoginView(LoginView):
     redirect_authenticated_user = True
     template_name = 'account/login.html'
     form_class = UserAuthForm
-
+    
     def get_success_url(self):
         return reverse_lazy('core:homepage')
     
@@ -176,4 +179,25 @@ def update_item(request):
         ProductToBasket.objects.delete()
 
     return JsonResponse('item was added', safe=False)
+
+
+class UserPasswordResetView(PasswordResetView):
+    template_name = 'account/password_reset_form.html'
+    form_class=UserPasswordResetForm
+    email_template_name = 'account/password-reset.html'
+    success_url = reverse_lazy('account:forget_pwd')
+    def get_success_url(self):
+         
+         messages.add_message(self.request, messages.INFO, 'Parolunuzu yenilemek haqqinda istey mailinize gonderilmistir')
+         return self.success_url
+
+class UserPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'account/password_reset_confirm.html'
+    form_class=UserPasswordResetConfirmForm
+    success_url=reverse_lazy("account:login")
+    def get_success_url(self):
+        
+        messages.add_message(self.request, messages.INFO, 'Parolunuz deyisildi')
+     
+        return self.success_url
 

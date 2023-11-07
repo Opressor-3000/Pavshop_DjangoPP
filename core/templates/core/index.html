@@ -194,15 +194,15 @@
           Sed feugiat, tellus vel tristique posuere, diam</span> </div>
         <div class="knowledge-share">
           <ul class="row">
-            <!-- for p in posts -->
+            {% for last_p in last_posts %}
             <!-- Post 1 -->
             <li class="col-md-6">
-              <div class="date"> <span>p.datetime</span> <span class="huge">p.datetime</span> </div>
-              <a href="#.">p.title</a>
-              <p>p.text | truncate</p>
-              <span>By <strong>p.author</strong></span> 
+              <div class="date"> <span>{{ last_p.datetime }}</span> <span class="huge">{{ last_p.datetime }}</span> </div>
+              <a href="{% url 'blog:post' last_p.slug %}">{{ last_p.title }}</a>
+              <p>{{ last_p.text | truncatechars:30 }}</p>
+              <span>By <strong>{{ last_p.author }}</strong></span> 
             </li>
-           <!-- endfor -->
+           {% endfor %}
           </ul>
         </div>
       </div>

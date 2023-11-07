@@ -1,5 +1,7 @@
 from django.forms import TextInput, ModelForm, CharField, PasswordInput, EmailInput, EmailField
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import password_validation
+from django.contrib.auth.forms import AuthenticationForm,UserCreationForm,PasswordResetForm,SetPasswordForm
 
 
 from .models import *
@@ -95,3 +97,25 @@ class RemoveToCart(ModelForm):
     class Meta:
         model = ProductToBasket
         fields = []
+
+
+class UserPasswordResetForm(PasswordResetForm):
+    
+     email = EmailField(
+        
+        max_length=254,
+        widget=EmailInput(attrs={'autocomplete': 'email','class': 'form-control',"placeholder": "Email",}),
+    )
+class UserPasswordResetConfirmForm(SetPasswordForm):
+    
+     new_password1 = CharField(
+        label=("New password"),
+        widget = PasswordInput(attrs={'autocomplete': 'new-password','class': 'form-control',"placeholder": "New Password",}),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+     new_password2 = CharField(
+        label=("New password confirmation"),
+        strip=False,
+        widget=PasswordInput(attrs={'autocomplete': 'new-password','class': 'form-control',"placeholder": "Confirm Password",}),
+    )
