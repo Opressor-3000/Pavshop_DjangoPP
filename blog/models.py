@@ -20,7 +20,7 @@ class PostReview(AbstractModel):
         ordering = ['pk']
 
     def __str__(self) -> str:
-        return f'{self.user} review {self.post} {self.review}'
+        return str(self.id)
 
 
 class Post(AbstractModel):
@@ -45,4 +45,4 @@ class Post(AbstractModel):
         return reverse_lazy('blog_detail', kwargs={'post': self.title })
     
     def __str__(self):
-        return self.title 
+        return str(self.title)

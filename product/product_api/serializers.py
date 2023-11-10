@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField, PrimaryKeyRelatedField
-from ..models import Category, Variant, Product, Tag, Brand, Style, Discount, DiscountType, Unit, Designer, Collection, VariantToStore, Store, Color
+from ..models import Category, Variant, Product, Tag, Brand, Style, Discount, DiscountType, Unit, Designer, Collection, VariantToStore, Store, Color, ProductReview
 
 
 class CategorySerializer(ModelSerializer):
@@ -27,7 +27,8 @@ class TagSerializer(ModelSerializer):
 class BrandSerializer(ModelSerializer):
    class Meta:
       model = Brand
-      fields = ('title',
+      fields = (
+         'title',
       )
 
 
@@ -155,7 +156,6 @@ class VariantSerializer(ModelSerializer):
          'tag',
          'parent',
          'in_stock',
-         
       )
 
 
@@ -174,3 +174,17 @@ class VariantToCategoriesSearchSerializer(ModelSerializer):
    class Meta:
       model = Category
       fields = ('title',)
+
+
+class ProductReviewSerializer(ModelSerializer):
+   product = ProductSerializer()
+   class Meta:
+      model = ProductReview
+      fields = (
+         'product',
+         'review',
+         'text',
+         'published_at',
+         'created_at',
+         'updated_at',
+      )

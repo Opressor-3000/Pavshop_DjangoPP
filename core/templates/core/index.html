@@ -44,7 +44,7 @@
               data-endelementdelay="0.1" 
               data-endspeed="300" 
               style="z-index: 6; font-size:80px; color:#2d3a4b; text-transform:uppercase; white-space: nowrap;"><small class="font-regular">$</small>{{prod.price}} </div>
-          <!-- LAYER NR. 2 -->
+          <!-- LAYER NR. 3 -->
           <div class="tp-caption sfr font-extra-bold tp-resizeme" 
               data-x="left" data-hoffset="0" 
               data-y="center" data-voffset="0" 
@@ -57,7 +57,7 @@
               data-endelementdelay="0.1" 
               data-endspeed="300" 
               style="z-index: 6; font-size:120px; color:#fff; text-transform:uppercase; white-space: nowrap;">featured </div>
-          <!-- LAYER NR. 2 -->
+          <!-- LAYER NR. 4 -->
           <div class="tp-caption sfr font-extra-bold tp-resizeme" 
               data-x="left" data-hoffset="0" 
               data-y="center" data-voffset="110" 
@@ -70,7 +70,7 @@
               data-endelementdelay="0.1" 
               data-endspeed="300" 
               style="z-index: 6; font-size:120px; color:#fff; text-transform:uppercase; white-space: nowrap;">cycle </div>
-          <!-- LAYER NR. 4 -->
+          <!-- LAYER NR. 5 -->
           <div class="tp-caption lfb tp-resizeme" 
               data-x="left" data-hoffset="0" 
               data-y="center" data-voffset="240" 
@@ -82,6 +82,76 @@
               data-endspeed="300" 
               data-scrolloffset="0"
               style="z-index: 8;"><a href="#." class="btn">SHOP NOW</a> </div>
+        </li>
+        <!-- SLIDE  -->
+        <li data-transition="random" data-slotamount="7" data-masterspeed="300"  data-saveperformance="off" > 
+          <!-- MAIN IMAGE --> 
+          <img src="{{ prod.get_main_img }}"  alt="slider"  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat"> 
+          <!-- LAYERS --> 
+          <!-- LAYER NR. 1 -->
+          <div class="tp-caption font-playfair sfb tp-resizeme" 
+              data-x="center" data-hoffset="0" 
+              data-y="center" data-voffset="-150" 
+              data-speed="800" 
+              data-start="500" 
+              data-easing="Power3.easeInOut" 
+              data-splitin="none" 
+              data-splitout="none" 
+              data-elementdelay="0.1" 
+              data-endelementdelay="0.1" 
+              data-endspeed="300" 
+              style="z-index: 7; font-size:18px; color:#fff; max-width: auto; max-height: auto; white-space: nowrap;">The Latest Product from PAVSHOP</div>
+          <!-- LAYER NR. 2 -->
+          <div class="tp-caption sfr font-regular tp-resizeme letter-space-4" 
+              data-x="center" data-hoffset="0" 
+              data-y="center" data-voffset="-50" 
+              data-speed="800" 
+              data-start="800" 
+              data-easing="Power3.easeInOut" 
+              data-splitin="chars" 
+              data-splitout="none" 
+              data-elementdelay="0.07" 
+              data-endelementdelay="0.1" 
+              data-endspeed="300" 
+              style="z-index: 6; font-size:78px; color:#fff; text-transform:uppercase; white-space: nowrap;">look beautiful </div>
+          <!-- LAYER NR. 2 -->
+          <div class="tp-caption sfr font-extra-bold tp-resizeme letter-space-4" 
+              data-x="center" data-hoffset="0" 
+              data-y="center" data-voffset="60" 
+              data-speed="800" 
+              data-start="1300" 
+              data-easing="Power3.easeInOut" 
+              data-splitin="chars" 
+              data-splitout="none" 
+              data-elementdelay="0.07" 
+              data-endelementdelay="0.1" 
+              data-endspeed="300" 
+              style="z-index: 6; font-size:140px; color:#fff; text-transform:uppercase; white-space: nowrap;">this season </div>
+          <!-- LAYER NR. 4 -->
+          <div class="tp-caption sfb font-extra-bold tp-resizeme" 
+              data-x="center" data-hoffset="120"
+              data-y="center" data-voffset="200"
+              data-speed="800" 
+              data-start="2200" 
+              data-easing="Power3.easeInOut" 
+              data-splitin="none" 
+              data-splitout="none" 
+              data-elementdelay="0.07" 
+              data-endelementdelay="0.1" 
+              data-endspeed="300" 
+              style="z-index: 6; font-size:60px; color:#fff; text-transform:uppercase; white-space: nowrap;"><small class="font-regular">$</small> 299 </div>
+          <!-- LAYER NR. 4 -->
+          <div class="tp-caption lfb tp-scrollbelowslider tp-resizeme" 
+              data-x="center" data-hoffset="-120" 
+              data-y="center" data-voffset="200" 
+              data-speed="800" 
+              data-start="2200" 
+              data-easing="Power3.easeInOut" 
+              data-elementdelay="0.1" 
+              data-endelementdelay="0.1" 
+              data-endspeed="300" 
+              data-scrolloffset="0"
+              style="z-index: 8;"><a href="#." class="btn">BUY NOW</a> </div>
         </li>
         {% endfor %}
         
@@ -122,9 +192,9 @@
               </a> 
               <a href="#."><i class="icon-basket"></i></a> 
               {% if user.is_authenticated %}
-              <button class="add_wishlist" data-product="{{ new.id }}"><i class="icon-heart"></i></button>
+              <button class="add_wishlist" id="add_wishlist" data-product="{{ new.id }}"><i class="icon-heart" id="add_wishlist"></i></button>
               {% else %}
-              <button class="disable_wishlist"><i class="icon-heart"></i></button>
+              <a href="{% url 'account:login' %}"><button>i class="icon-heart"></i></button></a>
               {% endif %}
             </div>
           </div>
@@ -158,14 +228,14 @@
               <div class="overlay">
                 <div class="position-center-center">
                   <div class="inn">
-                    <a href="" data-lighter>
+                    <a href="#" data-lighter>
                       <i class="icon-magnifier"></i>
                     </a> 
-                    <a href=""><i class="icon-basket"></i></a> 
+                    <a href="#"><i class="icon-basket"></i></a> 
                     {% if user.is_authenticated %}
-                    <button class="add_wishlist" data-product=""><i class="icon-heart"></i></button>
+                    <a href="#" class="add_wishlist" id="add_wishlist" data-product=""><i class="icon-heart" id="add_wishlist"></i></a>
                     {% else %}
-                    <button class="disable_wishlist"><i class="icon-heart"></i></button>
+                    <a href="#" class="disable_wishlist" id="add_wishlist"><i class="icon-heart" id="add_wishlist"></i></a>
                     {% endif %}
                   </div>
                 </div>
@@ -200,7 +270,7 @@
               <div class="date"> <span>{{ last_p.datetime }}</span> <span class="huge">{{ last_p.datetime }}</span> </div>
               <a href="{% url 'blog:post' last_p.slug %}">{{ last_p.title }}</a>
               <p>{{ last_p.text | truncatechars:30 }}</p>
-              <span>By <strong>{{ last_p.author }}</strong></span> 
+              <span>By <strong>{{ last_p.author.full_name }}</strong></span> 
             </li>
            {% endfor %}
           </ul>

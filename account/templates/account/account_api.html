@@ -16,104 +16,53 @@
           <div class="item-decribe"> 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs animate fadeInUp" data-wow-delay="0.4s" role="tablist">
-              <li role="presentation" class="active"><a href="#descr" role="tab" data-toggle="tab">{% trans 'SHOPPING CART' %}</a></li>
+              <li role="presentation" class="active"><a href="#shopcart" role="tab" data-toggle="tab">{% trans 'SHOPPING CART' %}</a></li>
+              <li role="presentation"><a href="#orders" role="tab" data-toggle="tab">{% trans 'MY ORDERS' %}</a></li>
               <li role="presentation"><a href="#wishlist" role="tab" data-toggle="tab">{% trans 'WISHLIST' %}</a></li>
-              <li role="presentation"><a href="#review" role="tab" data-toggle="tab">{% trans 'MY REVIEWS' %}</a></li>
               <li role="presentation"><a href="#posts" role="tab" data-toggle="tab">{% trans 'MY POSTS' %}</a></li>
+              <li role="presentation"><a href="#reviewposts" role="tab" data-toggle="tab">{% trans 'MY POST REVIEW' %}</a></li>
+              <li role="presentation"><a href="#reviews" role="tab" data-toggle="tab">{% trans 'MY PRODUCT REVIEWS' %}</a></li>
             </ul>
             
             <!-- Tab panes -->
             <div class="tab-content animate fadeInUp" data-wow-delay="0.4s"> 
               <!-- SHOPPING CART -->
-              <div role="tabpanel" class="tab-pane fade in active" id="descr">
+              <div role="tabpanel" class="tab-pane fade in active" id="shopcart">
                 <div class="shopping-cart"> 
             
                   <!-- SHOPPING INFORMATION -->
                   <div class="cart-head">
                     <ul class="row">
                       <!-- PRODUCTS -->
-                      <li class="col-sm-2 text-left">
-                        <h6>{% trans 'PRODUCTS' %}</h6>
-                      </li>
+                      <li class="col-sm-2 text-left"><h6>{% trans 'PRODUCTS' %}</h6></li>
                       <!-- NAME -->
-                      <li class="col-sm-4 text-left">
-                        <h6>NAME</h6>
-                      </li>
+                      <li class="col-sm-4 text-left"><h6>NAME</h6></li>
                       <!-- PRICE -->
-                      <li class="col-sm-2">
-                        <h6>PRICE</h6>
-                      </li>
+                      <li class="col-sm-2"><h6>PRICE</h6></li>
                       <!-- QTY -->
-                      <li class="col-sm-1">
-                        <h6>QUANTITY</h6>
-                      </li>
-                      
+                      <li class="col-sm-1"><h6>QUANTITY</h6></li>
                       <!-- TOTAL PRICE -->
-                      <li class="col-sm-2">
-                        <h6>TOTAL</h6>
-                      </li>
+                      <li class="col-sm-2"><h6>TOTAL</h6></li>
                       <li class="col-sm-1"> </li>
                     </ul>
                   </div>
-                  
-                  {% for sc in shopping_cart %}
                   <!-- Cart Details -->
-                    <ul class="row cart-details">
-                      <li class="col-sm-6">
-                        <div class="media"> 
-                          <!-- Media Image -->
-                          <div class="media-left media-middle"> <a href="{% url 'product:product' sc.slug %}" class="item-img"> <img class="media-object" src="{% static 'images/cart-img-3.jpg' %}" alt=""> </a> </div>
-                          
-                          <!-- Item Name -->
-                          <div class="media-body">
-                            <div class="position-center-center">
-                              <h5>{{ sc.title }}</h5>
-                              <p>{{ sc.get_product}}</p>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      
-                      <!-- PRICE -->
-                      <li class="col-sm-2">
-                        <div class="position-center-center"> <span class="price"><small>$</small>{{ sc.price }}</span> </div>
-                      </li>
-                      
-                      <!-- QTY -->
-                      <li class="col-sm-1">
-                        <div class="position-center-center">
-                          <div class="quinty"> 
-                            <!-- QTY -->
-                            <select class="selectpicker">
-                              <option>1</option>
-                            </select>
-                          </div>
-                        </div>
-                      </li>
-                      
-                      <!-- TOTAL PRICE -->
-                      <li class="col-sm-2">
-                        <div class="position-center-center"> <span class="price"><small>$</small>{{ sc.total.price }}</span> </div>
-                      </li>
-                      
-                      <!-- REMOVE -->
-                      <li class="col-sm-1">
-                        <div class="position-center-center"> <a href=""><i class="icon-close"></i></a> </div>
-                      </li>
-                    </ul>
-                  {%endfor%}
+                  <div class="cart-detail">
+
                   </div>
+                </div>
+              </div>
+
+                            <!-- WISHLIST -->
+              <div role="tabpanel" class="tab-pane fade" id="orders">
               </div>
               
               <!-- WISHLIST -->
               <div role="tabpanel" class="tab-pane fade" id="wishlist">
-                {% for wish in user_wishlist %}
+              </div>
 
-                {% endfor %}
-                <h6></h6>
-                
-                <!-- REVIEW PEOPLE 1 -->
-                <div class="media">
+                <!-- MY POSTS -->`
+                <div class="media posts" class="tab-pane fade" id="posts">
                   <div class="media-left"> 
                     <!--  Image -->
                     <div class="avatar"> <a href="#"> <img class="media-object" src="images/avatar-1.jpg" alt=""> </a> </div>
@@ -125,30 +74,15 @@
                     <h6>TYRION LANNISTER <span class="pull-right">MAY 10, 2016</span> </h6>
                   </div>
                 </div>
-              </div>
-                
-              <!-- MY REVIEWS -->
-              <div role="tabpanel" class="tab-pane fade" id="review"> 
-                <div class="media">
-                  <div class="media-left"> 
-                    <!--  Image -->
-                    <div class="avatar"> <img class="media-object" src="{{ r.avatar }}" alt=""> </div>
-                  </div>
-                  <!--  Details -->
-                  {% for review in user_reviews %}
-                  <div class="media-body">
-                    <a href="{% url 'product:product' review.product.slug %}"><h6>{{ review.product.title }}<span class="pull-right">{{ review.date }}</span> </h6></a>
-                    <p class="font-playfair">{{ review.text }}</p>
-                  </div>
-                  {% endfor %}
+             
+                <!-- MY POST REVIEWS -->
+                <div class="post_review" class="tab-pane fade" id="reviewposts">
                 </div>
-              </div>
-              
-              <!-- MY POSTS -->
-              <div role="tabpanel" class="tab-pane fade" id="posts"> 
-                {% for post in user_posts %}
-                {% endfor %}
-              </div>
+                
+                <!-- MY PRODUCT REVIEWS -->
+                <div class="product_review" class="tab-pane fade" id="reviews">
+                </div>
+
             </div>
           </div>
 

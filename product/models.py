@@ -19,7 +19,7 @@ class Category(MPTTModel):
     update_at = DateTimeField(auto_now=True, verbose_name='update at')
     
     def __str__(self) -> str:
-        return self.titler
+        return str(self.title)
     
     def get_absolute_url(self):
         return reverse_lazy('categories', kwargs={'category': self.title})
@@ -40,7 +40,7 @@ class DiscountType(AbstractModel):
     user = ForeignKey(User, on_delete=PROTECT)
     
     def __str__(self) -> str:
-        return self.title
+        return str(self.title)
     
     def get_absolute_url(self, **kwargs):
         return reverse_lazy('product', kwargs={'discounttype': self.title })
@@ -61,7 +61,7 @@ class Discount(AbstractModel):
     deleted_at = BooleanField(default=False)
     
     def __str__(self) -> str:
-        return self.title
+        return str(self.title)
     
     def get_absolute_url(self):
         return reverse_lazy('product/', kwargs={'product':self.title})
@@ -94,7 +94,7 @@ class ProductReview(AbstractModel):
     deleted_at = BooleanField(default=False)
   
     def __str__(self) -> str:
-        return f'{self.user} {self.product} {self.review}'
+        return f'{str(self.user.get_full_name)} {str(self.product.title)}'
     
     class Meta:
         verbose_name = 'review'
@@ -117,7 +117,7 @@ class Store(AbstractModel):
     deleted_at = BooleanField(default=False)
    
     def __str__(self) -> str:
-        return f'{self.title} {self.address}'
+        return f'{str(self.title)} {str(self.address)}'
     
     class Meta:
         verbose_name = 'store'
@@ -133,7 +133,7 @@ class Unit(AbstractModel):
         verbose_name_plural = 'Units'
     
     def __str__(self) -> str:
-        return self.title
+        return str(self.title)
 
 
 class Color(AbstractModel):
@@ -142,7 +142,7 @@ class Color(AbstractModel):
     user = ForeignKey(User, on_delete=PROTECT)
     
     def __str__(self):
-        return self.title
+        return str(self.title)
     
     class Meta:
         verbose_name = 'color'
@@ -156,7 +156,7 @@ class Designer(AbstractModel):
     user = ForeignKey(User, on_delete=PROTECT)
 
     def __str__(self) -> str:
-        return self.name
+        return str(self.name)
     
     def get_absolute_url(self):
         return reverse_lazy('designer', kwargs={'designer':self.title})
@@ -173,7 +173,7 @@ class Style(AbstractModel):
     user = ForeignKey(User, on_delete=PROTECT)
    
     def __str__(self) -> str:
-        return self.title
+        return str(self.title)
     
     def get_absolute_url(self):
         return reverse_lazy('style', kwargs={'style':self.title})
@@ -191,7 +191,7 @@ class Brand(AbstractModel):
     deleted_at = BooleanField(default=False)
 
     def __str__(self) -> str:
-        return self.title
+        return str(self.title)
     
     def get_absolute_url(self):
         return reverse_lazy('brand', kwargs={'brand':self.title})
@@ -211,7 +211,7 @@ class Collection(AbstractModel):
     deleted_at = BooleanField(default=False)
 
     def __str__(self) -> str:
-        return self.title
+        return str(self.title)
     
     def get_absolute_url(self):
         return reverse_lazy('collection', kwargs={'collection':self.title})
@@ -229,7 +229,7 @@ class Tag(AbstractModel):
     user = ForeignKey(User, on_delete=PROTECT)
     
     def __str__(self):
-        return self.title
+        return str(self.title)
     
     def get_absolute_url(self):
         return reverse_lazy('product_list', kwargs={'tag': self.title})
@@ -256,7 +256,7 @@ class Product(AbstractModel): #11
         return reverse_lazy('product/', kwargs={'product':self.title})
     
     def __str__(self) -> str:
-        return self.title
+        return str(self.title)
     
     class Meta:
         verbose_name = 'product'
@@ -276,7 +276,7 @@ class Image(AbstractModel):
         ordering = ['pk']
 
     def __str__(self) -> str:
-        return f'{self.image}'
+        return str(self.id)
 
     def get_absolute_url(self):
         return reverse_lazy('post', kwargs={'image':f'{self.image}'})
@@ -299,7 +299,7 @@ class Variant(AbstractModel):
         return reverse_lazy('product:product', kwargs={'variant_slug':self.slug})
     
     def __str__(self) -> str:
-        return f'{self.title} ({self.unit})'
+        return f'{str(self.title)} ({str(self.unit)})'
     
     @property
     def get_main_img(self):
@@ -354,5 +354,5 @@ class VariantToStore(AbstractModel):
         ordering = ['store']
 
     def __str__(self) -> str:
-        return f'{self.variant} store:{self.store}, quantity:{self.quantity}'
+        return f'{str(self.variant.title)} store:{str(self.store.title)}, quantity:{str(self.quantity)}'
 

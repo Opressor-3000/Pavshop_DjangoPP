@@ -17,7 +17,7 @@ class Subscriber(AbstractModel):
         ordering = ['pk']
 
     def __str__(self) -> str:
-        return f'{self.email}'                                                                                                     
+        return str(self.email)                                                                                                     
 
 
 class Contact(AbstractModel):
@@ -30,7 +30,7 @@ class Contact(AbstractModel):
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
 
     def __str__(self):
-        return self.subject
+        return str(self.subject)
 
     class Meta:
         verbose_name = 'contact'
@@ -54,7 +54,7 @@ class HomeSlider(AbstractModel):
     #     ordering = ['-pk']
 
     def __str__(self):
-        return self.title
+        return str(self.title)
     
     def get_absoluute_url(self):
         return reverse_lazy('homepage', kwargs={'slider': self.title })

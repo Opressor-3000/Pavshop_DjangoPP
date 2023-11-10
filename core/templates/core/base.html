@@ -32,23 +32,8 @@
 <!-- Online Fonts -->
 <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900' rel='stylesheet' type='text/css'>
-<script type="text/javascript">var user="{{request.user}}"
-  function getToken(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-      var cookies = document.cookie.split(';');
-      for (var i = 0; i < cookie.length; i++) {
-        var cookie = cookies[i].trim();
-        if (cookie.substring(0, name.length + 1) === (name + '=')) {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
-      }
-    }
-    return cookieValue
-  }
-
-  var csrftoken = getToken('csrftoken');
+<script type="text/javascript">var user="{{ request.user.full_name }}"
+ 
 </script>
 
 </head>
@@ -143,12 +128,14 @@
     </div>
   </footer>  
 </div>
-<script type="text/javascript"> var user = '{{request.user}}'</script>
+<script type="text/javascript"> var user = '{{request.user.full_name }}'</script>
 <script src="{% static 'js/jquery-1.11.3.min.js' %}"></script> 
 <script src="{% static 'js/bootstrap.min.js' %}"></script> 
 <script src="{% static 'js/own-menu.js' %}"></script> 
 <script src="{% static 'js/jquery.lighter.js' %}"></script> 
 <script src="{% static 'js/owl.carousel.min.js' %}"></script> 
+<script>var userId='{{request.user.id}}'</script>
+<script src="{% static 'js/wishlist.js' %}"></script>
 <!-- SLIDER REVOLUTION 4.x SCRIPTS  --> 
 <script type="text/javascript" src="{% static 'rs-plugin/js/jquery.tp.t.min.js' %}"></script> 
 <script type="text/javascript" src="{% static 'rs-plugin/js/jquery.tp.min.js' %}"></script> 

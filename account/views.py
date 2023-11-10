@@ -78,14 +78,19 @@ class UserRegister(CreateView):
         return super().form_invalid(form)
     
 
-class LoginView(LoginView):
+class UserLoginView(LoginView):
     redirect_authenticated_user = True
     template_name = 'account/login.html'
     form_class = UserAuthForm
     
     def get_success_url(self):
         return reverse_lazy('core:homepage')
-    
+
+    def form_invalid(self, form):
+        messages.error(self.request,'Invalid username or password')
+        return self.render_to_response(self.get_context_data(form=form))
+
+
 def login(request):
     if request.method == "POST":
         form = UserAuthForm(data=request.POST)
@@ -125,7 +130,16 @@ class AddToCartView(LoginRequiredMixin, CreateView):    #  добавить в �
     success_url = reverse_lazy('product:product')
 
     def get_addtocart(self, *, object_list=None, **kwargs):
-        pass
+        if self.request.user.is_authenticated:
+            user = self.request.user.id
+            if Order.objects.filter(user=self.request.user, status=1):
+                pass
+            #     product_to_basket, created = ProductToBasket.objects.get_or_create(user=user, count=1)
+            else:
+                order = Order.objects.create(user=user, status=1)
+                # self.get_addtocart(object_list=None, **kwargs)
+        # else:
+
         # if Order.objects.filter(user=self.request.user).filter(status=2).first():
         #     1
         # else:
@@ -135,10 +149,10 @@ class AddToCartView(LoginRequiredMixin, CreateView):    #  добавить в �
 
 class AddToWishList(LoginRequiredMixin, CreateView):
     # form_class = AddToWhishlistForm
-    template_name = 1
-    success_url = 2
+    template_name = 'account/add_wishlist.html'
 
-
+    def get_success_url(self) -> str:
+        return self.request.GET.get('next')
 
 
 class Wishlist(LoginRequiredMixin, ListView):  
@@ -186,18 +200,18 @@ class UserPasswordResetView(PasswordResetView):
     form_class=UserPasswordResetForm
     email_template_name = 'account/password-reset.html'
     success_url = reverse_lazy('account:forget_pwd')
+    
     def get_success_url(self):
-         
          messages.add_message(self.request, messages.INFO, 'Parolunuzu yenilemek haqqinda istey mailinize gonderilmistir')
          return self.success_url
+
 
 class UserPasswordResetConfirmView(PasswordResetConfirmView):
     template_name = 'account/password_reset_confirm.html'
     form_class=UserPasswordResetConfirmForm
     success_url=reverse_lazy("account:login")
+
     def get_success_url(self):
-        
         messages.add_message(self.request, messages.INFO, 'Parolunuz deyisildi')
-     
         return self.success_url
 

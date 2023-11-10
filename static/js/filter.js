@@ -41,14 +41,14 @@ const getProducts= async()=>{
         <!-- Sale Tags -->
         <div class="on-sale"> 10% <span>OFF</span> </div>
         <!-- Item img -->
-        <div class="item-img"> <img class="img-1" src="{{ var.get_main_img }}" alt="" >
+        <div class="item-img"> <img class="img-1" src="${ data[i].get_main_img }" alt="" >
           <!-- Overlay -->
           <div class="overlay">
             <div class="position-center-center">
               <div class="inn">
-                <a href="{{ var.get_main_img }}" data-lighter>
+                <a href="${ data[i].get_main_img }" data-lighter>
                   <i class="icon-magnifier"></i></a>
-                <button data-product={{ var.id }} data-action="add_to_cart" class='update_cart' >
+                <button data-product=${ data[i].id } data-action="add_to_cart" class='update_cart' >
                   <i class="icon-basket"></i>
                 </button> 
                 <a href="#." ><i class="icon-heart"></i></a>
@@ -56,9 +56,9 @@ const getProducts= async()=>{
             </div>
           </div>
         </div>
-        <!-- Item Name {{ var.slug.get_absolute_url }} -->
-        <div class="item-name"> <a href="{% url 'product:product' var.slug %}">{{ var.title }}</a>
-          <p>{{ var.product.description }}</p>
+        <!-- Item Name { data[i].get_absolute_url } -->
+        <div class="item-name"> <a href="{% url 'product:product' ${data[i].slug } ">${data[i].title}</a>
+          <p>${ data[i].product.description }</p>
         </div>
         <!-- Price --> 
         <span class="price"><small>$</small>${data[i].price}</span> 

@@ -30,14 +30,14 @@ class User(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
 
-    email = models.EmailField(_("email address"), unique=True, blank=True)
+    email = models.EmailField(_("email address"), unique=True)
     phone = models.CharField(
         max_length=20, db_index=True, unique=True, verbose_name="phone"
     )
     avatar = models.ImageField(upload_to="avatars/", blank=True)
-    saller = models.BooleanField(default=False, verbose_name="Saller")
-    bloger = models.BooleanField(default=False, verbose_name="Bloger")
-    deleted_at = models.BooleanField(default=False, verbose_name="delete Account")
+    saller = models.BooleanField(default=False, verbose_name="seller")
+    bloger = models.BooleanField(default=False, verbose_name="bloger")
+    deleted_at = models.BooleanField(default=False, verbose_name="delete account")
 
     class Meta:
         verbose_name = "user"
@@ -45,9 +45,9 @@ class User(AbstractUser):
         ordering = ["-pk"]
 
     def __str__(self):
-        if self.get_full_name():
-            return self.get_full_name()
-        return f"{self.first_name} {self.last_name}"
+        # if self.get_full_name():
+        #     return self.get_full_name()
+        return str(self.username)
 
     def get_absolute_url(self):
         return reverse_lazy("user", kwargs={"user": self.id})
@@ -67,7 +67,7 @@ class Address(AbstractModel):
         ordering = ["-pk"]
 
     def __str__(self) -> str:
-        return f"{self.company_name} address:{self.address}"
+        return f"{str(self.company_name)} address:{str(self.address)}"
 
 
 class Status(AbstractModel):
@@ -82,7 +82,7 @@ class Status(AbstractModel):
         ordering = ["pk"]
 
     def __str__(self) -> str:
-        return f"{self.title}"
+        return f"{str(self.title)}"
 
     def get_order_status(self, user):
         pass
@@ -109,7 +109,7 @@ class Order(AbstractModel):
         ordering = ["-pk"]
 
     def __str__(self) -> str:
-        return f"{self.pk} {self.status}"
+        return f" {str(self.status)}"
 
     @property
     def lastorder(self, user):
@@ -159,8 +159,8 @@ class WishList(AbstractModel):
     def get_absolute_url(self):
         return reverse_lazy("account", kwargs={"wishlist": self.user})
 
-    def __str__(self) -> str:
-        return f"{self.user} wish:{self.variant}"
+    def __str__(self):
+        return str(self.id)
 
 
 class ProductToBasket(AbstractModel):
@@ -196,7 +196,7 @@ class ProductToBasket(AbstractModel):
         return reverse_lazy("shopcart", kwargs={"shopcartlist": self.user})
 
     def __str__(self) -> str:
-        return f"{self.user} {self.variant} count:{self.count}"
+        return f"{str(self.user)} {str(self.variant)} count:{str(self.count)}"
 
     def get_or_create(self):
         pass

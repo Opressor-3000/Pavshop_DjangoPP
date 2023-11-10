@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from ..models import *
 from product.product_api.serializers import CategorySerializer, TagSerializer, ProductSerializer
-from account.accoun_api.serializers import UserSerializer
+from account.accoun_api.user_serializer import UserSerializer
 
 
 class PostReviewSerializer(ModelSerializer):
@@ -27,10 +27,10 @@ class PostListSerializer(ModelSerializer):
 
 
 class Postserializer(ModelSerializer):
-   category = CategorySerializer
-   tag = TagSerializer
-   product = ProductSerializer
-   author = UserSerializer
+   category = CategorySerializer()
+   tag = TagSerializer()
+   product = ProductSerializer()
+   author = UserSerializer()
    class Meta:
       model = Post
       fields = {

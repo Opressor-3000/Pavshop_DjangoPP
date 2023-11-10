@@ -34,10 +34,10 @@
               <!-- ESTIMATE SHIPPING & TAX -->
               <div class="col-sm-7">
                 <h6>LOGIN YOUR ACCOUNT</h6>
-                <form>
+                <form method="post" >
+                  {% csrf_token %}
                   <ul class="row">
                     <li class="col-md-12">
-                    {% csrf_token %}
                     {% for field in form %}
                     <p>{{ field.lable }}</p>
                     {{ field }}
@@ -59,13 +59,19 @@
                     <!-- FORGET PASS -->
                     <li class="col-md-4">
                       <div class="checkbox margin-0 margin-top-20 text-right">
-                        <a href="#.">Forget Password</a>
+                        <a href="{% url 'account:forget_pwd' %}">Forget Password</a>
+                        {% if user.is_authenticated %}
                           <p><a href="{% url 'account:logout' %}">Log Out</a></p>
-                          <p><a href="{% url 'account:login' %}">Reset Password</a></p>
+                        {% endif %}
+                          
                       </div>
                     </li>
                   </ul>
                 </form>
+                <br>
+                <h1> </h1>
+                <br>
+                <br>
                 
               </div>
               <!-- SUB TOTAL -->

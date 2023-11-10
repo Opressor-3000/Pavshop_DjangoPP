@@ -30,34 +30,34 @@
             <!-- Item Slide -->
             <div class="papular-block row single-img-demos"> 
               
-              {% for var in variants %}
+              {% for product in variants %}
               <!-- Item -->
               <div class="col-md-4">
                 <div class="item"> 
                   <!-- Sale Tags -->
                   <div class="on-sale"> 10% <span>OFF</span> </div>
                   <!-- Item img -->
-                  <div class="item-img"> <img class="img-1" src="{{ var.get_main_img }}" alt="" >
+                  <div class="item-img"> <img class="img-1" src="{{ product.get_main_img }}" alt="" >
                     <!-- Overlay -->
                     <div class="overlay">
                       <div class="position-center-center">
                         <div class="inn">
-                          <a href="{{ var.get_main_img }}" data-lighter>
+                          <a href="{{ product.get_main_img }}" data-lighter>
                             <i class="icon-magnifier"></i></a>
-                          <button data-product={{ var.id }} data-action="add_to_cart" class='update_cart' >
-                            <i class="icon-basket"></i>
+                          <button data-product={{ product.id }} data-action="add_to_cart" class='update_cart' >
+                            <i class="icon-basket"id="addtocart"></i>
                           </button> 
-                          <a href="#." ><i class="icon-heart"></i></a>
+                          <a href="#." ><i class="icon-heart" id="add_wishlist"></i></a>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <!-- Item Name {{ var.slug.get_absolute_url }} -->
-                  <div class="item-name"> <a href="{% url 'product:product' var.slug %}">{{ var.title }}</a>
-                    <p>{{ var.product.description }}</p>
+                  <!-- Item Name {{ product.slug.get_absolute_url }} -->
+                  <div class="item-name"> <a href="{% url 'product:product' product.slug %}">{{ product.title }}</a>
+                    <p>{{ product.product.description }}</p>
                   </div>
                   <!-- Price --> 
-                  <span class="price"><small>$</small>{{ var.price }}</span> \
+                  <span class="price"><small>$</small>{{ product.price }}</span> \
                 </div>
               </div>
               {% endfor %}

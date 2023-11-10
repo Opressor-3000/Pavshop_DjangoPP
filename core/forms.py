@@ -1,4 +1,4 @@
-from django.forms import ModelForm, TextInput
+from django.forms import ModelForm, TextInput, EmailInput, Textarea, CharField, Form
  
 
 from .models import *
@@ -11,14 +11,19 @@ class AbstractForm(ModelForm):
         return user
 
 
-class Contact(ModelForm):
-        
+class ContactForm(Form):
+    # name = CharField(label='Your Name', widget=TextInput(attrs={"class": "form-control"}))
+    # phone = CharField(label='Your Phone', widget=TextInput(attrs={"class": "form-control", "placeholder": "Enter your phone"}))
+    # email = EmailField(label='Your E-mail', widget=EmailInput(attrs={"class": "form-control", "placeholder": "Enter your e-mail"}))
+    # subject = CharField(label='Subject', widget=TextInput(attrs={"class": "form-control", "placeholder": "Enter subject"}))
+    # message = CharField(label='Your message', widget=Textarea(attrs={"class": "form-control", "placeholder": "Enter your messsage"}))
+    # type="text" class="form-control" name="name" id="name" placeholder=""
     class Meta:
         model = Contact
-        fields = ['email']
+        fields = ['name', 'phone', 'email', 'subject', 'message']
 
 
-class Subscriber(ModelForm):
+class SubscriberForm(ModelForm):
 
     class Meta:
         model = Subscriber

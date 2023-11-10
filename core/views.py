@@ -13,6 +13,7 @@ from product.utils import count_variant
 from blog.models import Post
 from product.models import Variant, Discount, Image
 from .models import *
+from .forms import ContactForm
 
 
 def about_us(request):
@@ -20,7 +21,7 @@ def about_us(request):
 
 
 class Contact(CreateView):
-    model = Contact
+    model = ContactForm
     template_name = 'core/contact.html'
 
 # def contact(request):
@@ -39,9 +40,9 @@ class HomePage(ListView):
         context = super().get_context_data(**kwargs)
         discount = Discount.objects.filter(deleted_at=False, date_begin__gte=datetime.now(), date_end__lte=datetime.now())
         if discount:
-            context['discount_prod'] = self.count_variants.order_by('-created_at')[:3]
+            context['discount_prod'] = self.count_variants.order_by('-created_at')[:2]
         else:
-            context['discount_prod'] = self.count_variants.order_by('-created_at')[:3]
+            context['discount_prod'] = self.count_variants.order_by('-created_at')[:2]
         context['new_arrival'] = self.count_variants.order_by('-created_at')
         context['popular_prod'] = self.count_variants
         context['last_posts'] = Post.objects.all().order_by('-created_at')[:3]
@@ -53,26 +54,4 @@ class HomePage(ListView):
     
     def get_main_image(self):
         return Image.objects.filter(variant = self, is_main = True)
-    
-
-
-def add_wishlist(requset):
-    pass
-#     pid = requset.GET['newarr']
-#     variant = Variant.objects.get(pk=pid.id)
-#     data = {}
-#     if WishList.object.filter(user=requset.user, variant=variant):
-#         data={
-#             "bool": False
-#         }
-#     else:
-#         WishList.objects.create(
-#             user=requset.GET.get['user']
-#             variant=variant
-#         )
-#         data={
-#             "bool": True
-#         }
-#         return JsonResponse(data)
-
 

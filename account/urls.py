@@ -11,16 +11,16 @@ urlpatterns = [
     path('checkout/', Checkout.as_view(), name='checkout'),
     path('wishlist/<int:pk>/', Wishlist.as_view(), name='wishlist'),
     path('addtowishlist/<slug:variant_slug>', AddToWishList.as_view(), name='addtowishlist'),
-    path('login/', login, name = 'login'),
+    path('login/', UserLoginView.as_view(), name = 'login'),
     path('register/', UserRegister.as_view(), name='register'),
     path('addtocart/<slug:variantslug>/', AddToCartView.as_view(), name='addtocart'),
     path('shopping_cart/', Basket.as_view(), name='shopcart'),
     path('logout/', logout, name='logout'),
     path('', UserAccount.as_view(), name='profile'),
     path("activate/<uidb64>/<token>/", ActivateView.as_view(), name='activation'),
-    path("updateitem", update_item, name='updateitem'),
-    path("password_reset/<str:uidb64>/<str:token>/",UserPasswordResetConfirmView.as_view(),name='password-reset'),
-    path('forget_pwd/',UserPasswordResetView.as_view(),name='forget_pwd'),
+    path("producttobasket/", update_item, name='producttobasket'),
+    path("password_reset/<str:uidb64>/<str:token>/",UserPasswordResetConfirmView.as_view(),name='password_reset'),
+    path('forget_pwd/',UserPasswordResetView.as_view(), name='forget_pwd'),
 
     # path('password_change/done/', name='password_change_done'),
     # path('password_reset/', name='password_reset'),
@@ -28,4 +28,5 @@ urlpatterns = [
     # path('password_reset/done/', name='password_reset_done'),
     # path('reset/<uidb64>/<token>/', name='password_reset_confirm'),
     # path('reset/done/', name='password_reset_complete'),
+    #<p><a href="{% url 'account:password_reset' %}">Reset Password</a></p>
 ]

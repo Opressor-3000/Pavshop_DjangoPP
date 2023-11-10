@@ -10,7 +10,7 @@ from core.forms import AbstractForm
 
 
 class RegisterForm(UserCreationForm):
-    first_name = CharField(label='First Name', widget=TextInput(attrs={"class": "col-md-6   ", "placeholder": "Enter first name"}))
+    first_name = CharField(label='First Name', widget=TextInput(attrs={"class": "col-md-6", "placeholder": "Enter first name"}))
     last_name = CharField(label='Last Name', widget=TextInput(attrs={"class": "col-md-6", "placeholder": "Enter last nema"}))
     phone = CharField(label='Your Phone', widget=TextInput(attrs={"class": "col-md-6", "placeholder": "Enter your phone"}))
     email = EmailField(label='Your E-mail', widget=EmailInput(attrs={"class": "col-md-6", "placeholder": "Enter your e-mail"}))
@@ -24,6 +24,9 @@ class RegisterForm(UserCreationForm):
         widget=PasswordInput(attrs={"autocomplete": "new-password"}),
         strip=False,
     )
+
+    def is_valid(self) -> bool:
+        return super().is_valid()
 
 
     class Meta:
@@ -44,7 +47,7 @@ class UserAuthForm(AuthenticationForm):
         'class': 'col-md-12',
         'placeholder': 'email'
     }))
-    password = CharField(widget=TextInput(attrs={
+    password = CharField(widget=PasswordInput(attrs={
         'name': 'password',
         'class': 'col-md-12',
         'placeholder': 'password'
@@ -53,6 +56,8 @@ class UserAuthForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ['email', 'password']
+
+    
 
 
 class UserWishList(AbstractForm):

@@ -1,8 +1,10 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework_simplejwt.tokens import Token
 from ..models import ProductToBasket, WishList, Status, Order, User, Address, Variant
-from product.product_api.serializers import VariantSerializer, DiscountSerializer, SerializerMethodField, CollectionSerializer
+from product.product_api.serializers import VariantSerializer, DiscountSerializer, SerializerMethodField, CollectionSerializer, ProductReviewSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from blog.blog_api.serializers import PostReviewSerializer, PostListSerializer
+
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -57,6 +59,18 @@ class UserSerializer(ModelSerializer):
       )
 
 
+class ProductToBasketSerializer(ModelSerializer):
+   class Meta:
+      model = ProductToBasket
+      fields = (
+         'user',
+         'order',
+         'variant',
+         'count',
+         'discount_id',
+      )
+
+
 #---------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -66,7 +80,7 @@ class StatusOrderSerializer(ModelSerializer):
       model = Status
       field = (
          'order',
-         "title"
+         'title'
       )
 
    def get_order(self, obj):
@@ -95,11 +109,13 @@ class OrdersOfUserSerializer(ModelSerializer):
       fields = (
          'user'
          'id',
-
+         'status',
+         'producttobasket',
       )
 
    def get_producttobasket(self):
-      ptb = ProductToBasketOrdersSerializer()
+      serializer = ProductToBasketOrdersSerializer()
+      return serializer.data
    
 
 class ProductToBasketOrdersSerializer(ModelSerializer):
@@ -154,11 +170,12 @@ class UserAddressserializer(ModelSerializer):
       )
 
 
-class WishListSerializer(ModelSerializer):
+class AddToWishListSerializer(ModelSerializer):
    variant = VariantSerializer
    class Meta:
       model = WishList
       fields = (
+         'user',
          'variant'
       )
 
@@ -174,14 +191,12 @@ class UserAccountSerializer(ModelSerializer):
          'first_name',
          'last_name',
          'wishlist',
-         
          'orders',
          'address',
          
+        
+         
       )
-
-   # def get_status(self, obj):
-   #    serializer = StatusOrderSerializer(obj.status.all(), context=self.context, many=True)
 
    def get_orders(self, obj):
       serializer = OrderSerializer(obj.user_id.all(), context=self.context, many=True)
@@ -189,17 +204,12 @@ class UserAccountSerializer(ModelSerializer):
    def get_wishlist(self, obj):
       serializer = WishListSerializer(obj.wishlistuser.all(), context=self.context, many=True)
 
-   def get_address(self, obj):
-      serializer = AddressSerializer(obj.user.all(), context=self.context, many=True)
+      
+   # def get_address(self, obj):
+   #    serializer = AddressSerializer(obj.user.all(), context=self.context, many=True)
 
 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-# class SellerEditerSerializer(ModelSerializer):
-#    class Meta:
-#       model = User
-#       fields = {
-
-#       }

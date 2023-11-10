@@ -35,35 +35,38 @@
               <div id="contact_message" class="success-msg"> <i class="fa fa-paper-plane-o"></i>Thank You. Your Message has been Submitted</div>
               
               <!--======= FORM  =========-->
+
               <form role="form" id="contact_form" class="contact-form" method="post" onSubmit="return false">
+                {% csrf_token %}
                 <ul class="row">
                   <li class="col-sm-6">
-                    <label>full name *
-                      <input type="text" class="form-control" name="name" id="name" placeholder="">
+                    <label>{{ form.name.lable }}
+                      {{ form.name }}
                     </label>
                   </li>
                   <li class="col-sm-6">
-                    <label>Email *
-                      <input type="text" class="form-control" name="email" id="email" placeholder="">
+                    <label>{{ form.phone.lable }}
+                      {{ form.phone }}
                     </label>
                   </li>
                   <li class="col-sm-6">
-                    <label>Phone *
-                      <input type="text" class="form-control" name="company" id="company" placeholder="">
+                    <label>{{ form.email.lable }}
+                      {{ form.email }}
                     </label>
                   </li>
+                  </li>
                   <li class="col-sm-6">
-                    <label>SUBJECT
-                      <input type="text" class="form-control" name="website" id="website" placeholder="">
+                    <label>{{ form.subject.lable }}
+                      {{ form.subject }}
                     </label>
                   </li>
                   <li class="col-sm-12">
-                    <label>Message
-                      <textarea class="form-control" name="message" id="message" rows="5" placeholder=""></textarea>
+                    <label>{{ form.message.lable }}
+                      {{ form.message }}
                     </label>
                   </li>
                   <li class="col-sm-12">
-                    <button type="submit" value="submit" class="btn" id="btn_submit" onClick="proceed();">SEND MAIL</button>
+                    <button type="submit" value="submit" class="btn" id="send_message" onClick="proceed();">SEND MAIL</button>
                   </li>
                 </ul>
               </form>
