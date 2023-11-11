@@ -35,13 +35,11 @@ class AddWishlistAPIView(RetrieveUpdateDestroyAPIView):
    serializer_class = AddToWishListSerializer
    
    def post(self, request, *args, **kwargs):
-      print()
       if WishList.objects.filter(user=request.user, variant=request.data["variant"]).first():
          WishList.objects.filter(user=request.user,variant=request.data["variant"]).delete()
       else:
          variant=Variant.objects.filter(id=int(request.data["variant"])).first()
          WishList.objects.create(user=request.user,variant=variant)
-
 
       return Response('success')
       

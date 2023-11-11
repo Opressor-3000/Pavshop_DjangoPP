@@ -6,9 +6,9 @@
    <!-- SEARCH -->
    <div class="search">
      <input class="form-control" type="search" placeholder="Search blog">
-     <button type="submit"><i class="fa fa-search"></i></button>
+     <button type="submit" id="search-posts"><i class="fa fa-search"></i></button>
    </div>
-   <div class="shop-sidebar"> 
+   <div class="shop-sidebar">
      
      <!-- Category -->
      <h5 class="shop-tittle margin-bottom-30">category</h5>
@@ -30,7 +30,7 @@
      </ul>
      
      <!-- TAGS -->
-     <h5 class="shop-tittle margin-top-60 margin-bottom-30">PAUPLAR TAGS</h5>
+     <h5 class="shop-tittle margin-top-60 margin-bottom-30">POPULAR TAGS</h5>
      <ul class="shop-tags">
       {% for bt in blog_tags %}
        <li><a href="{% url 'blog:list' %}?taglist={{ bt.title }}">{{ bt.title }}</a></li>

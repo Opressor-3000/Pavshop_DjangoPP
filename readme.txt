@@ -15,7 +15,7 @@
 6. git pull origin dev
 
 
-git add . && git commit -m 'add to wishlist' && git push origin yusif && git checkout dev && git pull origin dev && git merge yusif && git push origin dev && git checkout yusif
+git add . && git commit -m 'add main search and post search fetchs ' && git push origin yusif && git checkout dev && git pull origin dev && git merge yusif && git push origin dev && git checkout yusif
 
 
 

@@ -201,9 +201,8 @@
                 <div class="search-overlay"></div>
                 <div class="position-center-center">
                   <div class="search">
-                    <form  action="{% url 'product:product_list'%}" method="get" name="variant-filter">
-                      {% csrf_token %}
-                      <input name="search" id="search" type="search"  placeholder="Search product">
+                    <form>
+                      <input type="search" placeholder="Search Shop">
                       <button type="submit"><i class="icon-check"></i></button>
                     </form>
                   </div>

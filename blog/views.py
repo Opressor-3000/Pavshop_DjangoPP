@@ -20,6 +20,7 @@ class PostList(ListView):
         queryset = Post.objects.all()
         if self.request.method == 'GET':
             req = self.request.GET
+            req['search'] = self.request.body['search']
             if req.get('search'):
                 return queryset.filter(
                     Q(title__icontains=req.get['search']) | 
