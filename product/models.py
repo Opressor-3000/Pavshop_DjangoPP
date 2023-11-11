@@ -152,6 +152,7 @@ class Color(AbstractModel):
 
 class Designer(AbstractModel):
     name = CharField(max_length=100, unique=True, db_index=True, verbose_name='Designer')
+    image = ImageField(upload_to='designer_image/', null=True, verbose_name='designer photo')
     slug = SlugField(max_length=100, unique=True, db_index=True, verbose_name='Varian_slug')
     user = ForeignKey(User, on_delete=PROTECT)
 

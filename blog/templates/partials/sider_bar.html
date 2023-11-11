@@ -14,7 +14,7 @@
      <h5 class="shop-tittle margin-bottom-30">category</h5>
      <ul class="shop-cate">
       {% for bc in blog_cats %}
-       <li><a href="{% url 'blog:' %}">{{ bc.title}}<span></span></a></li>
+       <li><a href="{% url 'blog:post_list' %}?category={{ bc.title }}"><span>{{ bc.title}}</span></a></li>
       {% endfor %}
      </ul>
      

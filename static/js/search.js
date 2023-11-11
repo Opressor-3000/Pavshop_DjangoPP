@@ -31,7 +31,7 @@ addWishlist.addEventListener("click", async (e)=>{
            "X-CSRFToken":csrftoken
        },
        body: JSON.stringify({
-           search: e.document.getElementById("search-input").value,
+           search: e.document.getElementById("search-input")[0].value,
        })
    });
 

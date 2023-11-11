@@ -25,16 +25,18 @@ const csrftoken = getToken('csrftoken')
 let addWishlist = document.getElementById("search-button");
 
 addWishlist.addEventListener("click", async (e)=>{
-
-   let data = await fetch("http://127.0.0.1:8000/blog/list/", {
-       method: "GET",
-       headers: {
-           "Content-Type": "application/json",
-           "X-CSRFToken":csrftoken
-       },
-       body: JSON.stringify({
-           search: e.document.getElementById("search-posts").value
-       })
-   });
+    console.log(e.document.getElementById("search-posts").value);
+    let data = await fetch("http://127.0.0.1:8000/blog/list/", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken":csrftoken
+        },
+        body: JSON.stringify({
+            search: e.document.getElementById("search-posts")[0].value
+        })
+    });
 
 });
+
+<p>Lorem</p>

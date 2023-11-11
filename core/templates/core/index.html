@@ -267,10 +267,16 @@
             {% for last_p in last_posts %}
             <!-- Post 1 -->
             <li class="col-md-6">
-              <div class="date"> <span>{{ last_p.datetime }}</span> <span class="huge">{{ last_p.datetime }}</span> </div>
-              <a href="{% url 'blog:post' last_p.slug %}">{{ last_p.title }}</a>
-              <p>{{ last_p.text | truncatechars:30 }}</p>
-              <span>By <strong>{{ last_p.author.full_name }}</strong></span> 
+              <div class="papular-block ">
+                <div class="item"> 
+                  <div class="item-img single-img-demos"><img class="img-1" src="{{ last_p.preview.url }}" alt="">
+                    <div class="date"> <span>{{ last_p.datetime }}</span> <span class="huge">{{ last_p.datetime }}</span> </div>
+                    <a href="{% url 'blog:post' last_p.slug %}">{{ last_p.title }}</a>
+                    <p>{{ last_p.text | truncatechars:130 }}</p>
+                    <span>By <strong>{{ last_p.author.last_name }} {{ last_p.author.first_name }}</strong></span> 
+                  </div>
+                </div>
+              </div>
             </li>
            {% endfor %}
           </ul>
@@ -290,13 +296,13 @@
               <!-- Slide -->
               <div class="testi-in"> <i class="fa fa-quote-left"></i>
                 <p>Phasellus lacinia fermentum bibendum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed ullamcorper sapien lacus, eu posuere odio luctus non. Nulla lacinia, eros vel fermentum consectetur, risus p</p>
-                <h5>john smith</h5>
+                <h5>{{ designer.name }}</h5>
               </div>
             </div>
           </div>
           
           <!-- Img -->
-          <div class="col-sm-6"> <img class="img-responsive" src="{% static 'images/testi-avatar.jpg' %}" alt=""> </div>
+          <div class="col-sm-6"> <img class="img-responsive" src="{{ designer.image.url }}" alt=""> </div>
         </div>
       </div>
     </section>

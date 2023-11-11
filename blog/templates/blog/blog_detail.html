@@ -1,5 +1,5 @@
+{% extends 'core/base.html' %}
 {% load static %}
-{% extends 'base.html' %}
 {% load i18n %}
 
 {% block content %}
@@ -9,12 +9,7 @@
   <section class="sub-bnr" data-stellar-background-ratio="0.5">
    <div class="position-center-center">
      <div class="container">
-       <h4></h4>
-       <p></p>
-       <ol class="breadcrumb">
-         <li><a href="#"></a></li>
-         <li class="active"></li>
-       </ol>
+        <img src="">
      </div>
    </div>
  </section>
@@ -29,56 +24,31 @@
          <div class="col-md-9"> 
            
            <!-- Article -->
-           <article> 
+           <article>
              <!-- Post Img --> 
-             <img class="img-responsive" src="{{ post.preview.image.url }}" alt="" > 
-             <!-- Tittle -->
-             <div class="post-tittle left"> <a href="#." class="title">{{ post.title }}</a> 
-               <!-- Post Info --> 
-               <span><i class="primary-color icon-user"></i> {{ post.author.first_name }} {{ post.author.last_name}}</span> <span><i class="primary-color icon-calendar"></i> {{ post.created_at }}</span> <span><i class="primary-color icon-bubble"></i> {{ review_count }} </span> <span><i class="primary-color icon-tag"></i> {{ post.tag }}</span> </div>
+             <img class="img-responsive" src="{{ post.preview.url }}" alt="" > 
+             <!-- Tittle --> 
+             <div class="post-tittle left"> <a href="#." class="tittle">{{ post.title }}</a>  
+               <!-- Post Info -->   
+               <span><i class="primary-color icon-user"></i> {{ post.author.get_full_name }}</span>  
+               <span><i class="primary-color icon-calendar"></i> {{ created_at|date:'mm dd, YYYY' }}</span> 
+               <span><i class="primary-color icon-bubble"></i> {{ review_count }} </span> 
+               <span><i class="primary-color icon-tag"></i> {{ tag }}</span>
+             </div>
              <!-- Post Content -->
+             
 
              
              <div class="text-left">
-               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat dui at lacus aliquet, a consequat enim aliquet. Integer molestie sit amet sem et faucibus. Nunc ornare pharetra dui, vitae auctor orci fringilla eget. Pellentesque in placerat felis. Etiam mollis venenatis luctus. Morbi ac scelerisque mauris. Etiam sodales a nulla ornare viverra. Nunc at blandit neque, bibendum varius purus. <br>
-                 <br>
-                 Nam sit amet sapien vitae enim vehicula tincidunt. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc faucibus imperdiet vulputate. Morbi volutpat leo iaculis elit vehicula, eu convallis magna finibus. Suspendisse tristique ullamcorper erat a elementum. Cras eget elit non nunc aliquam ullamcorper quis sed metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada, erat in ullamcorper bibendum, elit lacus mattis lorem, quis luctus diam lorem vel ligula.</p>
                
-                 <h6 class="margin-top-80 margin-bottom-30">product history</h6>
-               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat dui at lacus aliquet, a consequat enim aliquet. Integer molestie sit amet sem et faucibus. Nunc ornare pharetra dui, vitae auctor orci fringilla eget. Pellentesque in placerat felis. Etiam mollis venenatis luctus. Morbi ac scelerisque mauris. Etiam sodales a nulla ornare viverra. <br>
-                 <br>
-                 Nam sit amet sapien vitae enim vehicula tincidunt. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc faucibus imperdiet vulputate. Morbi volutpat leo iaculis elit vehicula, eu convallis magna finibus.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada, erat in ullamcorper bibendum, elit lacus mattis lorem, quis luctus diam lorem vel ligula.</p>
-               
-               <!-- Post Img --> 
-               <img class="img-responsive margin-top-50 margin-bottom-50" src="" alt="" >
-               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat dui at lacus aliquet, a consequat enim aliquet. Integer molestie sit amet sem et faucibus. Nunc ornare pharetra dui, vitae auctor orci fringilla eget. Pellentesque in placerat felis. Etiam mollis venenatis luctus. Morbi ac scelerisque mauris. Etiam sodales a nulla ornare viverra. Nunc at blandit neque, bibendum varius purus. <br>
-                 <br>
-                 Nam sit amet sapien vitae enim vehicula tincidunt. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc faucibus imperdiet vulputate. Morbi volutpat leo iaculis elit vehicula, eu convallis magna finibus. Suspendisse tristique ullamcorper erat a elementum. Cras eget elit non nunc aliquam ullamcorper quis sed metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada, erat in ullamcorper bibendum, elit lacus mattis lorem, quis luctus diam lorem vel ligula.</p>
-               
-               <!-- LIST STYLE -->
-               <ul class="list-group margin-top-50 margin-top-20">
-                 <li>
-                   <p>Donec sed dictum leo, et posuere felis. </p>
-                 </li>
-                 <li>
-                   <p> Sed pharetra mauris vel varius suscipit. Aliquam lectus velit, </p>
-                 </li>
-                 <li>
-                   <p> Tempus id est ut, volutpat maximus sapien. </p>
-                 </li>
-               </ul>
-               <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat dui aolutpat dui at lacus aliquet, a consequat et lacus aliquet, a consequat enim aliquet. Integer molestie sit ame.</p>
-               
-               <!-- Blockquote -->
-               <blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat dui at lacus aliquet, a consequat enim aliquet. Integer molestie sit amet sem et faucibus. </blockquote>
-               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. NullamMorbi ac scelerisque mauris. Etiam sodales a nulla ornare viverra. Nunc at blandit neque, bociis natoque penatibus et magnnascetiscing elit. NullamMorbi ac scelerisque miscing elit. NullamMorbi ac scelerisque mur ridic volutpat dui at lacus aliquet, a consequat enim aliquet. Integer molestie sit ame.</p>
-               
+                 <h6 class="margin-top-80 margin-bottom-30"></h6>
+                <p>{{ post.text }}</p>
                <!-- Tags -->
                <div class="row margin-top-50">
                  <div class="col-md-8">
                    <h5 class="shop-tittle">PRODUCT TAGS</h5>
                    <ul class="shop-tags padding-left-15">
-                    {% for tag in post.tag %}
+                    {% for tag in post.tags %}
                      <li><a href="#.">{{ tag.title }}</a></li>
                     {% endfor %}
                    </ul>
@@ -111,41 +81,15 @@
                  <h5 class="shop-tittle margin-bottom-30">COMMENTS</h5>
                  <ul class="media-list padding-left-15">
                    <!--=======  COMMENTS =========-->
+                   {% for review in post_reviews %}
                    <li class="media">
-                     <div class="media-left"> <a href="#" class="avatar"> <img class="media-object img-responsive" src="images/avatar-1.jpg" alt=""> <br>
+                     <div class="media-left"> <a href="#" class="avatar"> <img class="media-object img-responsive" src="{{ review.user.avatar.url }}" alt=""> <br>
                        </a> </div>
                      <div class="media-body">
-                       <h6 class="media-heading">William Saron <span><i class="icon-clock primary-color"></i> April 27, 2016 - 10:00 am</span></h6>
-                       <p>Crack commando unit was sent to prison by a military court for a crime they didn't commit. ese men promptly escaped from a maximum security stockade to the Los Angeles. </p>
-                       <a href="#." class="raply"><i class="icon-bubble primary-color"></i> Reply</a> </div>
+                       <h6 class="media-heading">{{ review.user.get_full_name}} <span><i class="icon-clock primary-color"></i> {{ review.created_at }}</span></h6>
+                       <p>{{ review.review }}</p>
                    </li>
-                   <!--=======  COMMENTS =========-->
-                   <li class="media">
-                     <div class="media-left"> <a href="#" class="avatar"> <img class="media-object img-responsive" src="images/avatar-3.jpg" alt=""> <br>
-                       </a> </div>
-                     <div class="media-body">
-                       <h6 class="media-heading">William Saron <span><i class="icon-clock primary-color"></i> April 27, 2016 - 10:00 am</span></h6>
-                       <p>Crack commando unit was sent to prison by a military court for a crime they didn't commit. ese men promptly escaped from a maximum security stockade to the Los Angeles. </p>
-                       <a href="#." class="raply"><i class="icon-bubble primary-color"></i> Reply</a> </div>
-                   </li>
-                   <!--=======  COMMENTS =========-->
-                   <li class="media padding-left-100">
-                     <div class="media-left"> <a href="#" class="avatar"> <img class="media-object img-responsive" src="images/avatar-2.jpg" alt=""> <br>
-                       </a> </div>
-                     <div class="media-body">
-                       <h6 class="media-heading">William Saron <span><i class="icon-clock primary-color"></i> April 27, 2016 - 10:00 am</span></h6>
-                       <p>Crack commando unit was sent to prison by a military court for a crime they didn't commit. ese men promptly escaped from a maximum security stockade to the Los Angeles. </p>
-                       <a href="#." class="raply"><i class="icon-bubble primary-color"></i> Reply</a> </div>
-                   </li>
-                   <!--=======  COMMENTS =========-->
-                   <li class="media">
-                     <div class="media-left"> <a href="#" class="avatar"> <img class="media-object img-responsive" src="images/avatar-3.jpg" alt=""> <br>
-                       </a> </div>
-                     <div class="media-body">
-                       <h6 class="media-heading">William Saron <span><i class="icon-clock primary-color"></i> April 27, 2016 - 10:00 am</span></h6>
-                       <p>Crack commando unit was sent to prison by a military court for a crime they didn't commit. ese men promptly escaped from a maximum security stockade to the Los Angeles. </p>
-                       <a href="#." class="raply"><i class="icon-bubble primary-color"></i> Reply</a> </div>
-                   </li>
+                   {% endfor %}
                  </ul>
                  <hr>
                  

@@ -11,7 +11,7 @@ from django.db.models.query import QuerySet
 
 from product.utils import count_variant
 from blog.models import Post
-from product.models import Variant, Discount, Image
+from product.models import Variant, Discount, Image, Designer
 from .models import *
 from .forms import ContactForm
 
@@ -45,7 +45,8 @@ class HomePage(ListView):
             context['discount_prod'] = self.count_variants.order_by('-created_at')[:2]
         context['new_arrival'] = self.count_variants.order_by('-created_at')
         context['popular_prod'] = self.count_variants
-        context['last_posts'] = Post.objects.all().order_by('-created_at')[:3]
+        context['last_posts'] = Post.objects.all().order_by('-created_at')[:2]
+        context['designer'] = Designer.objects.order_by('-created_at')[:1]
         return context
         
     

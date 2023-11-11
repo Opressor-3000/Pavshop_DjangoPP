@@ -51,6 +51,9 @@ class User(AbstractUser):
 
     def get_absolute_url(self):
         return reverse_lazy("user", kwargs={"user": self.id})
+    
+    def get_full_name(self) -> str:
+        return super().get_full_name()
 
 
 class Address(AbstractModel):

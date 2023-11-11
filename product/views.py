@@ -69,7 +69,6 @@ class ProductList(ListView):
         if self.request.method == 'GET':
             queryset = count_variant()
             req = self.request.GET
-            req['search'] = self.request.body['search']
             if req.get('search'):
                 queryset = queryset.filter(
                     Q(title__icontains=req.get('search')) | 
