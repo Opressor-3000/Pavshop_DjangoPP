@@ -9,7 +9,7 @@ app_name = 'account'
 
 urlpatterns = [
     path('checkout/', Checkout.as_view(), name='checkout'),
-    path('wishlist/<int:pk>/', Wishlist.as_view(), name='wishlist'),
+    path('wishlist/', Wishlist.as_view(), name='wishlist'),
     path('addtowishlist/<slug:variant_slug>', AddToWishList.as_view(), name='addtowishlist'),
     path('login/', UserLoginView.as_view(), name = 'login'),
     path('register/', UserRegister.as_view(), name='register'),
@@ -21,12 +21,6 @@ urlpatterns = [
     path("producttobasket/", update_item, name='producttobasket'),
     path("password_reset/<str:uidb64>/<str:token>/",UserPasswordResetConfirmView.as_view(),name='password_reset'),
     path('forget_pwd/',UserPasswordResetView.as_view(), name='forget_pwd'),
-
-    # path('password_change/done/', name='password_change_done'),
-    # path('password_reset/', name='password_reset'),
-    # path('password_change/', name='password_change'),
-    # path('password_reset/done/', name='password_reset_done'),
-    # path('reset/<uidb64>/<token>/', name='password_reset_confirm'),
-    # path('reset/done/', name='password_reset_complete'),
-    #<p><a href="{% url 'account:password_reset' %}">Reset Password</a></p>
+    path('user/', AccountView.as_view(), name='api_account'),
+    path('profile/', UserAccountAPI.as_view(), name='profile'),
 ]

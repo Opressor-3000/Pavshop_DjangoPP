@@ -3,28 +3,28 @@
 
 
 
-function getToken(name) {
-   let cookieValue = null;
-   if (document.cookie && document.cookie !== '') {
-       const cookies = document.cookie.split(';');
-       for (let i = 0; i < cookies.length; i++) {
-           const cookie = cookies[i].trim();
-           // Does this cookie string begin with the name we want?
-           if (cookie.substring(0, name.length + 1) === (name + '=')) {
-               cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-               break;
-           }
-       }
-   }
-   console.log(cookieValue);
-   return cookieValue;
-}
+// function getToken(name) {
+//    let cookieValue = null;
+//    if (document.cookie && document.cookie !== '') {
+//        const cookies = document.cookie.split(';');
+//        for (let i = 0; i < cookies.length; i++) {
+//            const cookie = cookies[i].trim();
+//            // Does this cookie string begin with the name we want?
+//            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+//                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+//                break;
+//            }
+//        }
+//    }
+//    console.log(cookieValue);
+//    return cookieValue;
+// }
 
-const csrftoken = getToken('csrftoken')
+// const csrftoken = getToken('csrftoken')
 
-let addWishlist = document.getElementById("search-button");
+let searchResault = document.getElementById("search-button");
 
-addWishlist.addEventListener("click", async (e)=>{
+searchResault.addEventListener("click", async (e)=>{
     console.log(e.document.getElementById("search-posts").value);
     let data = await fetch("http://127.0.0.1:8000/blog/list/", {
         method: "GET",
@@ -36,7 +36,4 @@ addWishlist.addEventListener("click", async (e)=>{
             search: e.document.getElementById("search-posts")[0].value
         })
     });
-
 });
-
-<p>Lorem</p>

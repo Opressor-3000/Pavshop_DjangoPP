@@ -316,19 +316,29 @@ $('ul.categories li').click( function() {
  });
 
 
- let loginBtn = document.querySelector("#login_btn");
+//  let loginBtn = document.querySelector("#login_btn");
 
- loginBtn.addEventListener("click", async () => {
-	let email = document.querySelector("#mail").value
-	let password = document.querySelector("#psw").value
-	let data = await fetch("http://127.0.0.1:8000/api/v1/account/token/", {
-		method: "POST",
-		header:{
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(body)
-	});
-	let response = await data.json();
-	localStorage.setItem("pavshop_access_token", response["access"]);
-	localStorage.setItem("pavshop_refresh_token", response["refresh"]);
- });
+//  loginBtn.addEventListener("click", async () => {
+// 	let email = document.querySelector("#mail").value
+// 	let password = document.querySelector("#psw").value
+// 	let data = await fetch("http://127.0.0.1:8000/api/v1/account/token/", {
+// 		method: "POST",
+// 		header:{
+// 			"Content-Type": "application/json"
+// 		},
+// 		body: JSON.stringify(body)
+// 	});
+// 	let response = await data.json();
+// 	localStorage.setItem("pavshop_access_token", response["access"]);
+// 	localStorage.setItem("pavshop_refresh_token", response["refresh"]);
+//  });
+
+//  method: "POST",
+//  headers: {
+// 	  "Content-Type": "application/json",
+// 	  "X-CSRFToken":csrftoken
+//  },
+//  body: JSON.stringify({
+// 	  variant:e.target.dataset.product,
+// 	  user:userId
+//  })

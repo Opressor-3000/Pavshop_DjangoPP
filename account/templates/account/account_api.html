@@ -18,10 +18,6 @@
             <ul class="nav nav-tabs animate fadeInUp" data-wow-delay="0.4s" role="tablist">
               <li role="presentation" class="active"><a href="#shopcart" role="tab" data-toggle="tab">{% trans 'SHOPPING CART' %}</a></li>
               <li role="presentation"><a href="#orders" role="tab" data-toggle="tab">{% trans 'MY ORDERS' %}</a></li>
-              <li role="presentation"><a href="#wishlist" role="tab" data-toggle="tab">{% trans 'WISHLIST' %}</a></li>
-              <li role="presentation"><a href="#posts" role="tab" data-toggle="tab">{% trans 'MY POSTS' %}</a></li>
-              <li role="presentation"><a href="#reviewposts" role="tab" data-toggle="tab">{% trans 'MY POST REVIEW' %}</a></li>
-              <li role="presentation"><a href="#reviews" role="tab" data-toggle="tab">{% trans 'MY PRODUCT REVIEWS' %}</a></li>
             </ul>
             
             <!-- Tab panes -->
@@ -48,40 +44,19 @@
                   </div>
                   <!-- Cart Details -->
                   <div class="cart-detail">
-
+                    
                   </div>
                 </div>
               </div>
 
                             <!-- WISHLIST -->
               <div role="tabpanel" class="tab-pane fade" id="orders">
+
               </div>
               
               <!-- WISHLIST -->
               <div role="tabpanel" class="tab-pane fade" id="wishlist">
               </div>
-
-                <!-- MY POSTS -->`
-                <div class="media posts" class="tab-pane fade" id="posts">
-                  <div class="media-left"> 
-                    <!--  Image -->
-                    <div class="avatar"> <a href="#"> <img class="media-object" src="images/avatar-1.jpg" alt=""> </a> </div>
-                  </div>
-                  <!--  Details -->
-                  <div class="media-body">
-                    <p class="font-playfair">“Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                      labore et dolore magna aliqua.”</p>
-                    <h6>TYRION LANNISTER <span class="pull-right">MAY 10, 2016</span> </h6>
-                  </div>
-                </div>
-             
-                <!-- MY POST REVIEWS -->
-                <div class="post_review" class="tab-pane fade" id="reviewposts">
-                </div>
-                
-                <!-- MY PRODUCT REVIEWS -->
-                <div class="product_review" class="tab-pane fade" id="reviews">
-                </div>
 
             </div>
           </div>
@@ -113,4 +88,7 @@
             </div>
           </section>
     
+{% endblock %}
+{% block script %}
+<script src="{% static 'js/account.js' %}"></script>
 {% endblock %}

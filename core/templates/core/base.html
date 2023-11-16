@@ -86,11 +86,11 @@
       <div class="col-md-3">
         <h6>HELPFUL LINKS</h6>
         <ul class="link">
-          <li><a href="#"> Products</a></li>
-          <li><a href="#"> Find a Store</a></li>
-          <li><a href="#"> Features</a></li>
+          <li><a href="{% url 'product:product_list' %}"> Products</a></li>
+          <li><a href="{% url 'product:product_list' %}"> Find a Store</a></li>
+          <li><a href="{% url 'blog:post_list' %}"> Features</a></li>
           <li><a href="#"> Privacy Policy</a></li>
-          <li><a href="#"> Blog</a></li>
+          <li><a href="{% url 'blog:post_list' %}"> Blog</a></li>
           <li><a href="#"> Press Kit </a></li>
         </ul>
       </div>
@@ -99,12 +99,12 @@
       <div class="col-md-3">
         <h6>SHOP</h6>
         <ul class="link">
-          <li><a href="#"> About Us</a></li>
+          <li><a href="{% url 'core:about_us' %}"> About Us</a></li>
           <li><a href="#"> Career</a></li>
           <li><a href="#"> Shipping Methods</a></li>
-          <li><a href="#"> Contact</a></li>
-          <li><a href="#"> Support</a></li>
-          <li><a href="#"> Retailer</a></li>
+          <li><a href="{% url 'core:contact' %}"> Contact</a></li>
+          <li><a href="{% url 'core:contact' %}"> Support</a></li>
+          <li><a href="{% url 'product:product_list' %}"> Retailer</a></li>
         </ul>
       </div>
       
@@ -112,11 +112,15 @@
       <div class="col-md-3">
         <h6>MY ACCOUNT</h6>
         <ul class="link">
-          <li><a href="#"> Login</a></li>
-          <li><a href="#"> My Account</a></li>
-          <li><a href="#"> My Cart</a></li>
-          <li><a href="#"> Wishlist</a></li>
-          <li><a href="#"> Checkout</a></li>
+          {% if request.user.is_authenticated %}
+          <li><a href="{% url 'account:login' %}"> Login</a></li>
+          {% else %}
+          <li><a href="{% url 'account:logout' %}"> Logout</a></li>
+          {% endif %}
+          <li><a href="{% url 'account:api_account' %}"> My Account</a></li>
+          <li><a href="{% url 'account:shopcart' %}"> My Cart</a></li>
+          <li><a href="{% url 'account:wishlist' %}"> Wishlist</a></li>
+          <li><a href="{% url 'account:checkout' %}"> Checkout</a></li>
         </ul>
       </div>
       
@@ -128,7 +132,9 @@
     </div>
   </footer>  
 </div>
-<script type="text/javascript"> var user = '{{request.user.full_name }}'</script>
+{% block script %}
+{% endblock %}
+<script type="text/javascript"> var user = '{{request.user.get_full_name }}'</script>
 <script src="{% static 'js/jquery-1.11.3.min.js' %}"></script> 
 <script src="{% static 'js/bootstrap.min.js' %}"></script> 
 <script src="{% static 'js/own-menu.js' %}"></script> 
@@ -136,14 +142,14 @@
 <script src="{% static 'js/owl.carousel.min.js' %}"></script> 
 <script>var userId='{{request.user.id}}'</script>
 <script src="{% static 'js/wishlist.js' %}"></script>
-<script src="{% static 'js/search.js' %}"></script>
 <script src="{% static 'js/search_blog.js' %}"></script>
-<script src="{% static 'js/account.js' %}"></script>
+<script src="{% static 'js/token.js' %}"></script>
 <!-- SLIDER REVOLUTION 4.x SCRIPTS  --> 
 <script type="text/javascript" src="{% static 'rs-plugin/js/jquery.tp.t.min.js' %}"></script> 
 <script type="text/javascript" src="{% static 'rs-plugin/js/jquery.tp.min.js' %}"></script> 
 <script src="{% static 'js/main.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
 <script src="{% static 'js/filter.js' %}"></script>
+<script src="{% static 'js/search.js' %}"></script>
 </body>
 </html>

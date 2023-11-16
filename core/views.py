@@ -19,9 +19,9 @@ from .forms import ContactForm
 def about_us(request):
     return render(request, "core/about-us.html")
 
-
+ 
 class Contact(CreateView):
-    model = ContactForm
+    form_class = ContactForm
     template_name = 'core/contact.html'
 
 # def contact(request):

@@ -11,6 +11,7 @@ from product.models import Category, Variant, Discount
 
 register = template.Library()
 
+
 '''    НУжны след ФУНКЦИИ
         1   Popular 
         2   New Arrival
@@ -20,7 +21,6 @@ register = template.Library()
         6   Brands
         7   Store
 '''
-
 
 
 @register.simple_tag
@@ -37,7 +37,7 @@ register = template.Library()
 
 @register.simple_tag
 def categories():
-    return Category.objects.all()
+    return Category.objects.filter(parent=None)
 
 
 

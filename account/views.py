@@ -37,6 +37,12 @@ class UserAccount(ListView):
         context['sopping_cart'] = get_shopcarts(self.request)
         context['user_reviews'] = ProductReview.objects.filter(user=self.request.user)
         return context
+    
+
+class UserAccountAPI(ListView):  
+    model = User
+    template_name = 'account/account_api.html'
+    context_object_name = 'user'
 
 
 class ActivateView(View):
@@ -118,10 +124,15 @@ class Basket(LoginRequiredMixin, ListView):
             return Variant.objects.filter(variantinbasket__user=self.request.user)
        
     
-class Checkout(LoginRequiredMixin, CreateView):   # способы оплаты
-    model = Address
+class Checkout(LoginRequiredMixin, ListView):   # способы оплаты
+    model = ProductToBasket
     template_name = 'account/checkout.html'
     context_object_name = 'checkout'
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return super().get_queryset().filter(order__status__id=1)
+    
+    
 
 
 class AddToCartView(LoginRequiredMixin, CreateView):    #  добавить в корзину 
@@ -176,14 +187,6 @@ def update_item(request):
     data = json.loads(request.data)
     productid = data['productId']
     action = data['action']
-    user = request.user.id
-    product = Variant.objects.get(id=productid)
-    order, created = ProductToBasket.objects.get_or_create(user=user, order=1)
-
-    prodtobask = 1
-
-    order_item, created = 1
-
     if action == 'add':
         ProductToBasket.count += 1
     elif action == 'remove' and ProductToBasket.count > 1:
@@ -215,3 +218,9 @@ class UserPasswordResetConfirmView(PasswordResetConfirmView):
         messages.add_message(self.request, messages.INFO, 'Parolunuz deyisildi')
         return self.success_url
 
+class AccountView(LoginRequiredMixin, View):
+    model = User
+    template_name = 'account/account_api.html'
+    context_object_name = 'user'
+
+    

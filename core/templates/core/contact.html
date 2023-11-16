@@ -30,40 +30,31 @@
           <h5>PLEASE fill-up FEW details</h5>
           <div class="row">
             <div class="col-md-8"> 
+
+             
               
               <!--======= Success Msg =========-->
               <div id="contact_message" class="success-msg"> <i class="fa fa-paper-plane-o"></i>Thank You. Your Message has been Submitted</div>
               
               <!--======= FORM  =========-->
-
               <form role="form" id="contact_form" class="contact-form" method="post" onSubmit="return false">
                 {% csrf_token %}
                 <ul class="row">
                   <li class="col-sm-6">
-                    <label>{{ form.name.lable }}
-                      {{ form.name }}
-                    </label>
+                    {{ form.name }}
                   </li>
                   <li class="col-sm-6">
-                    <label>{{ form.phone.lable }}
-                      {{ form.phone }}
-                    </label>
+                    {{ form.phone }}
                   </li>
                   <li class="col-sm-6">
-                    <label>{{ form.email.lable }}
-                      {{ form.email }}
-                    </label>
+                    {{ form.email }}
                   </li>
                   </li>
                   <li class="col-sm-6">
-                    <label>{{ form.subject.lable }}
-                      {{ form.subject }}
-                    </label>
+                    {{ form.subject }}
                   </li>
                   <li class="col-sm-12">
-                    <label>{{ form.message.lable }}
                       {{ form.message }}
-                    </label>
                   </li>
                   <li class="col-sm-12">
                     <button type="submit" value="submit" class="btn" id="send_message" onClick="proceed();">SEND MAIL</button>

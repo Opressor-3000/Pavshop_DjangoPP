@@ -15,7 +15,7 @@
 6. git pull origin dev
 
 
-git add . && git commit -m 'fix blog-list and post template / view ' && git push origin yusif && git checkout dev && git pull origin dev && git merge yusif && git push origin dev && git checkout yusif
+git add . && git commit -m 'fix blog list / blog sida bar  ' && git push origin yusif && git checkout dev && git pull origin dev && git merge yusif && git push origin dev && git checkout yusif
 
 
 

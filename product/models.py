@@ -308,6 +308,14 @@ class Variant(AbstractModel):
         if image:
             return image.image.url
         return ''
+    
+    @property
+    def get_all_img(self):
+        image = Image.objects.filter(variant = self)
+        if image:
+            return image.image.url
+        return ''
+
     @property
     def get_product(self):
         return Product.objects.get(variantofproduct__id=self.id)
@@ -323,19 +331,16 @@ class Variant(AbstractModel):
         for disc in discount:
             discount_list.append(disc.type_id)
         return discount_list
-    
-    @property
-    def get_designer(self):
-        pass
 
     @property
     def get_discount_price(self):
-        price_dict = {}
+        price_dict = []
         for disc in self.discount_type():
             if disc == 2:
                 return self.price - self.price * (self.discount_id__discount_persent / 100)
             if disc == 3 and self.filter(discount__decrease_by__lt=self.price):
                 return self.price - self.discount_id__decrease_by
+        low_price = 1
     
     class Meta:
         verbose_name = 'variant'

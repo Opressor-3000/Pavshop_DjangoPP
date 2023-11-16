@@ -7,11 +7,13 @@
 
 
   <!--======= SUB BANNER =========-->
-  <section class="sub-bnr" data-stellar-background-ratio="0.5">
-    <div class="position-center-center">
-      <div class="container">
-        <h4></h4>
-        <p></p>
+  <section class="sub-bnr" data-stellar-background-ratio="0.5" >
+    <div class="background-image">
+      <div class="position-center-center">
+        <div class="container">
+          <h4></h4>
+          <p></p>
+        </div>
       </div>
     </div>
   </section>
@@ -29,39 +31,7 @@
             
             <!-- Item Slide -->
             <div class="papular-block row single-img-demos"> 
-              
-              {% for product in variants %}
-              <!-- Item -->
-              <div class="col-md-4">
-                <div class="item"> 
-                  <!-- Sale Tags -->
-                  <div class="on-sale"> 10% <span>OFF</span> </div>
-                  <!-- Item img -->
-                  <div class="item-img"> <img class="img-1" src="{{ product.get_main_img }}" alt="" >
-                    <!-- Overlay -->
-                    <div class="overlay">
-                      <div class="position-center-center">
-                        <div class="inn">
-                          <a href="{{ product.get_main_img }}" data-lighter>
-                            <i class="icon-magnifier"></i></a>
-                          <button data-product={{ product.id }} data-action="add_to_cart" class='update_cart' >
-                            <i class="icon-basket"id="addtocart"></i>
-                          </button> 
-                          <a href="#." ><i class="icon-heart" id="add_wishlist"></i></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Item Name {{ product.slug.get_absolute_url }} -->
-                  <div class="item-name"> <a href="{% url 'product:product' product.slug %}">{{ product.title }}</a>
-                    <p>{{ product.product.description }}</p>
-                  </div>
-                  <!-- Price --> 
-                  <span class="price"><small>$</small>{{ product.price }}</span> \
-                </div>
-              </div>
-              {% endfor %}
-
+              <!-- -------------------------------------FETCH  INNER HTML ---------------------------------------->
             </div>
             
             <!-- Pagination -->
@@ -92,18 +62,23 @@
               <h5 class="shop-tittle margin-bottom-30">category</h5>
               <ul class="shop-cate categories">
                 {% for cat in categories %}
-                <!-- <li><input class="category_checkbox" type="checkbox">{{ cat.title }}</li> -->
-                <li><input class="category_checkbox"" value={{cat.title}} type="checkbox">
+                <li><input class="category_checkbox"" value={{cat.slug}} type="checkbox">
                   {{ cat.title }}</li>
                 {% endfor %}
+              </ul>
+
+              <h5 class="shop-tittle margin-top-60 margin-bottom-30">FILTER BY PRICE</h5>
+              <ul class="row">
+                <div class="col-sm-1"><li><input type="text" class="min-price"></li></ul></div>
+                <div class="col-sm-1"><li class=""><input type="text" class="max-price"></li></div>
               </ul>
               
               <!-- COLOUR -->
               <h5 class="shop-tittle margin-top-60 margin-bottom-30">FILTER BY COLORS</h5>
               <ul class="colors">
               {% for col in colours %}
-                <li><input value={{col.title}} type="checkbox">
-                  {{ col.title }}</li>
+                <li><input class="color_checkbox" value={{col.title}} type="checkbox">
+                    {{ col.title }}</li>
               {% endfor %}
               </ul>
             
@@ -111,7 +86,7 @@
               <h5 class="shop-tittle margin-top-60 margin-bottom-30">PAUPLAR TAGS</h5>
               <ul class="shop-tags">
                 {% for tag in tags %}
-                <li><input type="checkbox"><a href="{% url 'product:product_list' %}?tag={{ tag.title }}">{{ tag.title }}</a></li>
+                <li><input class="tag_chackbox" type="checkbox" value="{{tag.title}}">  {{ tag.title }}</li>
                 {% endfor %}
               </ul>
               
@@ -119,7 +94,7 @@
               <h5 class="shop-tittle margin-top-60 margin-bottom-30">brands</h5>
               <ul class="shop-cate">
                 {% for brand in brands %}
-                <li><input type='checkbox'><a href="{% url 'product:product_list' %}?brand={{ brand.title }}">{{ brand.title }}</a></li>
+                <li><input class="brand_chackbox" type='checkbox' value="{{ brand.slug }}">  {{ brand.title }}</a></li>
                 {% endfor %}
               </ul>
               

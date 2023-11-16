@@ -1,38 +1,23 @@
 
+let search_input = document.getElementsByClassName("search-input");
+console.log(search_input)
+let search_button = document.getElementsByClassName("search-button");
+console.log(search_button, 'sdfghjgfdsfghjhjgfdsfghj')
 
+search_button.addEventListener("click", async (e) => {
+    if(search_input[0].value){
+        let data = await fetch('http://127.0.0.1:8000/product/product_list/?search=${search_input}$', {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken
+            },
+            body: JSON.stringify({
+                search: search_input[0].value,
+            })
+        })
+    }else{
 
-function getToken(name) {
-   let cookieValue = null;
-   if (document.cookie && document.cookie !== '') {
-       const cookies = document.cookie.split(';');
-       for (let i = 0; i < cookies.length; i++) {
-           const cookie = cookies[i].trim();
-           // Does this cookie string begin with the name we want?
-           if (cookie.substring(0, name.length + 1) === (name + '=')) {
-               cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-               break;
-           }
-       }
-   }
-   console.log(cookieValue);
-   return cookieValue;
-}
-
-const csrftoken = getToken('csrftoken')
-
-let addWishlist = document.getElementById("search-button");
-
-addWishlist.addEventListener("click", async (e)=>{
-
-   let data = await fetch("http://127.0.0.1:8000/product/product_list/", {
-       method: "GET",
-       headers: {
-           "Content-Type": "application/json",
-           "X-CSRFToken":csrftoken
-       },
-       body: JSON.stringify({
-           search: e.document.getElementById("search-input")[0].value,
-       })
-   });
-
+    }
 });
+console.log("some")

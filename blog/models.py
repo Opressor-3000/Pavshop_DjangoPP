@@ -1,4 +1,4 @@
-from django.db import models
+from django.db.models import ForeignKey, CharField, SlugField, Sum, TextField, BooleanField, PROTECT, ImageField, ManyToManyField, Count
 from django.utils import timezone
 from django.urls import reverse_lazy
 
@@ -8,11 +8,11 @@ from core.Abstact_models import AbstractModel
 
 
 class PostReview(AbstractModel):
-    post = models.ForeignKey('Post', on_delete=models.PROTECT, related_name='post')
-    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='userrew')
-    text = models.TextField(verbose_name='')
-    review = models.ForeignKey('self', on_delete=models.PROTECT, blank=True, null=True, related_name='postreview')
-    deleted_at = models.BooleanField(default=False)
+    post = ForeignKey('Post', on_delete=PROTECT, related_name='post')
+    user = ForeignKey(User, on_delete=PROTECT, related_name='userrew')
+    text = TextField(verbose_name='')
+    review = ForeignKey('self', on_delete=PROTECT, blank=True, null=True, related_name='postreviewrel')
+    deleted_at = BooleanField(default=False)
 
     class Meta:
         verbose_name = 'review'
@@ -24,17 +24,17 @@ class PostReview(AbstractModel):
 
 
 class Post(AbstractModel):
-    title = models.CharField(max_length=100, unique=True, db_index=True, verbose_name='Title')
-    slug = models.SlugField(max_length=100, unique=True, db_index=True)
-    author = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Author', related_name='author')
-    text = models.TextField(verbose_name='Content')
-    preview = models.ImageField(upload_to='blog_image/', verbose_name='Preview')
-    image = models.ManyToManyField(Image, blank=True, verbose_name='Image')
-    published_at = models.BooleanField(default=False, verbose_name='Published at')  
-    tag = models.ManyToManyField(Tag, verbose_name='Tags', related_name='tags')
-    category = models.ManyToManyField(Category, blank=True ,verbose_name='About Categories', related_name='categories')
-    product = models.ManyToManyField(Product, blank=True ,verbose_name='About Products', related_name='productsofpost')
-    deleted_at = models.BooleanField(default=False)
+    title = CharField(max_length=100, unique=True, db_index=True, verbose_name='Title')
+    slug = SlugField(max_length=100, unique=True, db_index=True)
+    author = ForeignKey(User, on_delete=PROTECT, verbose_name='Author', related_name='author')
+    text = TextField(verbose_name='Content')
+    preview = ImageField(upload_to='blog_image/', verbose_name='Preview')
+    image = ManyToManyField(Image, blank=True, verbose_name='Image')
+    published_at = BooleanField(default=False, verbose_name='Published at')  
+    tag = ManyToManyField(Tag, verbose_name='Tags', related_name='tags')
+    category = ManyToManyField(Category, blank=True ,verbose_name='About Categories', related_name='categories')
+    product = ManyToManyField(Product, blank=True ,verbose_name='About Products', related_name='productsofpost')
+    deleted_at = BooleanField(default=False)
 
     class Meta:
         verbose_name = 'post'
@@ -46,3 +46,17 @@ class Post(AbstractModel):
     
     def __str__(self):
         return str(self.title)
+
+    @property
+    def get_review(self):
+        return PostReview.objects.filter(post=self.id)
+
+
+    @property
+    def get_reviewcount(self):
+        reviewcount = super().objects.aggregate(review_count = Count(self.get_review))
+        print(reviewcount, 'sdfggfgfsdfhgjkuyuhf hmngbfvdcs')
+        return reviewcount
+    #aggregate(Count(self.get_review))
+    def get_author(self):
+        return User.objects.filter(id=self.author)

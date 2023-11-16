@@ -48,6 +48,6 @@ urlpatterns = [
     path('blog/', include('blog.urls'), name='bloglist'),
     path('products/', include('product.urls'), name='product'),
     path('api/v1/blog/', include('blog.blog_api.urls'), name='blog_api'),
-    path('api/v1/account/', include('account.accoun_api.urls'), name='account_api'),
+    path('api/v1/account/', include('account.account_api.urls'), name='account_api'),
     path('api/products/', include('product.product_api.urls'), name='product_api')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

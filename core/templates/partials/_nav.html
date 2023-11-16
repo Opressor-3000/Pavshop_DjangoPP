@@ -43,12 +43,12 @@
             <li class="dropdown"> <a href="#." class="dropdown-toggle" data-toggle="dropdown">{% trans 'Categories' %}</a>
               <ul class="dropdown-menu">  
                 {% recursetree cat %}
-                  <li> <a href="{% url 'product:product_list' %}?category={{ node.title}}">{{ node.title }}</a></li>
-                  {% if not node.is_leaf_node %}
-                    <ul class="children">
-                        {{ children }}
-                    </ul>
-                  {% endif %}
+                <li> <a href="{% url 'product:product_list' %}?category={{ node.title}}">{{ node.title }}</a></li>
+                {% if not node.is_leaf_node %}
+                  <ul class="children">
+                    {{ children }}
+                  </ul>
+                {% endif %}
                 {% endrecursetree %}
               </ul>
             </li>
@@ -86,16 +86,17 @@
               <ul class="dropdown-menu">
                 <li> <a href="{% url 'blog:post_list' %}?new_post=true">{% trans 'New Posts' %}</a> </li>
                 <li> <a href="{% url 'blog:post_list' %}?popular=true">{% trans 'Popular Post' %}</a> </li>
-                <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans 'Authors' %}</a>
-                    <!--<ul class="dropdown-menu">
+                <li class="dropdown"> 
+                  <a href="{% url 'blog:post_list' %}?author=true" class="dropdown-toggle" data-toggle="dropdown">{% trans 'Authors' %}</a>
+                    <ul class="dropdown-menu">
+                      {% for author in authors %}
                       <li> <a href="{% url 'blog:post_list' %}?new_post=true"> New Posts</a> </li>
-                      <li> <a href="{% url 'blog:post_list' %}?popupal=true"> Popular Post</a> </li>
-                      <li> <a href="{% url 'blog:post_list' %}?user=true">Authors</a> </li>
-                    </ul> -->
+                      {% endfor %}
+                    </ul>
                   </li>
               </ul>
             </li>
-            
+              
             <!-- MEGA MENU -->
             <li class="dropdown megamenu"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Store</a>
               <div class="dropdown-menu">
@@ -143,7 +144,14 @@
                 </div>
               </div>
             </li>
-            <li> <a href="{% url 'core:contact' %}"> {% trans 'contact' %}</a> </li>
+
+            <li class="dropdown" > <a href="#." class="dropdown-toggle" data-toggle="dropdown">{% trans 'About' %}</a>
+              <ul class="dropdown-menu">
+                <li> <a href="{% url 'core:about_us' %}"> {% trans 'about us' %}</a> </li>
+                <li> <a href="{% url 'core:contact' %}"> {% trans 'contact' %}</a> </li>
+              </ul>
+            </li>
+               
           </ul>
         </div>
         
@@ -155,7 +163,7 @@
             <li class="dropdown user-acc"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" ><i class="icon-user"></i> </a>
               <ul class="dropdown-menu">
                 {% if request.user.is_authenticated %}
-                <li><h6>HELLO! {{ request.user.id }}</h6></li>
+                <li><h6>HELLO! {{ request.user.get_full_name }}</h6></li>
                 <li><a href="{% url 'account:profile' %}">{% trans 'ACCOUNT' %}</a></li>
                 <li><a href="{% url 'account:shopcart' %}">{% trans 'MY CART' %}</a></li>
                 <li><a href="{% url 'account:logout' %}">{% trans 'LOG OUT' %}</a></li>
@@ -171,11 +179,10 @@
             <li class="dropdown user-basket"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="icon-basket-loaded"></i> </a>
               <ul class="dropdown-menu">
                 {% get_shopcarts request as shopcart %}
-                {}
                 {% for sc in shopcart %}
                 <li>
                   <div class="media-left">
-                    <div class="cart-img"> <a href="{{ variant.get_absolute_url }}"> <img class="media-object img-responsive" src="{{ sc.image.url }}" alt="..."> </a> </div>
+                    <div class="cart-img"> <a href="{{ variant.get_absolute_url }}"> <img class="media-object img-responsive" src="{{ sc.variant.get_main_img }}" alt="..."> </a> </div>
                   </div>
                   <div class="media-body">
                     <h6 class="media-heading"> {{ sc.variant.title }} </h6>
@@ -183,7 +190,7 @@
                 </li>
                 {% endfor %}
                 <li>
-                  <h5 class="text-center">{% trans 'SUBTOTAL' %}:  USD</h5>
+                  <h5 class="text-center">{% trans 'SUBTOTAL' %}:  {{ request.user.get_subtotal }} USD</h5>
                 </li>
                 <li class="margin-0">
                   <div class="row">
@@ -201,9 +208,9 @@
                 <div class="search-overlay"></div>
                 <div class="position-center-center">
                   <div class="search">
-                    <form>
-                      <input type="search" placeholder="Search Shop">
-                      <button type="submit"><i class="icon-check"></i></button>
+                    <form methor="get">
+                      <input id="search" class="search-input" type="search" placeholder="Search Shop">
+                      <button type="submit-button" class="search-button"><i class="icon-check"></i></button>
                     </form>
                   </div>
                 </div>

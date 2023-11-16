@@ -13,15 +13,18 @@
      <!-- Category -->
      <h5 class="shop-tittle margin-bottom-30">category</h5>
      <ul class="shop-cate">
-      {% for bc in blog_cats %}
-       <li><a href="{% url 'blog:post_list' %}?category={{ bc.title }}"><span>{{ bc.title}}</span></a></li>
+      {% get_blogcat as blogcats %}
+      
+      {% for bc in blogcats %}
+       <li><a href="{% url 'blog:post_list' %}?category={{ bc.slug }}"><span>{{ bc.title}}</span></a></li>
       {% endfor %}
      </ul>
      
      <!-- Recent Post -->
      <h5 class="shop-tittle margin-top-60 margin-bottom-30">recent post</h5>
      <ul class="papu-post margin-top-20">
-      {% for rp in blog_recents %}
+      {% get_postrecent as postrecents %}
+      {% for rp in postrecents %}
        <li class="media">
          <div class="media-left"> <a href="{% url 'blog:post' rp.slug %}"> <img class="media-object" src="{{ rp.preview.url }}" alt=""></a> </div>
          <div class="media-body"> <a class="media-heading" href="{% url 'blog:post' rp.slug %}">{{ rp.title }}</a> <span>{{ rp.created_at }}</span> </div>
@@ -32,8 +35,9 @@
      <!-- TAGS -->
      <h5 class="shop-tittle margin-top-60 margin-bottom-30">POPULAR TAGS</h5>
      <ul class="shop-tags">
-      {% for bt in blog_tags %}
-       <li><a href="{% url 'blog:list' %}?taglist={{ bt.title }}">{{ bt.title }}</a></li>
+      {% get_blogtag as blogtags %}
+      {% for bt in blogtags %}
+       <li><a href="{% url 'blog:post_list' %}?tag={{ bt.slug }}">{{ bt.title }}</a></li>
        {% endfor %}
      </ul>
      

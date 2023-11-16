@@ -10,7 +10,7 @@ for (var i = 0; i < catCheckbox.length; i++) {
       
       for (var i = 0; i < catCheckbox.length; i++){
          if(catCheckbox[i].checked){
-            catList.push(catCheckbox[i].value)
+            catList.push(catCheckbox[i].value.toLowerCase())
          }
         
       }
@@ -20,84 +20,97 @@ for (var i = 0; i < catCheckbox.length; i++) {
    })
 }
 
+
+const colorCheckbox = document.getElementsByClassName("color_checkbox")
+
+
+for (var i = 0; i < colorCheckbox.length; i++) {
+   colorCheckbox[i].addEventListener("change", (e) => {
+      var url = new URL(window.location.href);
+      
+      console.log(e.target.value);
+      const colorList=[]
+      
+      for (var i = 0; i < colorCheckbox.length; i++){
+         if(colorCheckbox[i].checked){
+            colorList.push(colorCheckbox[i].value)
+         }
+        
+      }
+      url.searchParams.set("color", colorList);
+      window.history.replaceState(null,null,url);
+      getProducts()
+   })
+}
+
+
+const tagCheckbox = document.getElementsByClassName("tag_checkbox")
+
+
+for (var i = 0; i < tagCheckbox.length; i++) {
+   tagCheckbox[i].addEventListener("change", (e) => {
+      var url = new URL(window.location.href);
+      
+      console.log(e.target.value);
+      const tagList=[]
+      
+      for (var i = 0; i < tagCheckbox.length; i++){
+         if(tagCheckbox[i].checked){
+            tagList.push(tagCheckbox[i].value)
+         }
+        
+      }
+      url.searchParams.set("color", tagList);
+      window.history.replaceState(null,null,url);
+      getProducts()
+   });
+};
+
+
 const getProducts= async()=>{
+  
+  var url = new URL(window.location.href);
+  const category=url.searchParams.get("category");
+  const color=url.searchParams.get("color");
+  const tag=url.searchParams.get("tag")
 
- var url = new URL(window.location.href);
-   const category=url.searchParams.get("category");
+  const response= await fetch(`http://127.0.0.1:8000/api/products/variants/?product_id__category_id__slug=${category}$color__title=${color}$tag__title=${tag}$`)
 
-   
-   const response= await fetch(`http://127.0.0.1:8000/api/products/variants/?product_id__category_id__slug=${category}`)
+  const data=await response.json()
+  console.log(data.results);
 
-   const data=await response.json()
-   console.log(data);
-
-   const products=document.getElementsByClassName("papular-block")[0]
-
-   for(var i=0;i<data.length;i++){
-      products.innerHTML+=`
-
-      <div class="col-md-4">
-      <div class="item"> 
-        <!-- Sale Tags -->
-        <div class="on-sale"> 10% <span>OFF</span> </div>
-        <!-- Item img -->
-        <div class="item-img"> <img class="img-1" src="${ data[i].get_main_img }" alt="" >
-          <!-- Overlay -->
-          <div class="overlay">
-            <div class="position-center-center">
-              <div class="inn">
-                <a href="${ data[i].get_main_img }" data-lighter>
-                  <i class="icon-magnifier"></i></a>
-                <button data-product=${ data[i].id } data-action="add_to_cart" class='update_cart' >
-                  <i class="icon-basket"></i>
-                </button> 
-                <a href="#." ><i class="icon-heart"></i></a>
+  const products=document.getElementsByClassName("papular-block")[0]
+  products.innerHTML=""
+  for(var i=0;i<data.results.length;i++){
+    products.innerHTML+=`
+        <div class="col-md-4">
+        <div class="item"> 
+          <!-- Sale Tags -->
+          <div class="on-sale"> 10% <span>OFF</span> </div>
+          <!-- Item img -->
+          <div class="item-img"> <img class="img-1" src="${ data.results[i].get_main_img }" alt="" >
+            <!-- Overlay -->
+            <div class="overlay">
+              <div class="position-center-center">
+                <div class="inn">
+                  <a href="${ data.results[i].get_main_img }" data-lighter>
+                    <i class="icon-magnifier"></i></a>
+                  <button data-product=${ data.results[i].id } data-action="add_to_cart" class='update_cart' >
+                    <i class="icon-basket"></i>
+                  </button> 
+                  <a href="#." id="add_wishlist"><i class="icon-heart" id="add_wishlist"></i></a>
+                </div>
               </div>
             </div>
           </div>
+          <!-- Item Name { data[i].get_absolute_url } -->
+          <div class="item-name"> <a href="{% url 'product:product' ${data.results.slug } ">${data.results[i].title}</a>
+            <p>${ data.results[i].product_id.description }</p>
+          </div>
+          <!-- Price --> 
+          <span class="price"><small>$</small>${data.results[i].price}</span> 
         </div>
-        <!-- Item Name { data[i].get_absolute_url } -->
-        <div class="item-name"> <a href="{% url 'product:product' ${data[i].slug } ">${data[i].title}</a>
-          <p>${ data[i].product.description }</p>
-        </div>
-        <!-- Price --> 
-        <span class="price"><small>$</small>${data[i].price}</span> 
       </div>
-    </div>
-      `
-
-      
-   }
-
-
-
-
-
-
-}
-
-// const colCheckbox = document.getElementsByClassName("colour_checkbox")
-
-// for (var i = 0; i < colCheckbox.length; i++) {
-//    colCheckbox[i].addEventListener("change", (e) => {
-//       var searchParams = new URLSearchParams(window.location.search);
-//       searchParams.set("color", e.target.value);
-//       window.location.search = searchParams.toString();
-//       if (e.target.checkhed){
-        
-//       }
-//    })
-// }
-
-// const brandCheckbox = document.getElementsByClassName("brand_checkbox")
-
-// for (var i = 0; i < brandCheckbox.length; i++) {
-//    brandCheckbox[i].addEventListener("change", (e) => {
-//       var searchParams = new URLSearchParams(window.location.search);
-//       searchParams.set("brand", e.target.value);
-//       window.location.search = searchParams.toString();
-//       if (e.target.checkhed){
-        
-//       }
-//    })
-// }
+        `
+  };
+};

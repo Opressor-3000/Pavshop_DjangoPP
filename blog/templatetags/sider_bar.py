@@ -11,9 +11,22 @@ def get_search_post(request):
    return 
 
 @register.inclusion_tag('partials/sider_bar.py')
-def get_blog_sidebar():
-   blog_cats = Category.objects.annotate(cat = Count('categories')).order_by('cat')
-   print('sdfghjkll;oilukyjthrvedcvgbnhyj', blog_cats)
-   blog_tags = Tag.objects.annotate(tag = Count('tags')).order_by('tag')
+def get_blogsidebar():
+   blog_cats = Category.objects.annotate(cat = Count('categories')).order_by('cat').distinct()
+   blog_tags = Tag.objects.annotate(tag = Count('tags')).order_by('tag').distinct()
    blog_recents = Post.objects.annotate(recent = Count('postreview')).order_by('recent')[:3]
-   return {'blog_cats': blog_cats, 'blog_tags': blog_tags, 'blog_recents': blog_recents }
+   blogside = {'blog_cats': blog_cats, 'blog_tags': blog_tags, 'blog_recents': blog_recents }
+   print(blogside, 'dcvfbnukuytrfvfhnm,iukyjthgdf')
+   return blogside
+
+@register.simple_tag
+def get_blogcat():
+   return Category.objects.annotate(cat = Count('categories')).order_by('cat').distinct()[:8]
+
+@register.simple_tag
+def get_blogtag():
+   return Tag.objects.annotate(tag = Count('tags')).order_by('tag').distinct()[:7]
+
+@register.simple_tag
+def get_postrecent():
+   return Post.objects.all()[:3]

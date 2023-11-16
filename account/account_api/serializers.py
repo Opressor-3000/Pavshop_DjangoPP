@@ -18,7 +18,7 @@ class StatusSerializer(ModelSerializer):
    class Meta:
       model = Status
       fields = (
-         'title'
+         'title',
       )
 
 
@@ -46,6 +46,7 @@ class OrderSerializer(ModelSerializer):
    class Meta:
       model = Order
       fields = (
+         'id',
          'status',
       )
 
@@ -80,7 +81,7 @@ class StatusOrderSerializer(ModelSerializer):
       model = Status
       field = (
          'order',
-         'title'
+         'title',
       )
 
    def get_order(self, obj):
@@ -148,7 +149,7 @@ class UserShoppingCartSerializer(ModelSerializer):
    class Meta:
       model = User
       fields = (
-         'user'
+         'user',
          'order',
       )
 
@@ -176,14 +177,18 @@ class AddToWishListSerializer(ModelSerializer):
       model = WishList
       fields = (
          'user',
-         'variant'
+         'variant',
       )
 
 
 class UserAccountSerializer(ModelSerializer):
    wishlist = SerializerMethodField()
-   orders = SerializerMethodField()
+   userorder = SerializerMethodField()
    address = SerializerMethodField()
+   blogpost = SerializerMethodField()
+   productreview = SerializerMethodField()
+   blogreview = SerializerMethodField()
+   
    
    class Meta:
       model = User
@@ -191,22 +196,30 @@ class UserAccountSerializer(ModelSerializer):
          'first_name',
          'last_name',
          'wishlist',
-         'orders',
+         'userorder',
          'address',
-         
-        
-         
+         'blogpost',
+         'productreview',
+         'blogreview',
       )
 
-   def get_orders(self, obj):
+   def get_userorder(self, obj):
       serializer = OrderSerializer(obj.user_id.all(), context=self.context, many=True)
 
    def get_wishlist(self, obj):
-      serializer = WishListSerializer(obj.wishlistuser.all(), context=self.context, many=True)
-
+      serializer = WishlistSerializer(obj.wishlistuser.all(), context=self.context, many=True)
       
-   # def get_address(self, obj):
-   #    serializer = AddressSerializer(obj.user.all(), context=self.context, many=True)
+   def get_address(self, obj):
+      serializer = AddressSerializer(obj.user.all(), context=self.context, many=True)
+
+   def get_blogpost(self, obj):
+      serializer = PostListSerializer(obj.user.all(), context=self.context, many=True)
+
+   def get_productreview(self, obj):
+      serializer = ProductReviewSerializer(obj.userreview.all(), context=self.context, many=True)
+
+   def get_blogreview(self, obj):
+      serializer = PostReviewSerializer(obj.userrew.all(), context=self.context, many=True)
 
 
 

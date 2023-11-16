@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from ..models import *
 from product.product_api.serializers import CategorySerializer, TagSerializer, ProductSerializer
-from account.accoun_api.user_serializer import UserSerializer
+from account.account_api.user_serializer import UserSerializer
 
 
 class PostReviewSerializer(ModelSerializer):

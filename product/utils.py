@@ -4,7 +4,7 @@ from datetime import datetime
 from django.db.models import Sum
 
 
-from .models import Variant, Discount, DiscountType
+from .models import Variant, Discount, DiscountType, Category
 
 
 def get_current_discount():
@@ -23,15 +23,14 @@ def current_price(variant):
     current_discount = variant.discount__discounts.filter(deleted_at=False, date_begin__gte=datetime.now(), date_end__lte=datetime.now())
     discount_price = []
     if current_discount['discount_id__types'] == DiscountType.objects.get(id=1):
-      
       discount_price.append(1)
-    if current_discount['discount_id'] == Discount.objects.get(id=2):
-      discount_price.append(1)
-    if current_discount['discount_id'] == Discount.objects.get(id=3):
-      discount_price.append(1)
-    if current_discount['discount_id'] == Discount.objects.get(id=5):
-      discount_price.append(1)
-    if current_discount['discount_id'] == Discount.objects.get(id=6):
-      discount_price.append(1)
-    if current_discount['discount_id'] == Discount.objects.get(id=7):
-      discount_price.append(1)
+
+
+def get_parent(cat):
+  return Category.objects.filter(parent=cat)
+
+def get_subcat():
+  cat = Category.objects.filter(category__variantofproduct__varianttostore__gt=0)
+  return cat.distinct()
+  # if cat.parents.exists():
+  #     return cat.distinct()

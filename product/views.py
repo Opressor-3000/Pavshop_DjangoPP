@@ -13,8 +13,8 @@ from account.models import ProductToBasket, Order
 
 
 
-from .models import Variant, Category, Color, Tag
-from .utils import count_variant, get_current_discount
+from .models import Variant, Category, Color, Tag, Brand
+from .utils import count_variant, get_current_discount, get_subcat, get_parent
 
 
 def updateItem(request):    
@@ -49,16 +49,18 @@ class ProductDetail(DetailView):
         return context
 
 class ProductList(ListView):
-    paginate_by = 9
+    paginate_by = 6
     model = Variant
     template_name = 'product/product_list.html'
     context_object_name = 'variants'
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.filter(parent=None)
+        print(context['variants'])
+        context['categories'] = get_subcat()
         context['colours'] = Color.objects.all()
         context['tags'] = Tag.objects.all()[:9]
+        context['brands'] = Brand.objects.all()[:9]
         return context
 
 
@@ -109,6 +111,7 @@ class ProductList(ListView):
                     queryset = queryset.filter(variantinbasket__order__status_id=2).annotate(total_count = Sum('variantinbasket__count')).order_by('total_count')
                 else:
                     queryset = queryset.order_by('-created_at')
+            print(queryset)
             return queryset
         
             

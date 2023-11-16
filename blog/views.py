@@ -15,9 +15,10 @@ class PostList(ListView):
     paginate_by = 5
     model = Post
     template_name = 'blog/blog_list.html'
-    context_object_name = 'postlist'
+    context_object_name = 'posts'
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data()
         posts = Post.objects.all()
         context['blog_recent'] = posts.order_by('-created_at')[:3]
         context = super().get_context_data(**kwargs)
@@ -25,7 +26,7 @@ class PostList(ListView):
         context['tags'] = Tag.objects.annotate(count1 = Count(F('tags'))).filter(count1__gt=0)
         context['count_review'] = posts.annotate(count2 = Count('post')).filter(count2__gt=0)
         context['review_count'] = PostReview.objects.annotate(Count('post'))
-        
+        # context['authors'] = posts.get_author(context)
         return context
 
     def get_queryset(self) -> QuerySet[Any]:
@@ -40,20 +41,20 @@ class PostList(ListView):
                     Q(author__icontains=req.get['search'])
                 ).distinct
             if req.getlist('taglist'):
-                queryset.filter(tag_in=req.getlist('taglist'))
+                queryset.filter(tag__slug__in=req.getlist('taglist')).distinct()
             if req.get('popular'):
-                return queryset.annotate(total_count = Count('postreview')).order_by('total_count')
+                return queryset.get_review_count()
             if req.get('category'):
-                return queryset.filter(category__in=req.get('category'))[:10]
+                return queryset.filter(category__slug=req.get('category')).distinct()[:10]
             if req.get('tag'):
-                return queryset.filter(tag__in=req.get('tags'))[:7]
+                return queryset.filter(tag__slug=req.get('tags')).distinct()[:7]
             if req.get('new_post'):
                 return queryset.order_by('-created_at')
             if req.get('user'):
-                user = User.objects.annotate(userid = Count('author')).filter(userid__gt=0)
-            return queryset.filter(author=req.get(user))
-
-    
+                user = User.objects.annotate(userid = Count('author')).filter(userid__gt=0).distinct
+            if req.get('author'):
+                return queryset.order_by('author')
+            return queryset
 
 
 class PostDetail(DetailView):

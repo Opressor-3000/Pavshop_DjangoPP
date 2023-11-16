@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from django.db.models import Sum, Max, F
+from django.db.models import Sum, Max, F, CheckConstraint, Q
 from django.utils import timezone
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser
@@ -47,13 +47,31 @@ class User(AbstractUser):
     def __str__(self):
         # if self.get_full_name():
         #     return self.get_full_name()
-        return str(self.username)
+        return str(self.email)
 
     def get_absolute_url(self):
         return reverse_lazy("user", kwargs={"user": self.id})
-    
+
     def get_full_name(self) -> str:
         return super().get_full_name()
+
+    @property
+    def get_subtotal(self):
+        subtotal_dict = self.get_current_order.aggregate(Sum("price"))
+        return subtotal_dict["price__sum"]
+
+    @property
+    def get_current_order(self):
+        return Variant.objects.filter(
+            variantinbasket__user=self, variantinbasket__order__status__id=1
+        )
+
+    @property
+    def get_quantity(self):
+        producttobasket = ProductToBasket.objects.filter(
+            user=self, order__status__id=1, order__user=self
+        )
+        return producttobasket.aggregate(Sum("count"))
 
 
 class Address(AbstractModel):
@@ -91,12 +109,17 @@ class Status(AbstractModel):
         pass
 
 
+#  ORDER #####################################################################
 class Order(AbstractModel):
     user = models.ForeignKey(
         User, on_delete=models.PROTECT, verbose_name="username", related_name="user_id"
     )
     status = models.ForeignKey(
-        Status, on_delete=models.PROTECT, verbose_name="status", related_name="status",
+        Status,
+        on_delete=models.PROTECT,
+        verbose_name="status",
+        related_name="status",
+        default=1
     )
     address = models.ForeignKey(
         Address,
@@ -112,7 +135,7 @@ class Order(AbstractModel):
         ordering = ["-pk"]
 
     def __str__(self) -> str:
-        return f" {str(self.status)}"
+        return f" {str(self.status)} {str(self.user.email)}"
 
     @property
     def lastorder(self, user):
@@ -126,15 +149,14 @@ class Order(AbstractModel):
             order__variantinptb__in=order
         )
 
-    def alluserorder(self, user):
-        pass
-
     def create_order(sender, **kwargs):
         if kwargs["created"]:
             user_profile = Order.objects.create(user=kwargs["instance"])
 
     post_save.connect(create_order, sender=User)
 
+
+#  WISHLIST #######################################################################################################
 
 from product.models import Variant, Discount
 
@@ -154,7 +176,6 @@ class WishList(AbstractModel):
     )
 
     class Meta:
-        unique_together = ["user", "variant"]
         verbose_name = "users_wishs"
         verbose_name_plural = "wishlists"
         ordering = ["-pk"]
@@ -199,10 +220,10 @@ class ProductToBasket(AbstractModel):
         return reverse_lazy("shopcart", kwargs={"shopcartlist": self.user})
 
     def __str__(self) -> str:
-        return f"{str(self.user)} {str(self.variant)} count:{str(self.count)}"
+        return str(self.id)
 
-    def get_or_create(self):
-        pass
+    # def get_or_create(self):
+    #     pass
 
     def get_price_fo_varinat(self):
         try:
