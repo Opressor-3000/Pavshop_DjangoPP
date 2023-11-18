@@ -44,7 +44,6 @@ class HomePage(ListView):
         else:
             context['discount_prod'] = self.count_variants.order_by('-created_at')[:2]
         context['new_arrival'] = self.count_variants.order_by('-created_at')
-        print(self.count_variants.all()[:3])
         context['popular_prod'] = Variant.objects.all()[:5]
         context['last_posts'] = Post.objects.all().order_by('-created_at')[:2]
         context['designer'] = Designer.objects.order_by('-created_at')[:1]

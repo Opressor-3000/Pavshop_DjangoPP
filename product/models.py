@@ -261,7 +261,7 @@ class Product(AbstractModel): #11
     
     @property
     def get_review(self):
-        ProductReview.objects.filter(product=self.id)
+        return ProductReview.objects.filter(product=self.id)
     
     @property
     def get_reviewcount(self):

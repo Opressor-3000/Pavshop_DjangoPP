@@ -45,7 +45,7 @@ class ProductDetail(FormMixin, DetailView):
     
     def get_success_url(self, **kwargs):         
         if  kwargs != None:
-            return reverse_lazy('product:product', kwargs = {'variant_slug': self.slug})
+            return reverse_lazy('product:product', kwargs = {'variant_slug': self.get_object().slug })
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -57,7 +57,7 @@ class ProductDetail(FormMixin, DetailView):
         return context
     
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object
+        self.object = self.get_object()
         form = self.get_form()
         if form.is_valid():
             return self.form_valid(form)
@@ -84,7 +84,6 @@ class ProductListFetch(ListView):
         context['colours'] = Color.objects.all()
         context['tags'] = Tag.objects.all()[:9]
         context['brands'] = Brand.objects.all()[:9]
-        print('-------------------------------------------------------------------------------')
         return context
         
 

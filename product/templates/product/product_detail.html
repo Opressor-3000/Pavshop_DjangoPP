@@ -116,7 +116,7 @@
           <!-- Nav tabs -->
           <ul class="nav nav-tabs animate fadeInUp" data-wow-delay="0.4s" role="tablist">
             <li role="presentation" class="active"><a href="#descr" role="tab" data-toggle="tab">DESCRIPTION</a></li>
-            <li role="presentation"><a href="#review" role="tab" data-toggle="tab">REVIEW {{ review.count }}</a></li>
+            <li role="presentation"><a href="#review" role="tab" data-toggle="tab">REVIEW {{ product.product_id.get_reviewcount }}</a></li>
             <li role="presentation"><a href="#tags" role="tab" data-toggle="tab">INFORMATION</a></li>
           </ul>
           
@@ -152,10 +152,10 @@
             
             <!-- REVIEW -->
             <div role="tabpanel" class="tab-pane fade" id="review">
-              <h6>{{ product.get_review_count }} REVIEWS FOR SHIP YOUR IDEA</h6>
+              <h6>{{ product.product_id.get_reviewcount }} REVIEWS FOR SHIP YOUR IDEA</h6>
               
               <!-- REVIEW PEOPLE 1 -->
-              {% for review in product.product_id.get_review_count %}
+              {% for review in product.product_id.get_review %}
               <div class="media">
                 <div class="media-left"> 
                   <!--  Image -->

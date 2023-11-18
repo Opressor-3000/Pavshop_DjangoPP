@@ -78,7 +78,7 @@ class PostDetail(FormMixin, DetailView):
 
     def get_success_url(self, **kwargs) -> str:
         if  kwargs != None:
-            return reverse_lazy('blog:post_list', kwargs={'slug':self.slug})
+            return reverse_lazy('blog:post', kwargs={'slug':self.get_object().slug })
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -95,15 +95,19 @@ class PostDetail(FormMixin, DetailView):
         return context
 
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object
+        self.object = self.get_object()
+        print(self.object.id)
+        print(self.request.user.id)
         form = self.get_form()
         if form.is_valid():
+            print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
     
     def form_valid(self, form):
-        form.instance.post=self.get_object()
+        print('dfvgbnhjmhngbfvdfbgnhmhngbfvdvfbgn')
+        form.instance.post=self.object
         form.instance.user = self.request.user
         form.save()
         return super().form_valid(form)

@@ -25,5 +25,5 @@ class PostReviewForm(AbstractForm):
                  'text',
                  ]
        widget = {
-           'text':Textarea(attrs={"class":"row"})
+           'text':Textarea(attrs={"class":"form-control"})
        }

@@ -81,3 +81,8 @@ class Post(AbstractModel):
     @property
     def get_author(self):
         return User.objects.filter(id=self.author)
+    
+    @property
+    def get_categories(self):
+        review = Category.objects.filter(id=self.category)
+        return review
