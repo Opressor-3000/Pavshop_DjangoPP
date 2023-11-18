@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.db.models import CheckConstraint, CharField, ForeignKey, DateTimeField, SlugField, BooleanField, IntegerField, DecimalField, ManyToManyField, DateField, TextField, ImageField, PROTECT, CASCADE, Q, F
+from django.db.models import CheckConstraint, CharField, ForeignKey, DateTimeField, SlugField, BooleanField, IntegerField, DecimalField, ManyToManyField, DateField, TextField, ImageField, PROTECT, CASCADE, Q, F, Count
 from django.utils import timezone
 from django.urls import reverse_lazy
 from mptt.models import MPTTModel, TreeForeignKey
@@ -259,6 +259,15 @@ class Product(AbstractModel): #11
     def __str__(self) -> str:
         return str(self.title)
     
+    @property
+    def get_review(self):
+        ProductReview.objects.filter(product=self.id)
+    
+    @property
+    def get_reviewcount(self):
+        return self.get_review.count()
+
+    
     class Meta:
         verbose_name = 'product'
         verbose_name_plural = 'products'
@@ -295,7 +304,7 @@ class Variant(AbstractModel):
     parent = ManyToManyField('self', blank=True)
     in_stock = BooleanField(default=False, verbose_name='In stock')
     user = ForeignKey(User, on_delete=PROTECT, related_name='user_add_variant', verbose_name='variant_creator')
-  
+    @property
     def get_absolute_url(self):
         return reverse_lazy('product:product', kwargs={'variant_slug':self.slug})
     

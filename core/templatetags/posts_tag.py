@@ -8,5 +8,6 @@ from account.models import User
 register = template.Library()
 
 @register.simple_tag
-def get_posts(request):
-    return User.objects.annotate(users = Count('blog__author'))
+def get_posts():
+    result = User.objects.annotate(users = Count('author')).filter(users__gt=0)
+    return result

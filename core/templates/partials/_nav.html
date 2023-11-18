@@ -33,9 +33,9 @@
           <ul class="nav">
             <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Main</a>
               <ul class="dropdown-menu">
-                <li> <a href="{% url 'product:product_list' %}?new_arrival=true">{% trans "New Arrival" %} </a> </li>
-                <li> <a href="{% url 'product:product_list' %}?popular=true"> {% trans 'Popular' %}</a> </li>
-                <li> <a href="{% url 'product:product_list' %}?discounts=true"> {% trans 'Discounts' %}</a> </li>
+                <li> <a href="{% url 'product:productlist' %}?new_arrival=true">{% trans "New Arrival" %} </a> </li>
+                <li> <a href="{% url 'product:productlist' %}?popular=true"> {% trans 'Popular' %}</a> </li>
+                <li> <a href="{% url 'product:productlist' %}?discounts=true"> {% trans 'Discounts' %}</a> </li>
               </ul>
             </li>
 
@@ -43,7 +43,7 @@
             <li class="dropdown"> <a href="#." class="dropdown-toggle" data-toggle="dropdown">{% trans 'Categories' %}</a>
               <ul class="dropdown-menu">  
                 {% recursetree cat %}
-                <li> <a href="{% url 'product:product_list' %}?category={{ node.title}}">{{ node.title }}</a></li>
+                <li> <a href="{% url 'product:productlist' %}?category={{ node.slug }}">{{ node.title }}</a></li>
                 {% if not node.is_leaf_node %}
                   <ul class="children">
                     {{ children }}
@@ -60,12 +60,12 @@
                   <ul class="col-sm-6">
                     {% get_brands as brands %}
                     {% for brn in brands %}
-                    <li> <a href="{% url 'product:product_list' %}?brand={{ brn.slug }}" class="collection-toggle">{{ brn.title }}</a></li>
+                    <li> <a href="{% url 'product:productlist' %}?brand={{ brn.slug }}" class="collection-toggle">{{ brn.title }}</a></li>
                     {% endfor %}
                   </ul>
                   <ul class="col-sm-6">
                     {% for c in collections %}
-                    <li> <a href="{% url 'product:product_list' %}?collection={{ c.id }}">{{ c.title }}</a></li>
+                    <li> <a href="{% url 'product:productlist' %}?collection={{ c.id }}">{{ c.title }}</a></li>
                     {% endfor %}
                   </ul>
                 </div>
@@ -89,8 +89,9 @@
                 <li class="dropdown"> 
                   <a href="{% url 'blog:post_list' %}?author=true" class="dropdown-toggle" data-toggle="dropdown">{% trans 'Authors' %}</a>
                     <ul class="dropdown-menu">
+                      {% get_posts as authors %}
                       {% for author in authors %}
-                      <li> <a href="{% url 'blog:post_list' %}?new_post=true"> New Posts</a> </li>
+                      <li> <a href="{% url 'blog:post_list' %}?author={{ author }}"> {{ author.get_full_name }}</a> </li>
                       {% endfor %}
                     </ul>
                   </li>

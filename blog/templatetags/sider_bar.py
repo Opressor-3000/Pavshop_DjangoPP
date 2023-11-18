@@ -16,7 +16,6 @@ def get_blogsidebar():
    blog_tags = Tag.objects.annotate(tag = Count('tags')).order_by('tag').distinct()
    blog_recents = Post.objects.annotate(recent = Count('postreview')).order_by('recent')[:3]
    blogside = {'blog_cats': blog_cats, 'blog_tags': blog_tags, 'blog_recents': blog_recents }
-   print(blogside, 'dcvfbnukuytrfvfhnm,iukyjthgdf')
    return blogside
 
 @register.simple_tag

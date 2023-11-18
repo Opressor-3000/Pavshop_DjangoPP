@@ -8,6 +8,8 @@ class VariantFilterAPIView(ListAPIView):
    serializer_class = VariantSerializer
    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
    filterset_fields = ['product_id__category_id__slug', 'color__title']
+
+   
    
 
 

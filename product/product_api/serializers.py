@@ -156,7 +156,8 @@ class VariantSerializer(ModelSerializer):
          'tag',
          'parent',
          'in_stock',
-         'get_main_img'
+         'get_main_img',
+         "get_absolute_url"
       )
 
 

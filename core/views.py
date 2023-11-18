@@ -44,15 +44,16 @@ class HomePage(ListView):
         else:
             context['discount_prod'] = self.count_variants.order_by('-created_at')[:2]
         context['new_arrival'] = self.count_variants.order_by('-created_at')
-        context['popular_prod'] = self.count_variants
+        print(self.count_variants.all()[:3])
+        context['popular_prod'] = Variant.objects.all()[:5]
         context['last_posts'] = Post.objects.all().order_by('-created_at')[:2]
         context['designer'] = Designer.objects.order_by('-created_at')[:1]
         return context
         
     
     def get_queryset(self) -> QuerySet[Any]:    
-        return self.count_variants.filter(varianttostore__quantity__gte=1).order_by('-created_at')[:8]
+        return self.count_variants
     
-    def get_main_image(self):
-        return Image.objects.filter(variant = self, is_main = True)
+    # def get_main_image(self):
+    #     return Image.objects.filter(variant = self, is_main = True)
 

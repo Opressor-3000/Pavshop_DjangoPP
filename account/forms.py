@@ -1,11 +1,11 @@
-from django.forms import TextInput, ModelForm, CharField, PasswordInput, EmailInput, EmailField
+from django.forms import TextInput, ModelForm, CharField, PasswordInput, EmailInput, EmailField, Textarea
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import AuthenticationForm,UserCreationForm,PasswordResetForm,SetPasswordForm
 
 
 from .models import *
-from product.models import Discount   
+from product.models import Discount, ProductReview
 from core.forms import AbstractForm
 
 
@@ -72,6 +72,17 @@ class Address(ModelForm):
     class Meta:
         model = Address
         fields = ['user', 'company_name', 'address', 'city', 'country']
+
+
+class ProductReviewForm(AbstractForm):
+   class Meta:
+       model = ProductReview
+       fields = [
+                 'text',
+                 ]
+       widget = {
+           'text':Textarea(attrs={"class":"row"})
+       }
 
 
 class DiscountCode(ModelForm):

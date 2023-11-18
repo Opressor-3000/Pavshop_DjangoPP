@@ -1,8 +1,8 @@
 
-let search_input = document.getElementsByClassName("search-input");
-console.log(search_input)
-let search_button = document.getElementsByClassName("search-button");
-console.log(search_button, 'sdfghjgfdsfghjhjgfdsfghj')
+let search_product = document.getElementsByClassName("search-product");
+console.log(search_product)
+const search_button = document.getElementsByClassName("get-product");
+
 
 search_button.addEventListener("click", async (e) => {
     if(search_input[0].value){

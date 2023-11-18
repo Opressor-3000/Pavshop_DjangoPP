@@ -1,10 +1,10 @@
-from django import forms
-
+from django.forms import Textarea, TextInput, ModelForm
 
 from .models import *
+from core.forms import AbstractForm
 
 
-class AddReview(forms.ModelForm):
+class AddReview(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['product'].empty_lable = 'Product not selected'
@@ -14,7 +14,16 @@ class AddReview(forms.ModelForm):
         model = Post
         fields = ['title', 'text', 'preview', 'image']
         widgets = {
-            'title': forms.TextInput(attrs={'class':''})
+            'title': TextInput(attrs={'class':''})
         }
 
 
+class PostReviewForm(AbstractForm):
+   class Meta:
+       model = PostReview
+       fields = [
+                 'text',
+                 ]
+       widget = {
+           'text':Textarea(attrs={"class":"row"})
+       }

@@ -80,16 +80,6 @@
                       {% endfor %}
                     </ul>
                   </li>
-
-                  <!-- 
-                    <button type="submit" class="btn">REGISTER NOW</button>
-                    
-                    сделать тег for который разворачивает список наборов в которых есть этот product
-                      <form method="post">
-                      {% csrf_token %}
-                        <input type="submit" value="Remove from Cart">
-                      </form>
-                      -->
                   
                   <!-- ADD TO CART -->
                   <li class="col-xs-6"> <a href="#." class="btn">ADD TO CART</a> </li>
@@ -162,10 +152,10 @@
             
             <!-- REVIEW -->
             <div role="tabpanel" class="tab-pane fade" id="review">
-              <h6>3 REVIEWS FOR SHIP YOUR IDEA</h6>
+              <h6>{{ product.get_review_count }} REVIEWS FOR SHIP YOUR IDEA</h6>
               
               <!-- REVIEW PEOPLE 1 -->
-              {% for review in product_reviews %}
+              {% for review in product.product_id.get_review_count %}
               <div class="media">
                 <div class="media-left"> 
                   <!--  Image -->
@@ -181,14 +171,14 @@
               
               <!-- ADD REVIEW           ########################################       -->
               <h6 class="margin-t-40">ADD REVIEW</h6>
-              <form>
+              <form method="post">
                 {% csrf_token %}
                 
                 <ul class="row">
-                  {% for field in form %}   
+                  
                   <li class="col-sm-12">
                     <label> *YOUR REVIEW
-                      <textarea></textarea>
+                      <textarea name="text"></textarea>
                     </label>
                   </li>
                   <li class="col-sm-6"> 
@@ -198,7 +188,7 @@
                   <li class="col-sm-6">
                     <button type="submit" class="btn btn-dark btn-small pull-right no-margin">POST REVIEW</button>
                   </li>
-                  {% endfor %}
+                 
                 </ul>
               </form>
             </div>

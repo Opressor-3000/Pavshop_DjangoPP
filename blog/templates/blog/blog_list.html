@@ -36,26 +36,36 @@
                  <img class="img-responsive" src="{{ post.preview.url }}" alt="" > </div>
                <div class="col-sm-7"> 
                  <!-- Tittle -->
-                 <div class="post-tittle left"> <a href="#." class="tittle">{{ post.title }}</a> 
+                 <div class="post-tittle left"> <a href="{% url 'blog:post' post.slug %}" class="tittle">{{ post.title }}</a> 
                    <!-- Post Info --> 
-                   <span><i class="primary-color icon-user"></i> {{ post.author.get_full_name }}</span> <span><i class="primary-color icon-calendar"></i> {{ post.created_at }}</span> <span><i class="primary-color icon-bubble">{{ post.id }}</i> </span> <span><i class="primary-color icon-tag"></i> Furniture</span> </div>
+                   <span><i class="primary-color icon-user"></i> {{ post.author.get_full_name }}</span> <span><i class="primary-color icon-calendar"></i> {{ post.created_at }}</span> <span><i class="primary-color icon-bubble">{{ post.get_reviewcount }}</i> </span> <span><i class="primary-color icon-tag"></i>{% for t in post.tag.all %}{{ t.title }}{% endfor %}</span> </div>
                  <!-- Post Content -->
                  <div class="text-left">
-                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat dui at lacus aliquet, a consequat enim aliquet. Integer molestie sit amet sem et faucibus. Nunc ornare pharetra dui, vitae auctor orci fringilla eget. Pellentesque in placerat felis. Etiam mollis venenatis luctus.  
-                     
-                     Nunc at blandit neque, bibendum varius purus.</p>
-                   <a href="#." class="red-more">READ MORE</a> </div>
+                   <p>{{ post.text | truncatechars:260 }}</p>
+                   <a href="{% url 'blog:post' post.slug %}" class="red-more">READ MORE</a> </div>
                </div>
              </div>
            </article>
            {% endfor %}
            
-           <!-- Pagination -->
-           <ul class="pagination in-center">
-             <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-
-             <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-           </ul>
+          <!-- Pagination -->
+          {% if page_obj.has_other_page %}
+          <ul class="pagination in-center">
+            {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_number }}"><i class="fa fa-angle-left"></i></a></li>
+            {% endif %}
+            {% for pag in paginator.page_range %}
+              {% if page_obj.number == pag %}
+                <li class="active">{{ pag }}</li>
+              {% elif pag >= page_obj.number|add:-2 and pag <= page_obj.number|add:2 %}
+            <li><a href="?page={{ pag }}">{{ pag }}</a></li>
+            {% endif %}
+            {% endfor %}
+            {% if page.obj.has_next %}
+            <li><a href="?page={{ page_obj.next_number }}"><i class="fa fa-angle-right"></i></a></li>
+            {% endif %}
+          </ul>
+          {% endif %}
          </div>
          
          <!-- Sider Bar -->

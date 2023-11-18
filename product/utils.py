@@ -16,7 +16,7 @@ def get_current_discount():
 def count_variant():
   # quantity_to_store = Variant.objects.aggregate(quantity = Sum(''))
   # return Variant.objects.annotate(quantit = Sum('varianttostore__quantity') - Sum('variantinbasket__count')).filter(quantit__gt=0)
-  return Variant.objects.all()
+  return Variant.objects.filter(varianttostore__quantity__gte=1).order_by('-created_at')
 
 
 def current_price(variant):
@@ -32,5 +32,3 @@ def get_parent(cat):
 def get_subcat():
   cat = Category.objects.filter(category__variantofproduct__varianttostore__gt=0)
   return cat.distinct()
-  # if cat.parents.exists():
-  #     return cat.distinct()
