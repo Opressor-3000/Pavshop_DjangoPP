@@ -24,9 +24,9 @@ class Contact(CreateView):
     form_class = ContactForm
     template_name = 'core/contact.html'
 
-# def contact(request):
-#     return render("contact.html")
-
+    def get_success_url(self, **kwargs) -> str:
+        #, kwargs={'contact_success': "your message has been sent successfully"}
+        return reverse_lazy('core:homepage')
 
 class HomePage(ListView):
     paginate_by = 9

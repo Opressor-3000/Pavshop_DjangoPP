@@ -85,9 +85,9 @@
                   <li class="col-xs-6"> <a href="#." class="btn">ADD TO CART</a> </li>
                   
                   <!-- ADD TO WISHLIST  -->
-                  <li  class="col-xs-6"> <a  class="like-us"></a> </li>
+                  <li  class="col-xs-6"> <a href="#" class="like-us" id="add_wishlist"> <i data-product={{product.id}}  class="icon-heart" ></i></a> </li>
 
-                  <button id="add_wishlist" data-product={{product.id}}> <i data-product={{product.id}}  class="icon-heart" ></i>add wishlist</button>
+                  
                 </ul>
                 
                 <!-- INFOMATION -->
@@ -220,7 +220,11 @@
               <!-- Overlay -->
               <div class="overlay">
                 <div class="position-center-center">
-                  <div class="inn"><a href="{{ pop.get_main_img }}" data-lighter><i class="icon-magnifier"></i></a> <a href="#."><i class="icon-basket" id="addtocart"></i></a> <a href="#." ><i class="icon-heart" id="add_wishlist"></i></a></div>
+                  <div class="inn">
+                    <a href="{{ pop.get_main_img }}" data-lighter><i class="icon-magnifier"></i></a> 
+                    <a href="#"><i class="icon-basket" id="addtocart" data-product="{{ new.id }}"></i></a>
+                    <a href="#" id="add_wishlist"><i class="icon-heart" id="add_wishlist" data-product="{{ pop.id }}"></i></a>
+                  </div>
                 </div>
               </div>
             </div>

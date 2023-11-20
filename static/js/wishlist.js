@@ -13,6 +13,7 @@
 let addWishlist = document.getElementById("add_wishlist");
 
 addWishlist.addEventListener("click", async (e)=>{
+    console.log('add to wishlist begin')
     let data = await fetch("http://127.0.0.1:8000/api/v1/account/add_wishlist/", {
         method: "POST",
         headers: {
@@ -24,5 +25,5 @@ addWishlist.addEventListener("click", async (e)=>{
             user:userId
         })
     });
-
+    console.log('add to wishlist end')
 });

@@ -3,17 +3,12 @@ from ..models import Category, Variant, Product, Tag, Brand, Style, Discount, Di
 
 
 class CategorySerializer(ModelSerializer):
-   # serializer_related_field = SerializerMethodField()
    class Meta:
       model = Category
       fields = (
          'title',
          'parent',
-         
       )
-
-   # def get_related_name_field(self, obj):
-   #    pass
 
 
 class TagSerializer(ModelSerializer):

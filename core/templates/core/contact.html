@@ -37,27 +37,36 @@
               <div id="contact_message" class="success-msg"> <i class="fa fa-paper-plane-o"></i>Thank You. Your Message has been Submitted</div>
               
               <!--======= FORM  =========-->
-              <form role="form" id="contact_form" class="contact-form" method="post" onSubmit="return false">
+              <form method="post" id="contact_form" class="contact-form" >
                 {% csrf_token %}
                 <ul class="row">
                   <li class="col-sm-6">
+                    <label>Full Name *
                     {{ form.name }}
                   </li>
                   <li class="col-sm-6">
+                    <label>Phone *
                     {{ form.phone }}
+                    </label>
                   </li>
                   <li class="col-sm-6">
+                    <label>Email *
                     {{ form.email }}
+                    </label>
                   </li>
                   </li>
                   <li class="col-sm-6">
+                    <label>Subject *
                     {{ form.subject }}
+                    </label>
                   </li>
                   <li class="col-sm-12">
+                    <label>Message *
                       {{ form.message }}
+                    </label>
                   </li>
                   <li class="col-sm-12">
-                    <button type="submit" value="submit" class="btn" id="send_message" onClick="proceed();">SEND MAIL</button>
+                    <button type="submit" value="submit" class="btn" id="send_message"">SEND MAIL</button>
                   </li>
                 </ul>
               </form>

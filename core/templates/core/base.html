@@ -132,6 +132,8 @@
     </div>
   </footer>  
 </div>
+{% block script2 %}
+{% endblock %}
 {% block script %}
 {% endblock %}
 <script type="text/javascript"> var user = '{{request.user.get_full_name }}'</script>
@@ -149,8 +151,8 @@
 <script type="text/javascript" src="{% static 'rs-plugin/js/jquery.tp.t.min.js' %}"></script> 
 <script type="text/javascript" src="{% static 'rs-plugin/js/jquery.tp.min.js' %}"></script> 
 <script src="{% static 'js/main.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
-<script src="{% static 'js/filter.js' %}"></script>
+<script src="{% static 'js/cart.js' %}"></script>
+
 
 </body>
 </html>

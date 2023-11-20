@@ -12,6 +12,18 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
    def get_token(cls, user) -> Token:
       token = super().get_token(user)
       return token
+   
+
+class UserSerializer(ModelSerializer):
+   class Meta:
+      model = User
+      fields = (
+         'id',
+         'first_name',
+         'last_name',
+         'email',
+         'phone'
+      )
 
 
 class StatusSerializer(ModelSerializer):
@@ -34,6 +46,7 @@ class AddressSerializer(ModelSerializer):
 
 
 class WishlistSerializer(ModelSerializer):
+   variant = VariantSerializer()
    class Meta:
       model = WishList
       fields = (
@@ -41,8 +54,23 @@ class WishlistSerializer(ModelSerializer):
       )
 
 
-class OrderSerializer(ModelSerializer):
+class ProductInOrdersSerializer(ModelSerializer):
    status=StatusSerializer()
+   producttobasket = SerializerMethodField()
+   class Meta:
+      model = Order
+      fields = (
+         'id',
+         'status',
+         'producttobasket',
+      )
+
+   def get_producttobasket(self, obj):
+      serializer = ProductToBasketOldOrderSerializer(obj.order.all(), context=self.context, many=True)
+
+
+class OrderSerialiser(ModelSerializer):
+   status = StatusSerializer
    class Meta:
       model = Order
       fields = (
@@ -51,20 +79,24 @@ class OrderSerializer(ModelSerializer):
       )
 
 
-class UserSerializer(ModelSerializer):
-   class Meta:
-      model = User
-      fields = (
-         'first_name',
-         'last_name',
-      )
-
-
-class ProductToBasketSerializer(ModelSerializer):
+class ProductToBasketOldOrderSerializer(ModelSerializer):
+   variant = VariantSerializer
    class Meta:
       model = ProductToBasket
+      fields = {
+         'variant',
+         'count',
+
+      }
+
+
+class ProductToBasketListSerializer(ModelSerializer):
+   order = OrderSerialiser()
+   variant = VariantSerializer()
+   discount_id = DiscountSerializer()
+   class Meta:
+      model = ProductToBasket()
       fields = (
-         'user',
          'order',
          'variant',
          'count',
@@ -72,28 +104,36 @@ class ProductToBasketSerializer(ModelSerializer):
       )
 
 
+class ProductToBasketSerializer(ModelSerializer):
+   order =ProductInOrdersSerializer()
+   variant = VariantSerializer()
+   class Meta:
+      model = ProductToBasket()
+      fields = (
+         'order',
+         'variant',
+         'count',
+         'discount_id',
+      )
+
+
+class AddToCartOrderSerializer(ModelSerializer):
+   order = OrderSerialiser()
+   variant = VariantSerializer()
+   class Meta:
+      model = ProductToBasket
+      fields = (
+         'user',
+         'order',
+         'variant',
+         'count',
+      )
+
 #---------------------------------------------------------------------------------------------------------------------------------
 
 
-class StatusOrderSerializer(ModelSerializer):
-   order = SerializerMethodField()
-   class Meta:
-      model = Status
-      field = (
-         'order',
-         'title',
-      )
-
-   def get_order(self, obj):
-      serializer = OrderSerializer(obj.status.all(), context=self.context, many=True)
-      return serializer.data
-
 
 class CurrentUserSerializer(ModelSerializer):
-   # def get_user(self):
-   #    return self.context['request'].user
-   
-   # user = get_user()
    class Meta:
       model = User
       fields = (
@@ -130,35 +170,9 @@ class ProductToBasketOrdersSerializer(ModelSerializer):
          'variant',
       )
 
-
-class ProdictToBasketSerializer(ModelSerializer):
-   order = OrderSerializer()
-   variant = VariantSerializer()
-   class Meta:
-      model = ProductToBasket
-      fields = (
-         'order',
-         'variant',
-         'count',
-      )
-
-
-class UserShoppingCartSerializer(ModelSerializer):
-   user = CurrentUserSerializer()
-   order = SerializerMethodField()
-   class Meta:
-      model = User
-      fields = (
-         'user',
-         'order',
-      )
-
-   def get_order(self):
-      serializer = OrdersOfUserSerializer()
-      return serializer.data
    
 
-class UserAddressserializer(ModelSerializer):
+class UserAddressSerializer(ModelSerializer):
    user = CurrentUserSerializer()
    class Meta:
       model = Address
@@ -204,7 +218,7 @@ class UserAccountSerializer(ModelSerializer):
       )
 
    def get_userorder(self, obj):
-      serializer = OrderSerializer(obj.user_id.all(), context=self.context, many=True)
+      serializer = ProductInOrdersSerializer(obj.user_id.all(), context=self.context, many=True)
 
    def get_wishlist(self, obj):
       serializer = WishlistSerializer(obj.wishlistuser.all(), context=self.context, many=True)

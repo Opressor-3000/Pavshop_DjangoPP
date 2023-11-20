@@ -38,23 +38,27 @@
                  <!-- Sale Tags -->
                  <div class="on-sale"> 10% <span>OFF</span> </div>
                  <!-- Item img -->
-                 <div class="item-img"> <img class="img-1" src="{{ variant.image }}" alt="" >
+                 <div class="item-img"> <img class="img-1" src="{{ variant.get_main_img }}" alt="" >
                    <!-- Overlay -->
                    <div class="overlay">
                      <div class="position-center-center">
                        <div class="inn">
-                         <a href="#" data-lighter>
+                         <a href="{{ variant.get_main_img }}" data-lighter>
                            <i class="icon-magnifier"></i></a>
+                         {% if request.user.is_authenticade %}
                          <button data-product={{ variant.id }} data-action="add_to_cart" class='update_cart' >
-                           <i class="icon-basket"></i>
-                         </button> 
-                         <a href="#." id="add_wishlist"><i class="icon-heart" id="add_wishlist"></i></a>
+                          <i class="icon-basket" id="addtocart" data-product="{{ variant.id }}"></i>
+                        </button>
+                         <a href="#." id="add_wishlist" data-product="{{ variant.id }}"><i class="icon-heart" id="addwishlist"></i></a>
+                         {% else %}
+                         <a href="{% url 'account:login' %}"><i class="icon-heart" id="add_wishlist"></i></a>
+                         {% endif %}
                        </div>
                      </div>
                    </div>
                  </div>
                  <!-- Item Name { data[i].get_absolute_url } -->
-                 <div class="item-name"> <a href="${data.results[i].get_absolute_url}">${data.results[i].title}</a>
+                 <div class="item-name"> <a href="{% url 'product:product' variant.slug %}">{{ variant.title }}</a>
                    <p>{{ variant.discription|truncatechars:30 }}</p>
                  </div>
                  <!-- Price --> 

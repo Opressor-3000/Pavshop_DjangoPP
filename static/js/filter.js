@@ -5,7 +5,6 @@ for (var i = 0; i < catCheckbox.length; i++) {
    catCheckbox[i].addEventListener("change", (e) => {
       var url = new URL(window.location.href);
 
-      console.log(e.target.value);
       const catList = []
 
       for (var i = 0; i < catCheckbox.length; i++) {
@@ -28,7 +27,6 @@ for (var i = 0; i < colorCheckbox.length; i++) {
    colorCheckbox[i].addEventListener("change", (e) => {
       var url = new URL(window.location.href);
 
-      console.log(e.target.value);
       const colorList = []
 
       for (var i = 0; i < colorCheckbox.length; i++) {
@@ -51,7 +49,6 @@ for (var i = 0; i < tagCheckbox.length; i++) {
    tagCheckbox[i].addEventListener("change", (e) => {
       var url = new URL(window.location.href);
 
-      console.log(e.target.value);
       const tagList = []
 
       for (var i = 0; i < tagCheckbox.length; i++) {
@@ -77,7 +74,6 @@ const getProducts = async () => {
    const response = await fetch(`http://127.0.0.1:8000/api/products/variants/?product_id__category_id__slug=${category}&color__title=${color}&tag__title=${tag}$`)
 
    const data = await response.json()
-   console.log(data.results);
 
    const products = document.getElementsByClassName("papular-block")[0]
    products.innerHTML = ""

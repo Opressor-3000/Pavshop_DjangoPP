@@ -7,7 +7,10 @@
   
     <!-- Content -->
     <div id="content"> 
-
+    <!-- WISHLIST -->
+    <div role="tabpanel" class="tab-pane fade" id="wishlistdetails">
+      <p>wishlist</p>
+    </div>
       <!--======= PAGES INNER =========-->
       <section class="chart-page padding-top-100 padding-bottom-100">
         <div class="container"> 
@@ -18,6 +21,7 @@
             <ul class="nav nav-tabs animate fadeInUp" data-wow-delay="0.4s" role="tablist">
               <li role="presentation" class="active"><a href="#shopcart" role="tab" data-toggle="tab">{% trans 'SHOPPING CART' %}</a></li>
               <li role="presentation"><a href="#orders" role="tab" data-toggle="tab">{% trans 'MY ORDERS' %}</a></li>
+              <li role="presentation"><a href="#wishlist" role="tab" data-toggle="tab">{% trans 'WISHLIST' %}</a></li>
             </ul>
             
             <!-- Tab panes -->
@@ -35,28 +39,25 @@
                       <li class="col-sm-4 text-left"><h6>NAME</h6></li>
                       <!-- PRICE -->
                       <li class="col-sm-2"><h6>PRICE</h6></li>
-                      <!-- QTY -->
-                      <li class="col-sm-1"><h6>QUANTITY</h6></li>
-                      <!-- TOTAL PRICE -->
-                      <li class="col-sm-2"><h6>TOTAL</h6></li>
+                      <!-- ADD to WISHLIST -->
+                      <li class="col-sm-2"><h6>ADD</h6></li>
                       <li class="col-sm-1"> </li>
                     </ul>
                   </div>
-                  <!-- Cart Details -->
-                  <div class="cart-detail">
-                    
-                  </div>
+
                 </div>
               </div>
 
-                            <!-- WISHLIST -->
+              <!--  ORDERS  -->
               <div role="tabpanel" class="tab-pane fade" id="orders">
-
               </div>
               
               <!-- WISHLIST -->
               <div role="tabpanel" class="tab-pane fade" id="wishlist">
+                <p>wishlist</p>
               </div>
+
+              
 
             </div>
           </div>

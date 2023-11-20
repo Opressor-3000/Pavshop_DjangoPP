@@ -1,13 +1,13 @@
 from django.urls import path
 
 
-from .viewapi import AccountAPIView,AddWishlistAPIView, ProductToBasketAPIView
+from .viewapi import AccountAPIView, AddWishlistAPIView, ProductToBasketOldOrderAPIView, ShoppingCartAPIView, WishlistAPIView, AddToCartAPIView, OrdersAPIView
 from rest_framework_simplejwt.views import (
    TokenObtainPairView,
    TokenRefreshView,
    TokenVerifyView,
 )
-
+ 
 
 app_name = 'account_api'
 
@@ -19,5 +19,9 @@ urlpatterns = [
     path('api/token/verify', TokenVerifyView.as_view(), name='token_verify'),
     path('', AccountAPIView.as_view(), name='account'),
     path('add_wishlist/', AddWishlistAPIView.as_view(), name='add_wishlist'),
-    path('producttobasketapi/', ProductToBasketAPIView.as_view(), name='add_producttobasket'),
+    path('producttobasketapi/', ProductToBasketOldOrderAPIView.as_view(), name='add_producttobasket'),
+    path('shopcart/', ShoppingCartAPIView.as_view(), name='shopcartapi'),
+    path('wishlist/', WishlistAPIView.as_view(), name='wishlistapi'),
+    path('addtocart/', AddToCartAPIView.as_view(), name='addtocartapi'),
+    path('orders/', OrdersAPIView.as_view(), name='ordersapi')
 ]

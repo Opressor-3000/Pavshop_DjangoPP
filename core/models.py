@@ -27,7 +27,7 @@ class Contact(AbstractModel):
     subject = CharField(max_length=50, verbose_name='subject')
     message = TextField(verbose_name='message')
     status = BooleanField(default=False)
-    user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)
 
     def __str__(self):
         return str(self.subject)

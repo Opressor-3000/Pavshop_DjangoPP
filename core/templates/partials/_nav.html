@@ -177,7 +177,7 @@
             
             <!-- USER BASKET -->
             {% if request.user.is_authenticated %}
-            <li class="dropdown user-basket"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="icon-basket-loaded"></i> </a>
+            <li class="dropdown user-basket"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i id="addtocart" class="icon-basket-loaded"></i> </a>
               <ul class="dropdown-menu">
                 {% get_shopcarts request as shopcart %}
                 {% for sc in shopcart %}
@@ -210,8 +210,8 @@
                 <div class="position-center-center">
                   <div class="search">
                     <form methor="get">
-                      <input id="search" class="search-input" type="search" placeholder="Search Shop">
-                      <button type="submit-button" class="search-button"><i class="icon-check"></i></button>
+                      <input id="search-input" class="search-input" type="search" placeholder="Search Shop">
+                      <button id="get-product" type="submit-button" class="search-button"><i class="icon-check"></i></button>
                     </form>
                   </div>
                 </div>
