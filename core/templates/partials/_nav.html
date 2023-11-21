@@ -165,9 +165,11 @@
               <ul class="dropdown-menu">
                 {% if request.user.is_authenticated %}
                 <li><h6>HELLO! {{ request.user.get_full_name }}</h6></li>
-                <li><a href="{% url 'account:profile' %}">{% trans 'ACCOUNT' %}</a></li>
+                <li><a href="{% url 'account:wishlist' %}">{% trans 'WISHLIST' %}</a></li>
                 <li><a href="{% url 'account:shopcart' %}">{% trans 'MY CART' %}</a></li>
+                <li><a href="{% url 'account:order_api' %}">{% trans 'ORDERS' %}</a></li>
                 <li><a href="{% url 'account:logout' %}">{% trans 'LOG OUT' %}</a></li>
+                
                 {% else %}
                 <li><a href="{% url 'account:login' %}">{% trans 'LOGIN' %}</a></li>
                 <li><a href="{% url 'account:register' %}">{% trans 'SIGN IN' %}</a></li>

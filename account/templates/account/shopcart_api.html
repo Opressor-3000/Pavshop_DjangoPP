@@ -1,0 +1,118 @@
+{% extends 'core/base.html' %}
+{% load cart_tag %}
+{% load i18n %}
+{% load get_shopcart %}
+{% load static %}
+{% load total_cost %}
+{% block content %}
+  
+  <!--======= SUB BANNER =========-->
+  <section class="sub-bnr" data-stellar-background-ratio="0.2">
+    <div class="position-center-center">
+      <div class="container">
+        <h4></h4>
+        <p></p>
+      </div>
+    </div>
+  </section>
+  
+  <br><h1> </h1>
+  <br>
+  <!-- Content -->
+  <div id="content"> 
+    
+    <!--======= PAGES INNER =========-->
+    <section class="padding-top-100 padding-bottom-100 pages-in chart-page">
+      <div class="container"> 
+        
+        <!-- Payments Steps -->
+        <div class="shopping-cart text-center">
+          <div class="cart-head">
+            <ul class="row">
+              <!-- PRODUCTS -->
+              <li class="col-sm-2 text-left">
+                <h6>PRODUCTS</h6>
+              </li>
+              <!-- NAME -->
+              <li class="col-sm-4 text-left">
+                <h6>NAME</h6>
+              </li>
+              <!-- PRICE -->
+              <li class="col-sm-2">
+                <h6>PRICE</h6>
+              </li>
+              <!-- QTY -->
+              <li class="col-sm-1">
+                <h6>QTY</h6>
+              </li>
+              
+              <!-- TOTAL PRICE -->
+              <li class="col-sm-2">
+                <h6>TOTAL</h6>
+              </li>
+              <li class="col-sm-1"> </li>
+            </ul>
+          </div>
+          
+          <!-- Cart Details -->
+          <ul class="row cart-details" id="shopcartdetails">
+          
+         <!-- INNER API  INNER API  INNER API  INNER API  INNER API  INNER API  INNER API  -->
+
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!--======= PAGES INNER =========-->
+    <section class="padding-top-100 padding-bottom-100 light-gray-bg shopping-cart small-cart">
+      <div class="container"> 
+        
+        <!-- SHOPPING INFORMATION -->
+        <div class="cart-ship-info margin-top-0">
+          <div class="row"> 
+            
+
+            
+            <!-- SUB TOTAL -->
+            <div class="col-sm-5">
+              <h6>grand total</h6>
+              <div class="grand-total">
+                <div class="order-detail">
+                  {% get_shopcarts request as shopcart %}
+                  <p class="all-total">TOTAL COST <span> {{ request.user.get_subtotal }} </span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- About -->
+    <section class="small-about padding-top-150 padding-bottom-150">
+      <div class="container"> 
+        
+        <!-- Main Heading -->
+        <div class="heading text-center">
+          <h4>about PAVSHOP</h4>
+          <p>Phasellus lacinia fermentum bibendum. Interdum et malesuada fames ac ante ipsumien lacus, eu posuere odio luctus non. Nulla lacinia,
+            eros vel fermentum consectetur, risus purus tempc, et iaculis odio dolor in ex. </p>
+        </div>
+        
+        <!-- Social Icons -->
+        <ul class="social_icons">
+          <li><a href="#."><i class="icon-social-facebook"></i></a></li>
+          <li><a href="#."><i class="icon-social-twitter"></i></a></li>
+          <li><a href="#."><i class="icon-social-tumblr"></i></a></li>
+          <li><a href="#."><i class="icon-social-youtube"></i></a></li>
+          <li><a href="#."><i class="icon-social-dribbble"></i></a></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+   
+{% endblock %}
+{% block script %}
+<script src="{% static 'js/get_shopcart.js' %}"></script>
+{% endblock %}

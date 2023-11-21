@@ -23,4 +23,6 @@ urlpatterns = [
     path('forget_pwd/',UserPasswordResetView.as_view(), name='forget_pwd'),
     path('user/', AccountView.as_view(), name='api_account'),
     path('profile/', UserAccountAPI.as_view(), name='profile'),
+    path('order/', OrderAccount.as_view(), name='order_api'),
+    path('shopcart/', ShopCartAccount.as_view(), name='shopcart'),
 ]

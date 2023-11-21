@@ -167,12 +167,11 @@ class AddToWishList(LoginRequiredMixin, CreateView):
 
 
 class Wishlist(LoginRequiredMixin, ListView):  
-    model = User
+    model = WishList
     template_name = 'account/wishlist.html'
     context_object_name = 'wishlist'
 
-    def add_to_wishlist(self):
-        pass
+
 
 @login_required
 def logout(request):
@@ -223,4 +222,14 @@ class AccountView(LoginRequiredMixin, View):
     template_name = 'account/account_api.html'
     context_object_name = 'user'
 
+
+class OrderAccount(LoginRequiredMixin, ListView):
+    model = WishList
+    template_name = 'account/orders_api.html'
+    context_object_name = 'order'
     
+
+class ShopCartAccount(LoginRequiredMixin, ListView):
+    model = ProductToBasket
+    template_name = 'account/shopcart_api.html'
+    context_object_name = 'shopcart'

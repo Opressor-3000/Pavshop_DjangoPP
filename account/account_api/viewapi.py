@@ -176,3 +176,76 @@ class OrdersAPIView(ListAPIView):
          shopcart = ProductToBasket.objects.filter(order__id__in=order, user=request.user.id)
          result = ProductToBasketListSerializer(shopcart, many=True).data
          return Response(result)
+      
+
+class ReduceCountAPIView(RetrieveUpdateDestroyAPIView):
+   queryset = ProductToBasket
+   serializer_class = ProductToBasketListSerializer
+   authentication_classes = [SessionAuthentication, BasicAuthentication]
+   permission_classes = [IsAuthenticated]
+
+   def get(self, request, *args, **kwargs):
+      if request.user.is_authenticated:
+         if Order.objects.filter(user=request.user, status=1):
+            order = Order.objects.filter(user=int(request.user, status=1))
+            variant = Variant.objects.filter(id=request.data["variant"]).first()
+            if ProductToBasket.objects.filter(
+               user=request.user, order=order, variant=variant
+               ).first():
+               try:
+                  cart = ProductToBasket.objects.get(
+                  user=request.user, order=order, variant=variant
+                  )
+                  cart.count += 1
+                  cart.save()
+                  return Response("success")
+               except:
+                   raise ValueError('not Found')
+           
+            
+
+class IncreaseCountAPIView(RetrieveUpdateDestroyAPIView):
+   queryset = ProductToBasket
+   serializer_class = ProductToBasketListSerializer
+   authentication_classes = [SessionAuthentication, BasicAuthentication]
+   permission_classes = [IsAuthenticated]
+
+   def get(self, request, *args, **kwargs):
+      if request.user.is_authenticated:
+         if Order.objects.filter(user=request.user, status=1):
+            order = Order.objects.filter(user=int(request.user, status=1))
+            variant = Variant.objects.filter(id=request.data["variant"]).first()
+            if ProductToBasket.objects.filter(
+               user=request.user, order=order, variant=variant
+               ).first():
+               try:
+                  cart = ProductToBasket.objects.get(
+                  user=request.user, order=order, variant=variant
+                  )
+                  cart.count -= 1
+                  cart.save()
+                  return Response("success")
+               except:
+                   raise ValueError('not Found')
+               
+
+# class OrderAccount(ListAPIView):
+#    queryset = 
+#    serializer_class = ProductToBasketListSerializer
+#    authentication_classes = [SessionAuthentication, BasicAuthentication]
+#    permission_classes = [IsAuthenticated]
+
+#    def get(self, request, *args, **kwargs):
+#       if request.user.is_authenticated:
+#          pass
+
+
+# class ShopCartAccount(ListAPIView):
+#    queryset = Order
+#    serializer_class = ProductToBasketListSerializer
+#    authentication_classes = [SessionAuthentication, BasicAuthentication]
+#    permission_classes = [IsAuthenticated]
+
+#    def get(self, request, *args, **kwargs):
+#       if request.user.is_authenticated:
+#          pass

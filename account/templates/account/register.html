@@ -44,33 +44,39 @@
                         {{form.first_name }}
                        
                       </label>
+                      <div class="form-error">{{ form.first_name.error }}</div>
                     </li>
 
                     <li class="col-md-6">
                       <label> {{form.last_name.label }}
                         {{form.last_name }}
                       </label>
+                      <div class="form-error">{{ form.last_name.error }}</div>
                     </li>
                     <li class="col-md-6">
                       <label>{{form.email.label }}
                         {{form.email }}
                       </label>
+                      <div class="form-error">{{ form.email.error }}</div>
                     </li>
                     <li class="col-md-6">
                       <label> {{form.phone.label }}
                         {{form.phone }}
                       </label>
+                      <div class="form-error">{{ form.phone.error }}</div>
                     </li>
                     <li class="col-md-6">
                       <label> {{form.password1.label }}
                         {{form.password1 }}
                       </label>
+                      <div class="form-error">{{ form.password1.error }}</div>
                     </li>
                     
                     <li class="col-md-6">
                       <label> {{form.password2.label }}
                         {{form.password2 }}
                       </label>
+                      <div class="form-error">{{ form.password2.error }}</div>
                     </li>
                     <li class="col-md-6">
                       <button type="submit" class="btn">REGISTER NOW</button>

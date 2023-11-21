@@ -1,7 +1,7 @@
 from django.urls import path
 
 
-from .viewapi import AccountAPIView, AddWishlistAPIView, ProductToBasketOldOrderAPIView, ShoppingCartAPIView, WishlistAPIView, AddToCartAPIView, OrdersAPIView
+from .viewapi import AccountAPIView, AddWishlistAPIView, ProductToBasketOldOrderAPIView, ShoppingCartAPIView, WishlistAPIView, AddToCartAPIView, OrdersAPIView, IncreaseCountAPIView, ReduceCountAPIView
 from rest_framework_simplejwt.views import (
    TokenObtainPairView,
    TokenRefreshView,
@@ -23,5 +23,7 @@ urlpatterns = [
     path('shopcart/', ShoppingCartAPIView.as_view(), name='shopcartapi'),
     path('wishlist/', WishlistAPIView.as_view(), name='wishlistapi'),
     path('addtocart/', AddToCartAPIView.as_view(), name='addtocartapi'),
-    path('orders/', OrdersAPIView.as_view(), name='ordersapi')
+    path('orders/', OrdersAPIView.as_view(), name='ordersapi'),
+    path('increasecount/', IncreaseCountAPIView.as_view(), name="increase"),
+    path('reducecount/', ReduceCountAPIView.as_view(), name='reduce'),
 ]
