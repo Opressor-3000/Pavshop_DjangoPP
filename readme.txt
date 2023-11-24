@@ -15,7 +15,7 @@
 6. git pull origin dev
 
 
-git add . && git commit -m ' add WishlistAPI, Shopcart_api, order_api template and view' && git push origin yusif && git checkout dev && git pull origin dev && git merge yusif && git push origin dev && git checkout yusif
+git add . && git commit -m ' add WishlistAPI, Shopcart_api, order_api template and view' && git push origin yusif && git checkout main && git pull origin main && git merge yusif && git push origin main && git checkout yusif
 
 
 
